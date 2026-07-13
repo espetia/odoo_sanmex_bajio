@@ -6,6 +6,10 @@
             <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
             <field name="priority" eval="50"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="management" groups="account.group_account_manager"/>
+                    <field name="purchase_account" groups="account.group_account_manager"/>
+                </xpath>
                 <xpath  expr="//group[@name='main']" position='after'>
                     <notebook  groups="account.group_account_user">
                         <page string="Budget Items">
