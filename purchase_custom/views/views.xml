@@ -29,6 +29,8 @@
         <field name="arch" type="xml">
             <field name="origin" position="before">
                 <field name="project_id" groups="analytic.group_analytic_accounting" />
+                <field name="journal_id" />
+                <field name="fortnight_pay" />
             </field>
         </field>
     </record>
@@ -38,15 +40,30 @@
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_form" />
         <field name="arch" type="xml">
+            <xpath expr="//header" position="after">
+                <div class="alert alert-danger" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('in_budget', '!=', False)]}">
+                    Esta compra excede el presupuesto planeado
+                </div>
+            </xpath>
+            <xpath expr="//div[@name='date_planned_div']" position="after">
+                <field name="date_invoice_partner" />
+            </xpath>
             <field name="partner_ref" position="after">
-                <field name="project_id" required="1" options="{'no_create': True}"/>
+                <field name="project_id" required="1" options="{'no_create': True}" domain="[('purchase_account', '=', True)]"/>
+                <field name="payment_type"/>
+                <field name="journal_id" />
+                <field name="fortnight_pay" />
             </field>
             <field name="order_line" position="attributes">
                 <attribute name="context">{'default_account_analytic_id': project_id}</attribute>
             </field>
             <field name="invoice_status" position="after">
                 <field name="available_budget"/>
+                <field name="in_budget" invisible="1"/>
             </field>
+            <xpath expr="//field[@name='account_analytic_id']" position="attributes">
+                <attribute name="options">{'no_create': '1', 'no_create_edit': '1'}</attribute>
+            </xpath>
         </field>
     </record>
 
@@ -55,8 +72,10 @@
         <field name="model">budget.budget</field>
         <field name="inherit_id" ref="base_account_budget.crossovered_budget_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='budget_line']/tree/field[@name='theoretical_amount']" position="after">
-                <field name="purchase_amount" optional="show"/>
+            <xpath expr="//field[@name='budget_line']/tree/field[@name='theoretical_amount']" position="replace">
+                <field name="purchase_amount" optional="show" widget="monetary"/>
+                <field name="effective_amount" optional="show" widget="monetary"/>
+                <field name="available_budget" optional="show" widget="monetary"/>
             </xpath>
         </field>
     </record>
@@ -66,9 +85,20 @@
         <field name="model">budget.lines</field>
         <field name="inherit_id" ref="base_account_budget.view_budget_line_tree" />
         <field name="arch" type="xml">
+            <field name="planned_amount" position="attributes">
+                <attribute name="widget">monetary_abs</attribute>
+            </field>
+            <field name="practical_amount" position="attributes">
+                <attribute name="widget">monetary_abs</attribute>
+            </field>
+            <field name="theoretical_amount" position="attributes">
+                <attribute name="widget">monetary_abs</attribute>
+                <attribute name="invisible">1</attribute>
+            </field>
             <xpath expr="//field[@name='theoretical_amount']" position="after">
-                <field name="purchase_amount" optional="show" widget="monetary"/>
-                <field name="available_budget" optional="show" widget="monetary"/>
+                <field name="purchase_amount" optional="show" widget="monetary_abs"/>
+                <field name="effective_amount" optional="show" widget="monetary_abs"/>
+                <field name="available_budget" optional="show" widget="monetary_abs"/>
             </xpath>
         </field>
     </record>

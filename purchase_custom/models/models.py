@@ -2,38 +2,88 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
+
 class PurchaseOrder(models.Model):
-    _inherit = 'purchase.order'
+    _inherit = "purchase.order"
 
-    available_budget = fields.Float(string='Presupuesto disponible', compute='get_available_budget')
-    project_id = fields.Many2one(compute="_compute_project_id", inverse="_inverse_project_id", comodel_name="account.analytic.account",
-        string="Cuenta Analitica", readonly=True, states={"draft": [("readonly", False)]}, store=True, help="Centro de costos asociado a esta compra.",)
+    available_budget = fields.Float(string="Disponible para compra", compute="get_available_budget", store=True)
+    project_id = fields.Many2one(
+        compute="_compute_project_id",
+        inverse="_inverse_project_id",
+        comodel_name="account.analytic.account",
+        string="Cuenta Analitica",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        store=True,
+        help="Centro de costos asociado a esta compra.",
+    )
+    payment_type = fields.Selection(
+        [
+            ("1", "Efectivo"),
+            ("2", "Credito Proveedor"),
+            ("3", "American Express"),
+            ("4", "Pago Inmediato"),
+            ("5", "Gastos fijos"),
+            ("6", "Gastos Dirección"),
+            ("7", "Compras amex domiciliados"),
+        ],
+        string="Forma de Pago",
+    )
+    in_budget = fields.Boolean(string="Presupuesto disponible")
+    journal_id = fields.Many2one(
+        "account.journal",
+        string="Diario de pago",
+        required=False,
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        domain="[('type', 'in', ('bank', 'cash'))]",
+    )
+    fortnight_pay = fields.Selection(
+        [
+            ("1", "Q1"),
+            ("2", "Q2"),
+        ],
+        string="Quincena de pago",
+    )
+    date_invoice_partner = fields.Date(
+        string="Fecha de factura")
 
-    @api.depends('project_id')
+    @api.depends("project_id", "amount_total")
     def get_available_budget(self):
         for record in self:
-            if record.state in ('draft', 'sent', 'to_approve') and record.project_id:
-                budget_lines = self.env['budget.lines'].search([
-                    ('analytic_account_id', '=', record.project_id.id),
-                    ('date_to', '>=', record.date_planned),
-                    ('date_from', '<=', record.date_planned),
-                ])
-                real_available_budget = sum(budget_lines.mapped('planned_amount')) - sum(budget_lines.mapped('practical_amount')) - sum(
-                    budget_lines.mapped('purchase_amount'))
+            if record.project_id:
+                budget_lines = self.env["budget.lines"].search(
+                    [
+                        ("analytic_account_id", "=", record.project_id.id),
+                        ("date_to", ">=", record.date_planned),
+                        ("date_from", "<=", record.date_planned),
+                    ]
+                )
+
+                real_available_budget = budget_lines.planned_amount - budget_lines.purchase_amount
                 if real_available_budget < 0:
                     record.available_budget = abs(real_available_budget)
                 else:
-                    record.available_budget = 0.0
+                    record.available_budget = 0
+                    if budget_lines.purchase_amount == 0:
+                        record.available_budget = abs(budget_lines.planned_amount)
             else:
-                record.available_budget = 0.0
+                record.available_budget = 0
 
-    def button_confirm(self):
-        for order in self:
-            if order.available_budget < order.amount_untaxed:
-                raise UserError(
-                    _("Esta compra excede el presupuesto disponible de (%s) para el centro de costos (%s) en el periodo seleccionado. Favor de validar.") % (
-                    order.available_budget, order.project_id.name))
-        return super(PurchaseOrder, self).button_confirm()
+            if record.available_budget > record.amount_total:
+                record.in_budget = True
+            else:
+                record.in_budget = False
+
+    # remove bloqueo
+    # def button_confirm(self):
+    #    for order in self:
+    #        if not order.project_id.management:
+    #            if order.available_budget < order.amount_untaxed:
+    #                raise UserError(
+    #                    _("Esta compra excede el presupuesto disponible de (%s) para el centro de costos (%s) en el periodo seleccionado. Favor de validar.") % (
+    #                    order.available_budget, order.project_id.name))
+    #    return super(PurchaseOrder, self).button_confirm()
 
     @api.depends("order_line.account_analytic_id")
     def _compute_project_id(self):
@@ -61,16 +111,23 @@ class PurchaseOrder(models.Model):
         if self.project_id:
             self.order_line.update({"account_analytic_id": self.project_id.id})
 
+    def _prepare_invoice(self):
+        """Prepare the values to create the invoice."""
+        self.ensure_one()
+        invoice_vals = super(PurchaseOrder, self)._prepare_invoice()
+        if self.date_invoice_partner:
+            invoice_vals["invoice_date"] = self.date_invoice_partner
+        return invoice_vals
 
 
 class PurchaseOrderLine(models.Model):
-    _inherit = 'purchase.order.line'
+    _inherit = "purchase.order.line"
 
-    vehicle_id = fields.Many2one('fleet.vehicle', string='Vehiculo')
+    vehicle_id = fields.Many2one("fleet.vehicle", string="Vehiculo")
     invoice_status = fields.Selection(related="order_id.invoice_status", store=True)
-    amount_to_invoice = fields.Float(string='Monto a facturar', compute='compute_amount_to_invoice')
+    amount_to_invoice = fields.Float(string="Monto a facturar", compute="compute_amount_to_invoice")
 
-    @api.depends('product_qty')
+    @api.depends("product_qty")
     def compute_amount_to_invoice(self):
         for record in self:
             if record.product_id:
@@ -83,36 +140,66 @@ class PurchaseOrderLine(models.Model):
     @api.model
     def _prepare_account_move_line(self, move=False):
         res = super(PurchaseOrderLine, self)._prepare_account_move_line(move=move)
-        res['vehicle_id'] = self.vehicle_id.id
+        res["vehicle_id"] = self.vehicle_id.id
         return res
 
 
 class AccoountBudgetLines(models.Model):
-    _inherit = 'budget.lines'
+    _inherit = "budget.lines"
 
-    purchase_amount = fields.Float(string='En compras', compute='get_open_purchases')
-    available_budget = fields.Float(string='Disponible', compute='get_available_budget')
+    purchase_amount = fields.Float(string="En compras", compute="get_open_purchases")
+    available_budget = fields.Float(string="Disponible", compute="get_available_budget")
+    effective_amount = fields.Float(string="Ejercido", compute="get_effective_amount")
 
-    @api.depends('analytic_account_id')
+    @api.depends("analytic_account_id")
     def get_available_budget(self):
         for record in self:
-            record.available_budget = record.planned_amount - record.practical_amount - record.purchase_amount
+            record.available_budget = record.planned_amount - record.effective_amount
 
     def get_open_purchases(self):
         for line in self:
-            purchase_lines = self.env['purchase.order.line'].search([
-                ('state', 'in', ['purchase', 'done']),
-                # ('invoice_status', '!=', 'invoiced'),
-                ('date_planned', '>=', line.date_from),
-                ('date_planned', '<=', line.date_to),
-                ('account_analytic_id', '=', line.analytic_account_id.id)
-            ])
+            purchase_lines = self.env["purchase.order"].search(
+                [
+                    ("state", "in", ["purchase", "done"]),
+                    # ('invoice_status', '!=', 'invoiced'),
+                    ("date_planned", ">=", line.date_from),
+                    ("date_planned", "<=", line.date_to),
+                    ("project_id", "=", line.analytic_account_id.id),
+                ]
+            )
 
             if purchase_lines:
-                line.purchase_amount = sum(purchase_lines.mapped('amount_to_invoice'))
-            else: line.purchase_amount = 0.00
+                line.purchase_amount = sum(purchase_lines.mapped("order_amount_residual")) * -1
+            else:
+                line.purchase_amount = 0.00
+
+    def get_effective_amount(self):
+        for line in self:
+            paid_lines = self.env["account.move.line"].search(
+                [
+                    ("date", ">=", line.date_from),
+                    ("date", "<=", line.date_to),
+                    ("analytic_account_id", "=", line.analytic_account_id.id),
+                    ("payment_id", "!=", False),
+                    ("matching_number", "!=", False),
+                ]
+            )
+            if paid_lines:
+                # line.effective_amount = sum(paid_lines.mapped("debit")) * -1
+                # The effective amount is the sum of all debit amounts
+                efecctive_amount = sum(paid_lines.mapped("debit")) * -1
+                efecctive_fixed_amount = sum(paid_lines.mapped("credit"))
+                line.effective_amount = efecctive_amount + efecctive_fixed_amount
+            else:
+                line.effective_amount = 0.00
 
 
-
-
-
+# class AccountMoveLine(models.Model):
+#   _inherit = 'account.move.line'
+#
+#    paid_amount = fields.Float(string='Pagado', compute='compute_paid_amount')
+#
+#    @api.depends('price_total', 'amount_residual')
+#    def compute_paid_amount(self):
+#        for record in self:
+#            record.paid_amount = record.price_total - record.amount_residual

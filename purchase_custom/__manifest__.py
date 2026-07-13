@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'purchase', 'base_account_budget', 'account_fleet'],
+    'depends': ['base', 'purchase', 'base_account_budget', 'account_fleet', 'purchase_order_payment_status'],
 
     # always loaded
     'data': [
@@ -31,4 +31,9 @@
     'demo': [
         'demo/demo.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'purchase_custom/static/src/js/monetary_abs.js',
+        ],
+    },
 }
