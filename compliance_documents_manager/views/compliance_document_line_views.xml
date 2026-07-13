@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View compliance.document.line View Tree -->
+    <record id="view_compliance_document_line_employee_tree" model="ir.ui.view">
+        <field name="name">view.compliance.document.line.tree</field>
+        <field name="model">compliance.document.line</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="date_expiration &lt; current_date"
+            decoration-warning="expiration_date_soon">
+                <field name="currency_id" invisible="1" />
+                <field name="company_id" invisible="1"/>
+                <field name="name"/>
+                <field name="partner_id" />
+                <field name="type_compliance_document_id" />
+                <field name="type_resource" />
+                <field name="folio_document" />
+                <field name="amount_cost" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="expiration_date_soon"/>
+                <field name="date_expiration" widget="remaining_days"/>
+                <field name="is_visible" groups="compliance_documents_manager.group_compliance_documents_manager_manager"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View compliance.document.line form -->
+    <record id="view_compliance_document_line_employee_form" model="ir.ui.view">
+        <field name="name">view.compliance.document.line.form</field>
+        <field name="model">compliance.document.line</field>
+        <field name="arch" type="xml">
+            <form string="Compliance Document Line">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Name..."/>
+                        </h1>
+                    </div>
+                    <group name="partner_details">
+                        <group>
+                            <field name="partner_id" />
+                            <field name="type_compliance_document_id" domain="[('type_resource','=','empleado')]" />
+                            <field name="type_resource" invisible="1"/>
+                            <field name="currency_id" invisible="1" />
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="date_application" />
+                            <field name="date_expiration" />
+                            <field name="folio_document" />
+                            <field name="amount_cost" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="is_visible" 
+                                   groups="compliance_documents_manager.group_compliance_documents_manager_manager"/>
+                        </group>
+                    </group>
+                    <group name="employee_details">
+                        <group>
+                            <field name="employee_id" domain="[('is_operative','=',True)]"/>
+                        </group>
+                        
+                    </group>
+                    <notebook>
+                        <page name="employee_info" string="Información del Empleado">
+                            <group>
+                                <field name="department_id" />
+                                <field name="employee_name"/>
+                                <field name="nss_employee" />
+                                <field name="curp_employee" />
+                                <field name="rfc_employee" />
+                            </group>
+                            <group>
+                                <field name="notes" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- View compliance.document.line search -->
+    <record id="view_compliance_document_line_employee_search" model="ir.ui.view">
+        <field name="name">view.compliance.document.line.employee.search</field>
+        <field name="model">compliance.document.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Nombre" placeholder="Buscar por nombre..."/>
+                <field name="partner_id" string="Cliente" placeholder="Buscar por cliente..."/>
+                <field name="type_compliance_document_id" string="Tipo de documento" placeholder="Buscar por tipo de documento..."/>
+                <field name="employee_id" string="Empleado" placeholder="Buscar por empleado..."/>
+                <field name="folio_document" string="Folio de documento" placeholder="Buscar por folio" />
+                <separator/>
+                <filter string="Expirados" name="expirados" 
+                        domain="[('date_expiration', '&lt;', time.strftime('%Y-%m-%d'))]"/>
+                <filter string="Vigentes" name="vigentes" domain="[('date_expiration', '&gt;', time.strftime('%Y-%m-%d'))]"/>
+                <!-- Próximos 7 días -->
+                <filter string="Próximos 7 días" name="proximos_7_dias" domain="[('date_expiration', '&gt;=', time.strftime('%Y-%m-%d')), 
+                    ('date_expiration', '&lt;=', (datetime.datetime.now() + datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <!-- Próximos 30 días -->
+                <filter string="Próximos 30 días" name="proximos_30_dias" domain="[('date_expiration', '&gt;=', time.strftime('%Y-%m-%d')), 
+                    ('date_expiration', '&lt;=', (datetime.datetime.now() + datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Nombre" name="name" domain="[]" context="{'group_by':'name'}"/>
+                    <filter name="Documento" string="Por documento" domain="[]" context="{'group_by': 'type_compliance_document_id'}" />
+                    <field string="Departamento" name="department_id" domain="[]" context="{'group_by': 'department_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action compliance.document.line -->
+    <record id="action_compliance_document_line_employee" model="ir.actions.act_window">
+        <field name="name">Documentos de empleados</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">compliance.document.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type_resource', '=', 'empleado')]</field>
+        <field name="context">{'default_type_resource':'empleado'}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Puede crear un nuevo registro de empleado haciendo clic en el botón "Crear" arriba a la izquierda.
+            </p>
+        </field>
+    </record>
+
+    <!-- view tree for propiedades -->
+    <record id="view_compliance_document_line_property_tree" model="ir.ui.view">
+        <field name="name">view.compliance.document.line.property.tree</field>
+        <field name="model">compliance.document.line</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="date_expiration &lt; current_date"
+            decoration-warning="expiration_date_soon">
+                <field name="currency_id" invisible="1" />
+                <field name="company_id" invisible="1"/>
+                <field name="name"/>
+                <field name="partner_id" />
+                <field name="type_compliance_document_id" />
+                <field name="type_resource" />
+                <field name="folio_document" />
+                <field name="amount_cost" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="expiration_date_soon"/>
+                <field name="date_expiration" widget="remaining_days"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View compliance.document.line property form -->
+     <record id="view_compliance_document_line_property_form" model="ir.ui.view">
+        <field name="name">view.compliance.document.line.property.form</field>
+        <field name="model">compliance.document.line</field>
+        <field name="arch" type="xml">
+            <form string="Documento de Propiedad">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Name..."/>
+                        </h1>
+                    </div>
+                    <group name="partner_details">
+                        <group>
+                            <field name="partner_id" />
+                            <field name="type_compliance_document_id" domain="[('type_resource','=','propiedad')]" />
+                            <field name="type_resource" invisible="1"/>
+                            <field name="currency_id" invisible="1" />
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="date_application" />
+                            <field name="date_expiration" />
+                            <field name="folio_document" />
+                            <field name="amount_cost" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="is_visible" 
+                                   groups="compliance_documents_manager.group_compliance_documents_manager_manager"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="property_info" string="Información de la Propiedad">
+                            <group>
+                                <field name="property_name_doc" />
+                                <field name="property_address" />
+                            </group>
+                            <group>
+                                <field name="notes" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- View compliance.document.line property search -->
+     <record id="view_compliance_document_line_property_search" model="ir.ui.view">
+        <field name="name">view.compliance.document.line.property.search</field>
+        <field name="model">compliance.document.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Nombre" placeholder="Buscar por nombre..."/>
+                <field name="partner_id" string="Cliente" placeholder="Buscar por cliente..."/>
+                <field name="type_compliance_document_id" string="Tipo de documento" placeholder="Buscar por tipo de documento..."/>
+                <field name="folio_document" string="Folio de documento" placeholder="Buscar por folio" />
+                <separator/>
+                <filter string="Expirados" name="expirados" 
+                        domain="[('date_expiration', '&lt;', time.strftime('%Y-%m-%d'))]"/>
+                <filter string="Vigentes" name="vigentes" domain="[('date_expiration', '&gt;', time.strftime('%Y-%m-%d'))]"/>
+                <!-- Próximos 7 días -->
+                <filter string="Próximos 7 días" name="proximos_7_dias" domain="[('date_expiration', '&gt;=', time.strftime('%Y-%m-%d')), 
+                    ('date_expiration', '&lt;=', (datetime.datetime.now() + datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <!-- Próximos 30 días -->
+                <filter string="Próximos 30 días" name="proximos_30_dias" domain="[('date_expiration', '&gt;=', time.strftime('%Y-%m-%d')), 
+                    ('date_expiration', '&lt;=', (datetime.datetime.now() + datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Nombre" name="name" domain="[]" context="{'group_by':'name'}"/>
+                    <filter name="Documento" string="Por documento" domain="[]" context="{'group_by': 'type_compliance_document_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action compliance.document.line property -->
+    <record id="action_compliance_document_line_property" model="ir.actions.act_window">
+        <field name="name">Documentos de propiedades</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">compliance.document.line</field>
+        <field name="search_view_id" ref="view_compliance_document_line_property_search"/>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type_resource', '=', 'propiedad')]</field>
+        <field name="context">{'default_type_resource':'propiedad'}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Puede crear un nuevo registro de propiedad haciendo clic en el botón "Crear" arriba a la izquierda.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_compliance_document_property_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="act_window_id" ref="action_compliance_document_line_property"/>
+        <field name="view_id" ref="view_compliance_document_line_property_tree"/>
+    </record>
+
+    <record id="action_compliance_document_property_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="act_window_id" ref="action_compliance_document_line_property"/>
+        <field name="view_id" ref="view_compliance_document_line_property_form"/>
+    </record>
+
+    <!-- Menu root compliance.document.line -->
+    <menuitem
+        id="compliance_documents_employee_menu"
+        name="Empleados"
+        parent="compliance_documents_manager.compliance_documents_manager_menu"
+        sequence="10"/>
+    
+    <!-- Menu compliance.document.line -->
+    <menuitem
+        id="compliance_document_employee_line_menu"
+        name="Documentos de Empleados"
+        parent="compliance_documents_employee_menu"
+        action="action_compliance_document_line_employee"
+        sequence="10"/>
+
+    <!-- Menu compliance.document property -->
+    <menuitem
+        id="compliance_documents_property_menu"
+        name="Propiedades"
+        parent="compliance_documents_manager.compliance_documents_manager_menu"
+        sequence="10"/>
+
+    <menuitem
+        id="compliance_document_property_line_menu"
+        name="Documentos de Propiedades"
+        parent="compliance_documents_property_menu"
+        action="action_compliance_document_line_property"
+        sequence="10"/>    
+    <!-- Server Action compliance_document_line -->
+    <record id="model_compliance_document_line_action" model="ir.actions.server">
+        <field name="name">Descargar Adjuntos Docs</field>
+        <field name="model_id" ref="model_compliance_document_line"/>
+        <field name="binding_model_id" ref="model_compliance_document_line"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records: 
+                action = records.action_download_attachments()
+                if action:
+                    action= action
+            </field>
+    </record>
+
+</odoo>

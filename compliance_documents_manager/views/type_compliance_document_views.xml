@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View type.compliance.document View Tree -->
+    <record id="view_type_compliance_document_tree" model="ir.ui.view">
+        <field name="name">view.type.compliance.document.tree</field>
+        <field name="model">type.compliance.document</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View type.compliance.document form -->
+    <record id="view_type_compliance_document_form" model="ir.ui.view">
+        <field name="name">view.type.compliance.document.form</field>
+        <field name="model">type.compliance.document</field>
+        <field name="arch" type="xml">
+            <form string="Tipo de documento">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Name..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="type_resource" />
+                            <field name="description"/>
+                        </group>
+                        
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View type.compliance.document search -->
+    <record id="view_type_compliance_document_search" model="ir.ui.view">
+        <field name="name">view.type.compliance.document.search</field>
+        <field name="model">type.compliance.document</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Nombre" filter_domain="[('name', 'ilike', self)]"/>
+                <field name="type_resource" string="Tipo de recurso"/>
+                <group expand="1" string="Group By">
+                    <filter string="Nombre" name="name" domain="[]" context="{'group_by':'name'}"/>
+                    <filter string="Tipo de recurso" name="type_resource" domain="[]" context="{'group_by':'type_resource'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action type.compliance.document -->
+    <record id="action_type_compliance_document" model="ir.actions.act_window">
+        <field name="name">Tipos de documentos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">type.compliance.document</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Aqui puedes crear un nuevo tipo de documento
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu item for type.compliance.document -->
+    <menuitem id="menu_type_compliance_document"
+              name="Tipos de documentos"
+              parent="compliance_document_config_menu"
+              action="action_type_compliance_document"
+              groups="group_compliance_documents_manager_manager"
+              sequence="10"
+    />
+</odoo>

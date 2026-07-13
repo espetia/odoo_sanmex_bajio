@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Menu root compliance.partner.manager -->
+     <menuitem
+        id="compliance_documents_manager_menu"
+        name="Administración"
+        sequence="10"
+        web_icon="compliance_documents_manager,static/description/icon_r1.png"
+        />
+    <!-- Menu compliance.partner.manager -->
+     <menuitem
+        id="compliance_document_config_menu"
+        name="Configuración"
+        parent="compliance_documents_manager_menu"
+        sequence="99"/>
+    
+    <!-- Menu compliance.partner.manager -->
+</odoo>

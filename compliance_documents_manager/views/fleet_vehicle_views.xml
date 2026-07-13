@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- View fleet.vehicle form -->
+    <record id="view_fleet_vehicle_form_documents_manager" model="ir.ui.view">
+        <field name="name">view.fleet.vehicle.form.documents.manager</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vin_sn']" position="after">
+                <field name="n_economic" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_fleet_vehicle_inherit_tree_documents_manager" model="ir.ui.view">
+        <field name="name">view.fleet.vehicle.tree.documents.manager</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='activity_state']" position="after">
+                <field name="n_economic" />
+            </xpath>
+            <xpath expr="//t[@t-if='record.license_plate.raw_value']" position="before">
+                <t t-if="record.n_economic.raw_value"><field name="n_economic"/> - </t>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_fleet_vehicle_inherit_search_documents_manager" model="ir.ui.view">
+        <field name="name">fleet.vehicle.view.search.documents.manager</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="n_economic"/>
+            </field>
+
+            <xpath expr="//filter[@name='alert_true']" position="after">
+                <separator/>
+                <filter name="has_n_economic" string="Con Nº Económico" domain="[('n_economic', '!=', False)]"/>
+                <filter name="no_n_economic" string="Sin Nº Económico" domain="[('n_economic', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_tree_fleet_vehicle_documents_manager" model="ir.ui.view">
+        <field name="name">fleet.vehicle.view.tree.inherit.documents.manager</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='license_plate']" position="before">
+                <field name="n_economic"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

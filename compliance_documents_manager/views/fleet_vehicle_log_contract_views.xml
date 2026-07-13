@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View fleet.vehicle.log.contract View Tree -->
+    <record id="fleet_vehicle_log_contract_view_tree_inherit_compliance_document" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.contract.view.tree.inherit</field>
+        <field name="model">fleet.vehicle.log.contract</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_contract_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vehicle_id']" position="after">
+                <field name="n_economic" />
+                <field name="license_plate" />
+                <field name="brand" />
+                <field name="model" />
+                <field name="year" />
+                <field name="n_series" />
+            </xpath>
+        </field>
+    </record>
+
+
+   <record id="fleet_vehicle_log_contract_view_form_inherit_compliance_document" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.contract.view.form.inheri.compliance_document</field>
+        <field name="model">fleet.vehicle.log.contract</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vehicle_id']" position="after">
+                <field name="license_plate" />
+                <field name="n_economic" />
+                <field name="brand" />
+                <field name="model" />
+                <field name="year" />
+                <field name="n_series" />
+            </xpath>
+        </field>
+   </record>
+
+
+
+    <!-- View fleet.vehicle.log.contract search -->
+    <record id="view_fleet_vehicle_log_contract_documents_search" model="ir.ui.view">
+        <field name="name">view.fleet.vehicle.log.contract.documents.search</field>
+        <field name="model">fleet.vehicle.log.contract</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="n_economic" filter_domain="[('vehicle_id.n_economic','ilike', self)]"/>
+                <field name="vehicle_id" string="Vehiculo" filter_domain="[('vehicle_id.name','ilike', self)]"/>
+                <field name="purchaser_id" string="Conductor" filter_domain="[('purchaser_id','child_of', self)]"/>
+                <field name="insurer_id" string="Vendor" filter_domain="[('insurer_id','child_of', self)]"/>
+                <filter string="En progreso" name="open" domain="[('state', '=', 'open')]"/>
+                <filter string="Expirado" name="expired" domain="[('state', '=', 'expired')]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action fleet.vehicle.log.contract -->
+    <record id="action_fleet_vehicle_log_documents_contract" model="ir.actions.act_window">
+        <field name="name">Contratos de Vehículos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">fleet.vehicle.log.contract</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_fleet_vehicle_log_contract_documents_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Fleet Vehicle Log Contract.
+            </p>
+        </field>
+    </record>
+
+
+    <record id="action_compliance_document_vehicle_contract_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="act_window_id" ref="action_fleet_vehicle_log_documents_contract"/>
+        <field name="view_id" ref="fleet_vehicle_log_contract_view_tree_inherit_compliance_document"/>
+    </record>
+
+    <record id="action_compliance_document_vehicle_contract_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="act_window_id" ref="action_fleet_vehicle_log_documents_contract"/>
+        <field name="view_id" ref="fleet_vehicle_log_contract_view_form_inherit_compliance_document"/>
+    </record>
+
+
+    <!-- Server Action Vehiculos -->
+    <record id="model_fleet_vehicle_log_contract_action" model="ir.actions.server">
+        <field name="name">Descargar Adjuntos Docs</field>
+        <field name="model_id" ref="model_fleet_vehicle_log_contract"/>
+        <field name="binding_model_id" ref="model_fleet_vehicle_log_contract"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records: 
+                action = records.action_download_attachments()
+                if action:
+                    action= action
+            </field>
+    </record>
+    
+    <menuitem
+        id="compliance_documents_fleet_menu"
+        name="Vehículos"
+        parent="compliance_documents_manager.compliance_documents_manager_menu"
+        groups="group_compliance_documents_manager_user"
+        sequence="10"/>
+    <menuitem
+        id="fleet_vehicle_log_contract_menu_compliance_document"
+        name="Documentos de Vehiculos"
+        action="action_fleet_vehicle_log_documents_contract"
+        parent="compliance_documents_fleet_menu"
+        sequence="10"/>
+</odoo>
