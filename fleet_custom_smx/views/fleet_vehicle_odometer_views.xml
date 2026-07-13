@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- View fleet.vehicle.odometer tree -->
+    <record id="view_fleet_vehicle_odometer_tree_custom_smx" model="ir.ui.view">
+        <field name="name">view.fleet.vehicle.odometer.tree</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="batch_id" string="Batch" context="{'create': False, 'edit': False}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

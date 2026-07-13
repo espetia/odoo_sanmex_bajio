@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- View fleet.vehicle form -->
+    <record id="view_fleet_vehicle_form_custom_smx" model="ir.ui.view">
+        <field name="name">view.fleet.vehicle.form.custom.smx</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='open_assignation_logs']" position="after">
+                <button name="action_view_odometer_batch" type="object" class="oe_stat_button" icon="fa-credit-card-alt">
+                    <field name="odometer_line_batch_count" string="Combustible" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View fleet.batch.odometer View Tree -->
+    <record id="view_fleet_batch_odometer_tree" model="ir.ui.view">
+        <field name="name">view.fleet.batch.odometer.tree</field>
+        <field name="model">fleet.batch.odometer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="user_id"/>
+                <field name="odometers_count" />
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View fleet.batch.odometer form -->
+    <record id="view_fleet_batch_odometer_form" model="ir.ui.view">
+        <field name="name">view.fleet.batch.odometer.form</field>
+        <field name="model">fleet.batch.odometer</field>
+        <field name="arch" type="xml">
+            <form string="Batch de odometros">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirmar" class="oe_highlight" states="draft"/>
+                    <button name="action_cancel" type="object" string="Cancelar" class="oe_highlight" states="draft"/>
+                    <button name="action_reset_to_draft" type="object" string="Restablecer a borrador" class="oe_highlight" states="confirmed,cancelled"/>
+                    <button name="action_import_excel" type="object" string="Importar Odometros" class="oe_link" states="draft"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled"/>
+                </header>
+                
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_odometers" type="object" class="oe_stat_button" icon="fa-tachometer">
+                            <field name="odometers_count" string="" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Name..."/>
+                        </h1>
+                        
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_to" />
+                            <field name="date_from" />
+
+                        </group>
+                        <group>
+                            <field name="company_id" invisible="1"/>
+                            <field name="user_id" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="excel_file" filename="excel_filename" widget="binary" options="{'accepted_file_extensions': ['.xlsx']}"/>
+                            <field name="excel_filename"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="lines_odometer" string="Lineas de cargas">
+                            <field name="line_ids" context="{'default_batch_id': id}" attrs="{'readonly': [('state', 'in', ['confirmed', 'cancel'])]}">
+                                <tree editable="bottom">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="date"/>
+                                    <field name="n_ticket_partner"/>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="total_amount" widget="monetary"/>
+                                    <field name="vehicle_id"/>
+                                    <field name="initial_odometer"/>
+                                    <field name="performance" />
+                                    <field name="km_traveled" />
+                                    <field name="odometer_value"/>
+                                </tree>
+                            </field>
+                            
+                        </page>
+                        <page name="other_info" string="Otra informacion">
+                            <field name="import_log" readonly="1" widget="text"/>
+                            <field name="total_lines" readonly=""/>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- View fleet.batch.odometer search -->
+    <record id="view_fleet_batch_odometer_search" model="ir.ui.view">
+        <field name="name">view.fleet.batch.odometer.search</field>
+        <field name="model">fleet.batch.odometer</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Nombre" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action fleet.batch.odometer -->
+    <record id="action_fleet_batch_odometer" model="ir.actions.act_window">
+        <field name="name">Batch de cargas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">fleet.batch.odometer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click para crear un nuevo batch de odometros.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="fleet_batch_menu"
+        name="Combustible"
+        parent="fleet.menu_root"
+        sequence="10"/>
+
+    <menuitem
+        id="fleet_batch_odometer_menu"
+        name="Batch de cargas"
+        parent="fleet_batch_menu"
+        action="action_fleet_batch_odometer"
+        sequence="10"/>
+
+</odoo>

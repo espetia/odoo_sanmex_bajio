@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- View maintenance.request form -->
+    <record id="inherit_fleet_maintenance_view_maintenance_request_form" model="ir.ui.view">
+        <field name="name">inherit.fleet.maintenance.view.maintenance.request.form</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='archive_equipment_request']" position="after">
+                <button string="Crear reparación" name="action_create_repair_order" type="object" class="oe_highlight" attrs="{'invisible': [('repair_order_id','!=',False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="vehicle_id" />
+                <field name="vehicle_kilometers" />
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- View maintenance.request tree -->
+    <record id="inherit_fleet_maintenance_view_maintenance_request_tree" model="ir.ui.view">
+        <field name="name">inherit.fleet.view.maintenance.request.tree</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="vehicle_id" />
+                <field name="vehicle_kilometers" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

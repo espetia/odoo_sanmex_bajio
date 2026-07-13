@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View fleet.batch.odometer.line View Tree -->
+    <record id="view_fleet_batch_odometer_line_tree" model="ir.ui.view">
+        <field name="name">view.fleet.batch.odometer.line.tree</field>
+        <field name="model">fleet.batch.odometer.line</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false">
+                <field name="currency_id" invisible="1"/>
+                <field name="batch_id"/>
+                <field name="date" />
+                <field name="description" optional="hide"/>
+                <field name="vehicle_id" />
+                <field name="initial_odometer" sum=""/>
+                <field name="odometer_value" sum=""/>
+                <field name="performance" optional="hide" sum=""/>
+                <field name="km_traveled" sum="Total recorrido"/>
+                <field name="quantity" sum="Total Consumido"/>
+                <field name="total_amount" widget="monetary" sum="Suma Total"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View fleet.batch.odometer.line form -->
+    <record id="view_fleet_batch_odometer_line_form" model="ir.ui.view">
+        <field name="name">view.fleet.batch.odometer.line.form</field>
+        <field name="model">fleet.batch.odometer.line</field>
+        <field name="arch" type="xml">
+            <form string="Lineas de carga" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <field name="batch_id"/>
+                        <field name="date" />
+                        <field name="vehicle_id" />
+                        <field name="initial_odometer" />
+                        <field name="odometer_value" />
+                        <field name="quantity" />
+                        <field name="total_amount" />
+                        <field name="performance" />
+                        <field name="km_traveled" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="fleet_batch_odometer_line_view_graph" model="ir.ui.view">
+        <field name="name">fleet.batch.odometer.line.view.graph</field>
+        <field name="model">fleet.batch.odometer.line</field>
+        <field name="arch" type="xml">
+            <graph string="Lineas de Carga" sample="1">
+                <field name="vehicle_id" type="row"/>
+                <field name="date" type="col"/>
+                <field name="quantity" type="measure"/>
+                <field name="total_amount" type="measure" />
+                <field name="km_traveled" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!--View pivot-->
+    <record id="fleet_batch_odometer_line_view_pivot" model="ir.ui.view">
+        <field name="name">fleet.batch.odometer.line.view.pivot</field>
+        <field name="model">fleet.batch.odometer.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Lineas de carga">
+                <field name="vehicle_id" type="row"/>
+                <field name="date" type="col"/>
+                <field name="km_traveled" type="measure"/>
+                <field name="quantity" type="measure"/>
+                <field name="total_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <!-- View fleet.batch.odometer.line search -->
+    <record id="view_fleet_batch_odometer_line_search" model="ir.ui.view">
+        <field name="name">view.fleet.batch.odometer.line.search</field>
+        <field name="model">fleet.batch.odometer.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="vehicle_id" string="Número Económico" 
+                   filter_domain="[('vehicle_id.n_economic', 'ilike', self)]"/>
+                <field name="vehicle_id"/>
+                <field name="batch_id"/>
+                <field name="date" />
+                <filter name="date" string="Fecha" date="date"/>
+                <separator/>
+                <filter name="filter_name_this_week" string="Esta semana" domain="[('date', '&gt;=', (context_today() - relativedelta(weeks=1)).strftime('%Y-%m-%d')), ('date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_name_this_month" string="Este mes" domain="[('date', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%Y-%m-%d')), ('date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <group expand="1" string="Group By">
+                    <filter  name="vehicle_id" string="Vehículo" domain="[]" context="{'group_by':'vehicle_id'}" help="Agrupar por Vehiculo" />
+                    <filter name="batch_id" string="Batch"  context="{'group_by': 'batch_id'}" />
+                    <filter name="date_group" string="Fecha"  context="{'group_by': 'date'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action fleet.batch.odometer.line -->
+    <record id="action_fleet_batch_odometer_line" model="ir.actions.act_window">
+        <field name="name">Lineas de cargas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">fleet.batch.odometer.line</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="domain">[('batch_id.state','=','confirmed')]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Fleet Batch Odometer Line.
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem
+        id="fleet_bathc_odometer_line_menu"
+        name="Lineas de cargas"
+        action="action_fleet_batch_odometer_line"
+        parent="fleet_batch_menu"
+        sequence="10"/>
+</odoo>
