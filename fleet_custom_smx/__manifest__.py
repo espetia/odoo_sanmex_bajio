@@ -10,8 +10,8 @@
     "data": [
         "data/sequence_batch_odometer.xml",
         "security/ir.model.access.csv",
-        "views/fleet_batch_odometer_line_views.xml",
         "views/fleet_batch_odometer_views.xml",
+        "views/fleet_batch_odometer_line_views.xml",
         "views/fleet_vehicle_odometer_views.xml",
         "views/fleet_vehicle_views.xml"
     ],
