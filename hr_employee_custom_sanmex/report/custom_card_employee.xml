@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="custom_card_action_employee_smx" model="ir.actions.report">
+        <field name="name">Imprimir Credencial Sanmex</field>
+        <field name="model">hr.employee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_employee_custom_sanmex.print_card_employee_smx</field>
+        <field name="report_file">hr_employee_custom_sanmex.print_card_employee_smx</field>
+        <field name="print_report_name">'SMX Credencial - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="paperformat_id" ref="hr_employee_custom_sanmex.paperformat_hr_employee"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="print_card_employee_smx">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="employee">
+                        <table style="width:100%; height:100%;">
+                            <tr>
+                                <td valign="center">
+                                    <table style="width:100%; margin-top:0px;">
+                                        <tr>
+                                            <td><br/>
+                                            </td>
+                                        </tr>
+                                        <tr style="margin-bottom:0px;margin-top:0px;">
+                                            <td align="center" valign="center">
+                                                <img t-if="employee.company_id.logo" t-att-src="image_data_uri(employee.company_id.logo)" style="height:180px;" alt="Company Logo"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <br/>
+                                            </td>
+                                        </tr>
+                                        <tr style="margin-bottom:0px;margin-top:0px;">
+                                            <td align="center" valign="center">
+                                                <img t-att-src="image_data_uri(employee.avatar_1920)" style="height:480px; margin-bottom:0px;margin-top:0px;" alt="Employee Image"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="center">
+                                    <table style="width:100%; margin-bottom:0px;margin-top:0px;">
+                                        <tr><th><div style="font-size:45px; margin-bottom:0pt;margin-top:1px;" align="center"><t t-esc="employee.name"/><br/><t t-esc="employee.job_id.name"/><br/></div></th></tr>
+                                        <tr><td><div align="center" style="font-size:40px;margin-top:0px;"> <strong>CURP: </strong><t t-esc="employee.curp_employee"/><br/><strong>NSS: </strong><t t-esc="employee.nss_employee"/><br/> <strong>RFC: </strong><t t-esc="employee.rfc_employee"/></div></td></tr>
+                                        <tr><td align="center"><div t-if="employee.barcode" t-field="employee.barcode" t-options="{'widget': 'barcode', 'width': 800, 'height': 150, 'img_style': 'max-height:100%;max-width:100%;margin-top:10px;', 'img_align': 'center'}"/></td></tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    <p style="page-break-before:always;"> </p>
+                   
+                        <table style="width:100%;height:100%;padding:0px;margin-top:0px;">
+                            <tr>
+                                <td><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="center">
+                                    <table style="width:100%; height:100%;margin-top:0px;">
+                                        <tr style="margin-top:0px;">
+                                            <td align="center" valign="center">
+                                                <img t-if="employee.company_id.logo" t-att-src="image_data_uri(employee.company_id.logo)" style="height:180px;margin-top:0px;" alt="Company Logo"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="center">
+                                    <table style="width:100%; height:100%;">
+                                        <tr>
+                                            <td>
+                                                <div style="font-size:50px;padding:2px;">
+                                                    <strong>REPSE:</strong> <t t-esc="employee.address_id.repse_id"/><br/>
+                                                    <strong>RFC:</strong> <t t-esc="employee.address_id.vat"/><br/>
+                                                    <strong>Vigencia:</strong> 01 de enero<br/>
+                                                    <strong>Departamento:</strong> <t t-esc="employee.department_id.name"/><br/>
+                                                    Esta credencial es personal e intransferible, en caso de emergencia o extravío favor de llamar al<br/>
+                                                    Tel. 984-206-19-19
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center">
+                                                <br/>
+                                                <img  t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', str('REGISTRO REPSE: ')+ employee.address_id.repse_id, 300, 300)" width="250" height="250"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                    <p style="page-break-before:always;"> </p>
+                </t>
+            </div>
+        </t>
+    </template>
+
+</odoo>
