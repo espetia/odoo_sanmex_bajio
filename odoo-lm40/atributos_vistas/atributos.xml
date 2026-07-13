@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  
+    <record model="ir.ui.view" id="sale_view_order_new_option">
+      <field name="name">sale_view_order_new_option</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='partner_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>
+        <xpath expr="//field[@name='partner_invoice_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>
+        <xpath expr="//field[@name='partner_shipping_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>
+        <!--<xpath expr="//field[@name='warehouse_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>-->
+        <xpath expr="//field[@name='pricelist_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>
+        <xpath expr="//tree/field[@name='product_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>
+        <xpath expr="//tree/field[@name='product_uom']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="purchase_view_order_option">
+      <field name="name">purchase_view_order_option</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">      
+        <xpath expr="//field[@name='partner_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>
+        <xpath expr="//field[@name='currency_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>
+        <xpath expr="//field[@name='picking_type_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>
+        <xpath expr="//tree/field[@name='product_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+        <xpath expr="//tree/field[@name='product_uom']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>      
+        </xpath>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_invoice_form_inherit_cfdi_33">
+            <field name="name">account.invoice.cfdi.33</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='partner_id']" position='attributes'>
+              <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>
+            <!--<xpath expr="//field[@name='partner_shipping_id']" position='attributes'>
+             <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>-->
+            <xpath expr="//tree/field[@name='product_id']" position='attributes'>
+             <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>
+           <xpath expr="//tree/field[@name='product_uom_id']" position='attributes'>
+            <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+           </xpath>
+            <xpath expr="//tree/field[@name='account_id']" position='attributes'>
+            <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+           </xpath>
+           <xpath expr="//field[@name='currency_id']" position='attributes'>
+        <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+        </xpath>
+     </field>
+    </record>
+
+    
+      <record model="ir.ui.view" id="stock_picking_atribute">
+            <field name="name">stock.picking.atribute</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+            
+            <xpath expr="//field[@name='location_dest_id']" position='attributes'>
+             <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>
+            <xpath expr="//field[@name='location_id']" position='attributes'>
+             <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position='attributes'>
+             <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>
+            <xpath expr="//tree/field[@name='product_id']" position='attributes'>
+             <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>
+    </field>
+    </record>
+
+       
+
+    <record model="ir.ui.view" id="product_attrib">
+            <field name="name">product.attrib</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='categ_id']" position='attributes'>
+              <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>            
+            <xpath expr="//field[@name='uom_id']" position='attributes'>
+            <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+           </xpath>
+           <xpath expr="//field[@name='uom_po_id']" position='attributes'>
+            <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+           </xpath>
+          
+     </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="product_attrib_1">
+            <field name="name">product.attrib.product</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_form_view"/>
+            <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='property_account_income_id']" position='attributes'>
+              <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>            
+            <xpath expr="//field[@name='property_account_expense_id']" position='attributes'>
+            <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+           </xpath>
+           
+          
+     </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_attrib_2">
+            <field name="name">product.attrib.product.stock</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.view_template_property_form"/>
+            <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='property_stock_production']" position='attributes'>
+              <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>            
+            <xpath expr="//field[@name='property_stock_inventory']" position='attributes'>
+            <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+           </xpath>           
+          
+     </field>
+    </record>
+
+         
+
+    <record model="ir.ui.view" id="category_product">
+            <field name="name">category.product</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="account.view_category_property_form"/>
+            <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='property_account_income_categ_id']" position='attributes'>
+              <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>            
+            <xpath expr="//field[@name='property_account_expense_categ_id']" position='attributes'>
+              <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>           
+         
+     </field>
+    </record>
+
+    <record model="ir.ui.view" id="category_product_1">
+            <field name="name">category.product.cat</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="stock_account.view_category_property_form"/>
+            <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='property_stock_account_input_categ_id']" position='attributes'>
+              <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>            
+            <xpath expr="//field[@name='property_stock_account_output_categ_id']" position='attributes'>
+              <attribute name="options">{'no_create': True}</attribute>        
+            </xpath>  
+            <xpath expr="//field[@name='property_stock_valuation_account_id']" position='attributes'>
+              <attribute name="options">{'no_create': True}</attribute>        
+            </xpath> 
+
+            <xpath expr="//field[@name='property_stock_journal']" position='attributes'>
+              <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>
+     </field>
+    </record>
+    
+    <record model="ir.ui.view" id="category_product_2">
+            <field name="name">category.product.cat2</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="purchase.view_category_property_form"/>
+            <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='property_account_creditor_price_difference_categ']" position='attributes'>
+              <attribute name="options">{'no_create': True, 'no_open': True}</attribute>        
+            </xpath>            
+            
+     </field>
+    </record>
+
+
+</odoo>

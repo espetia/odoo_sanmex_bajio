@@ -1,0 +1,18 @@
+<odoo>
+    
+    
+        
+
+        
+<!--    config menu -->
+
+		      
+	<menuitem name="Contabilidad Electrónica" parent="account.menu_finance_entries" id="menu_mexican_eaccount_options" sequence="0"/> 
+	
+        
+      
+        
+        
+    
+    
+</odoo>

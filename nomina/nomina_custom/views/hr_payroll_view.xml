@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="form_tablas_cfdi_inherit_view" model="ir.ui.view">
+        <field name="name">tablas.cfdi.form.custom</field>
+        <field name="model">tablas.cfdi</field>
+        <field name="inherit_id" ref="nomina_cfdi_ee.form_tablas_cfdi_view"/>
+        <field name="arch" type="xml">
+           
+           <xpath expr="//tree/field[@name='aguinaldo']" position='after'>
+                     <field name="factor_integracion"/>        
+                 </xpath>
+            <field name="salario_minimo" position="after">
+                <field name="salario_min_frontera"/>
+            </field>
+             <field name="imss_mes" position="before">
+                <field name="sd_n"/>
+                <field name="sd_anual"/>
+                
+
+            </field>
+             <notebook position="inside">
+                <page name="tablas_isn" string="ISN">
+                   <group>
+                        <field name="isn_lines" string="ISN">
+                            <tree editable="bottom">
+                                <field name="region"/>
+                                <field name="porcentaje"/>
+                               
+                            </tree>
+                        </field>
+            </group>
+        </page>
+    </notebook>
+       </field>
+    </record>
+
+    <record id="hr_contract_view_form_nomina_cfdi_custom" model="ir.ui.view">
+        <field name="name">hr.contract.nomina.custom</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="nomina_cfdi_ee.hr_contract_view_form_nomina_cfdi"/>
+        <field name="arch" type="xml">
+            <field name='sueldo_base_cotizacion' position='after'>
+                <div >                    
+                <button name='actualiza_sbc'  class="btn btn-link" type="object" string="Actualizar SBC"/>
+        </div>
+        </field>
+    </field>
+    </record>
+</odoo>

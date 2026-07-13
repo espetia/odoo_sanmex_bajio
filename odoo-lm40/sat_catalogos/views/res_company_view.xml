@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+        <record id="res_company_sat_form" model="ir.ui.view">
+            <field name="name">res.company.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+               <field name="partner_id" position="after">
+                    <field name="razonsocial" required="1" readonly="0"/>
+                    <field name="rfc" required="1" readonly="0"/>
+                </field> 
+                <field name="country_id" position="before">
+                    <field name="sat_localidad_id" placeholder="Localidad" class="o_address_city oe_edit_only"  options="{'no_create': True, 'no_open': True}" readonly="0"/>
+                </field>
+                <field name="street2" position="replace">
+                    <field name="street2" invisible="1"/>                   
+                </field>
+                <field name="city" position="replace">
+                    <field name="city" invisible="1" />                   
+                </field>
+                <field name="zip" position="replace">
+                    <field name="zip" invisible="1"/>
+                </field>
+                <field name="street" position="after">
+                        <div>
+                            <field name="num_external" placeholder="No. Externo..." style="width: 45%;" readonly="0"/>
+                            -
+                            <field name="num_internal" placeholder="No. Interno..." style="width: 45%;" readonly="0"/>
+                        </div>
+                         <field name="codigopostal_sat_id" placeholder="Codigo Postal" class="o_address_zip" required="1" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="colonia_sat_id" placeholder="Colonia" class="oe_edit_only" options="{'no_create': True, 'no_open': True}" readonly="0"/>
+                     <field name="sat_municipio_id" placeholder="Municipio" class="oe_edit_only" options="{'no_create': True, 'no_open': True}" readonly="0"/>
+                    </field>
+                <field name="vat" position="before"> 
+                    <field name="license_key" invisible="1"/>
+                    <field name="auto_mode_enabled"/>
+                    <field name="estimulo_sat"/>
+                    <field name="config_webservice"/>
+                </field>
+                
+                <notebook position="inside">
+                    <page string="Contabilidad Electrónica">
+                        <group colspan="4" col="4">
+                            
+                            <group colspan="2" string="Plantillas para conceptos en pólizas">
+                                <field name="concept_template_ids" nolabel="1" colspan="4">
+                                    <tree string="">
+                                        <field name="move_type"/>
+                                        <field name="concept"/>
+                                    </tree>
+                                    <form string="">
+                                        <group colspan="4"> <field name="move_type"/> </group>
+                                        <p colspan="4">Escriba el concepto que será asignado a las pólizas con el tipo especificado. Para redactar el concepto
+                                            se debe utilzar la sintaxis de Python para sustitución de variables: una cadena con cualquier número de símbolos de
+                                            formato, tres guiones bajos ( ___ ) y una tupla con los argumentos. Si la cadena no requiriera argumentos, se debe
+                                            indicar con los tres guiones bajos seguidos de una tupla vacía.
+                                            (_).<br/> 
+                                            Adicionalmente se tiene acceso a los objetos de la factura y del pago, así como a todos los campos accesibles desde
+                                            ellos a través de la &quot;notación de punto&quot;. Para acceder a dichos objetos utilice los marcadores <i>invoice
+                                            </i> y <i>voucher</i> respectivamente.</p>
+                                        <p colspan="4">El siguiente es un ejemplo de concepto válido:<br/>
+                                            Póliza correspondiente a la factura de %%s, con fecha %%s y monto &#36;%%d.___(invoice.partner_id.name, invoice.date_invoice, invoice.amount_total)
+                                        </p> 
+                                        <field name="concept" colspan="4" nolabel="1"/>
+                                    </form>
+                                </field>
+                            </group>
+                        </group>
+                    </page>                
+                </notebook>
+              <notebook position="inside">
+                    <page string="Configuración Certificados" >
+                          <group string="Info Certificado Sello Digital" col="4" colspan="4" groups="base.group_no_one,account.group_account_manager">
+                            <field name="certificate_file" required="1"/>
+                            <field name="certificate_file_pem" required="1"/>                             
+                            <field name="certificate_key_file" required="1"/>
+                            <field name="certificate_key_file_pem" required="1"/>
+                            <field name="certificate_password" password="True" required="1"/> 
+                            <field name="certificate_pfx_file" required="1"/>
+                            <field name="serial_number" required="1"/>
+                            <newline />
+                            <field name="date_start" required="1"/>
+                            <field name="date_end" required="1"/>                
+                             
+                        </group>
+
+                    </page>
+                </notebook>
+
+             <notebook position="inside">
+                    <page string="Configuración PAC" >
+                      <group>
+                        <group string="Datos de conexión con el Pac">
+                            <field name="cat_pacs" widget="selection" required="1"/>
+                            <field name="pac_testing"/>
+                            <field name="url_pruebas_pac" attrs="{'invisible': [('pac_testing', '=', False)], 'required': [('pac_testing', '=', True)]}"/>
+                            <field name="url_cancelacion_pac_prue" attrs="{'invisible': [('pac_testing', '=', False)], 'required': [('pac_testing', '=', True)]}"/>
+                            <field name="url_productivo_pac" attrs="{'invisible': [('pac_testing', '=', True)], 'required': [('pac_testing', '=', False)]}"/>
+                            <field name="url_cancelacion_pac_prodc" attrs="{'invisible': [('pac_testing', '=', True)], 'required': [('pac_testing', '=', False)]}"/>
+                        </group>
+                        <group string="Credenciales para conectarse con el PAC" attrs="{'invisible': [('pac_testing', '=', True)]}">                             
+                                <field name="pac_user" attrs="{'invisible': [('pac_testing', '=', True)], 'required': [('pac_testing', '=', False)]}"/>            
+                                <field name="pac_password" password="1" attrs="{'invisible': [('pac_testing', '=', True)], 'required': [('pac_testing', '=', False)]}"/>      
+                                 <field name="pac_equipo_id" attrs="{'invisible': [('pac_testing', '=', True)], 'required': [('pac_testing', '=', False)]}"/>
+                         </group>                            
+                        <group string="Credenciales de Acceso PAC para prueba" attrs="{'invisible': [('pac_testing', '=', False)]}">
+
+                            <field name="pac_user_4_testing" attrs="{'invisible': [('pac_testing', '=', False)], 'required': [('pac_testing', '=', True)]}"/>            
+                            <field name="pac_password_4_testing" password="1" attrs="{'invisible': [('pac_testing', '=', False)], 'required': [('pac_testing', '=', True)]}"/> 
+                            <field name="pac_equipo_id_4_testing" attrs="{'invisible': [('pac_testing', '=', False)], 'required': [('pac_testing', '=', True)]}"/>
+                         </group>      
+                      </group>
+                    </page>
+                </notebook>
+                
+                </field>
+            </record> 
+
+
+   
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="base_logistics_sanmex.StockLotDashboard">
+        <div class="o_rent_logistics_dashboard container">
+            <div class="row">
+                
+                <div class="col-sm-7">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <td class="o_text">
+                          <i class="fa fa-truck fa-lg"></i>
+                          <div>Operaciones</div>
+                        </td>
+                        <td class="o_main o_dashboard_action" title="Obra " context='{"search_default_to_delivery_smx": true}'>
+                          <a href="#" class="href"><t t-esc="values['total_confirm']"/> <br/> Confirmado</a>
+                          
+                        </td>
+                        <td class="o_main o_dashboard_action" title="Obra">
+                          <a href="#" class="href"><t t-esc="values['total_in_progress']"/> <br/> Próxima Entrega</a>
+                        </td>
+                        <td class="o_main o_dashboard_action" title="Obra">
+                          <a href="#" class="href"><t t-esc="values['total_delivery']"/> <br/> <div class="text-smx-label">Rentados</div></a>
+                        </td>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </t>
+    
+
+</templates>

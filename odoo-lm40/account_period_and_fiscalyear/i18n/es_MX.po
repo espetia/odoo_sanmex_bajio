@@ -1,0 +1,438 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_period_and_fiscalyear
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-29 03:08+0000\n"
+"PO-Revision-Date: 2016-12-28 21:43-0600\n"
+"Last-Translator: Israel Cruz Argil <israel.cruz@argil.mx>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_MX\n"
+"X-Generator: Poedit 1.8.11\n"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,help:account_period_and_fiscalyear.field_account_fiscalyear_state
+msgid ""
+" * The 'Open' status is for Open Fiscal Year. If Fiscal Year is open it's Period children too \n"
+"then you can add / upate records (Account entries, Invoices, etc.)\n"
+"\n"
+" * The 'Done' status is used to restrict modification of any information related to this Fiscal Year"
+msgstr ""
+" * El estado ‘Abierto' es para el Año Fiscal actual. Si el Año Fiscal está abierto y sus Periodos también\n"
+"entonces podrá agregar / modificar registros que afecten Contabilidad (Facturas, Pagos, Pólizas, etc)\n"
+"\n"
+" * El estado ‘Hecho’ se usa para restringir cualquier modificación de información Contable del Año Fiscal corriente."
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,help:account_period_and_fiscalyear.field_account_period_state
+msgid ""
+" * The 'Open' status is for Open Periods. If Period is open \n"
+"then you can add / upate records (Account entries, Invoices, etc.)\n"
+"\n"
+" * The 'Done' status is used to restrict modification of any information related to this Period"
+msgstr ""
+" * El estado ‘Abierto’ indica que se puede agregar  modificar registros que afecten la Contabilidad\n"
+"tales como Facturas, Pagos, Pólizas Contables, etc.\n"
+"\n"
+" * El estado ‘Hecho’ se usa para restringir cualquier modificación de información Contable del Periodo Contable."
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/account_move.py:35
+#, python-format
+msgid " Closing "
+msgstr " de Cierre "
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model,name:account_period_and_fiscalyear.model_account_fiscalyear
+msgid "Account Fiscalyear - Dummy"
+msgstr "Año Fiscal - Dummy"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_form
+msgid "Account Period"
+msgstr "Periodo Contable"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model,name:account_period_and_fiscalyear.model_account_period
+msgid "Account Periods - Dummy"
+msgstr "Periodos Contables - Dummy"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model,name:account_period_and_fiscalyear.model_account_move
+msgid "Al instalar este modulo se tiene acceso a formatos de la operacion Trabis"
+msgstr "Al instalar este modulo se tiene acceso a formatos de la operacion Trabis"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.actions.act_window,help:account_period_and_fiscalyear.action_account_period
+msgid ""
+"An accounting period typically is a month or a quarter. It\n"
+"                usually corresponds to the periods of the tax declaration."
+msgstr ""
+"Un periodo Contable es el típico mes o trimestre o cuatrimestre (según aplique en la legislación local)\n"
+"Usualmente corresponde a los periodos según lo requiere la declaración de impuestos de su país."
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_close
+msgid "Are you sure?"
+msgstr "Está seguro?"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_close
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_close_sure
+msgid "Check this box"
+msgstr "Active la casilla"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.actions.act_window,help:account_period_and_fiscalyear.action_account_period
+msgid "Click to add a fiscal period."
+msgstr "Clic para Agregar un Periodo."
+
+#. module: account_period_and_fiscalyear
+#: model:ir.actions.act_window,help:account_period_and_fiscalyear.action_account_fiscalyear
+msgid "Click to start a new fiscal year."
+msgstr "Clic para agregar un Año Fiscal"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_close
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_form
+msgid "Close Period"
+msgstr "Cerrar Periodo"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.actions.act_window,name:account_period_and_fiscalyear.action_account_period_close
+msgid "Close a Period"
+msgstr "Cerrar un Periodo"
+
+#. module: account_period_and_fiscalyear
+#: selection:account.fiscalyear,state:0 selection:account.period,state:0
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_fiscalyear_search
+msgid "Closed"
+msgstr "Cerrado"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_special
+msgid "Closing Period"
+msgstr "Periodo de Cierre"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_code
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_code
+msgid "Code"
+msgstr "Código"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_company_id
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_fiscalyear_form
+msgid "Create Monthly Periods"
+msgstr "Crear Periodos mensuales"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_create_uid
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_close_create_uid
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_create_date
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_close_create_date
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_date_stop
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_date_stop
+msgid "Date End"
+msgstr "Fecha final"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_date_start
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_date_start
+msgid "Date Start"
+msgstr "Fecha inicial"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.actions.act_window,help:account_period_and_fiscalyear.action_account_fiscalyear
+msgid ""
+"Define your company's financial year according to your needs. A\n"
+"                financial year is a period at the end of which a company's\n"
+"                accounts are made up (usually 12 months). The financial year is\n"
+"                usually referred to by the date in which it ends. For example,\n"
+"                if a company's financial year ends November 30, 2011, then\n"
+"                everything between December 1, 2010 and November 30, 2011\n"
+"                would be referred to as FY 2011."
+msgstr ""
+"Defina el Periodo Fiscal de su Compañía de acuerdo a sus necesidades.\n"
+"Un Periodo Fiscal corresponde al periodo donde se registra la información\n"
+"contable (generalmente 12 meses).s\n"
+"El Periodo Fiscal tiene una fecha inicial y final, por ejemplo del 1º de Enero\n"
+"al 31 de Diciembre de 2011, este Periodo Fiscal podría llamarse: PF2011."
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_display_name
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_close_display_name
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_form
+msgid "Duration"
+msgstr "Duración"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_move_closing_period
+msgid "En Periodo de Cierre"
+msgstr "En Periodo de Cierre"
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/metodos.py:94
+#: code:addons/account_period_and_fiscalyear/metodos.py:98
+#, python-format
+msgid ""
+"Error!\n"
+"The period is invalid. Either some periods are overlapping or the period's dates are not matching the scope of the fiscal year."
+msgstr ""
+"Error!\n"
+"El periodo es inválido. Puede ser que algunas fechas de los periodos se estén traslapando o el inicio o final de algún periodo esté fuera de la duración del Año Fiscal."
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/metodos.py:19
+#, python-format
+msgid ""
+"Error!\n"
+"The start date of a fiscal year must precede its end date."
+msgstr ""
+"Error!\n"
+"La fecha inicial del Año Fiscal debe preceder a la Fecha Final."
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/metodos.py:81
+#, python-format
+msgid ""
+"Error!\n"
+"The start date of this Period must precede its end date."
+msgstr ""
+"Error!\n"
+"La fecha inicial del Periodo debe preceder a su Fecha Final."
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_fiscalyear_id
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_fiscalyear_search
+msgid "Fiscal Year"
+msgstr "Ejercicio Fiscal"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.menu,name:account_period_and_fiscalyear.menu_fiscalyear_and_periods
+msgid "Fiscal Year and Periods"
+msgstr "Año Fiscal y Periodos"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.actions.act_window,name:account_period_and_fiscalyear.action_account_fiscalyear
+#: model:ir.ui.menu,name:account_period_and_fiscalyear.menu_action_account_fiscalyear
+msgid "Fiscal Years and Periods"
+msgstr "Año Fiscal y Periodos"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_fiscalyear_form
+msgid "Fiscal year"
+msgstr "Año Fiscal"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_fiscalyear_tree
+msgid "Fiscalyear"
+msgstr "Año Fiscal"
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/metodos.py:127
+#, python-format
+msgid "Go to the configuration panel"
+msgstr "Vaya al Panel de Configuración"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_fiscalyear_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_id
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_close_id
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model,name:account_period_and_fiscalyear.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear___last_update
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period___last_update
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_close___last_update
+msgid "Last Modified on"
+msgstr "Última Modifiación en"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_write_uid
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_close_write_uid
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_write_date
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_close_write_date
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_period_and_fiscalyear
+#: selection:account.fiscalyear,state:0 selection:account.period,state:0
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_fiscalyear_search
+msgid "Open"
+msgstr "Abierto"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_move_line_period_id
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_move_period_id
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_fiscalyear_form
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_search
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_tree
+msgid "Period"
+msgstr "Periodo"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_name
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_name2
+msgid "Period Name"
+msgstr "Nombre de Periodo"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.actions.act_window,name:account_period_and_fiscalyear.action_account_period
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_period_ids
+#: model:ir.ui.menu,name:account_period_and_fiscalyear.menu_action_account_period
+msgid "Periods"
+msgstr "Periodos"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_form
+msgid "Re-Open Period"
+msgstr "Re-Abrir Periodo"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_fiscalyear_search
+msgid "Search Fiscalyear"
+msgstr "Buscar Año Fiscal"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_search
+msgid "Search Period"
+msgstr "Buscar Periodo"
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/metodos.py:171
+#, python-format
+msgid "Start period should precede then end period."
+msgstr "Periodo inicial debe preceder al Periodo Final."
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_fiscalyear_state
+#: model:ir.model.fields,field_description:account_period_and_fiscalyear.field_account_period_state
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_fiscalyear_search
+msgid "Status"
+msgstr "Estado"
+
+#. module: account_period_and_fiscalyear
+#: sql_constraint:account.period:0
+msgid "The code of the account must be unique per company !"
+msgstr "El código de la cuenta debe ser único por Compañía!"
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/metodos.py:126
+#, python-format
+msgid ""
+"There is no period defined for this date: %s.\n"
+"Please go to Configuration/Periods."
+msgstr ""
+"No existe Periodo definido para esta fecha: %s.\n"
+"Por favor vaya a la Configuración de Periodos."
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/account_move.py:35
+#, python-format
+msgid "There is no%sPeriod matching Account Move date."
+msgstr "No existe ningún Periodo%s que corresponda a la Fecha de la Póliza."
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/metodos.py:156
+#, python-format
+msgid "This journal already contains items for this period, therefore you cannot modify its company field."
+msgstr "Este diario ya contiene elementos para este Periodo, sin embargo no puede modificar el campo Compañía."
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_search
+msgid "To Close"
+msgstr "A Cerrar"
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/account_move.py:51
+#, python-format
+msgid ""
+"Warning !!!\n"
+"\n"
+"You have no Closing Period matching Account Move Date"
+msgstr ""
+"Advertencia !!!\n"
+"\n"
+"No tiene definido un Periodo de Cierre que corresponda a la Fecha de la Póliza"
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/metodos.py:135
+#, python-format
+msgid "You can not re-open a period which belongs to closed fiscal year."
+msgstr "No puede re-abrir un Periodo que pertenece a un Año Fiscal Cerrado"
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/account_move.py:20
+#, python-format
+msgid "You cannot add/modify entries in Closed Period %s. Check the Period state"
+msgstr "No puede agregar / modificar pólizas del Periodo Cerrado %s. Revise el estado del Periodo."
+
+#. module: account_period_and_fiscalyear
+#: code:addons/account_period_and_fiscalyear/metodos.py:169
+#, python-format
+msgid "You should choose the periods that belong to the same company."
+msgstr "Solo puede seleccionar periodos que pertenecen a la misma Compañía"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.ui.view,arch_db:account_period_and_fiscalyear.view_account_period_close
+msgid "or"
+msgstr "ó"
+
+#. module: account_period_and_fiscalyear
+#: model:ir.model,name:account_period_and_fiscalyear.model_account_period_close
+msgid "period close"
+msgstr "Cerrar Periodo"

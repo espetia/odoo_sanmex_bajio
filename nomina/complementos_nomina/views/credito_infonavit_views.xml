@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="form_credito_infonavit_view_inherit_complementos_nomina" model="ir.ui.view">
+        <field name="name">form.credito.infonavit.view.inherit.complementos.nomina</field>
+        <field name="model">credito.infonavit</field>
+        <field name="inherit_id" ref="nomina_cfdi_extras_ee.form_credito_infonavit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="enviar_data" string="Enviar data a empleado" type="object" states="done" class="btn-primary"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

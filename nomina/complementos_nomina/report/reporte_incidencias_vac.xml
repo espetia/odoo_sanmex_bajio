@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="report_vacations">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.internal_layout">
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2>
+                                        REPORTE DE INCIDENCIAS DE VACACIONES
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="text-right">Periodo de nómina : <span t-field="o.date_start"/> - <span t-field="o.date_end"/></h5>
+                                    <br/>
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Empleado</th>
+                                                <th>Fecha inicial</th>
+                                                <th>Días</th>
+                                                <th>Días disponibles</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.slip_ids" t-as="table_line">
+                                                <tr t-foreach="table_line.employee_id.vacations_ids" t-as="line_vacations">
+                                                    <t t-if="line_vacations.state == 'done' and line_vacations.fecha_inicial >= o.date_start and (line_vacations.fecha_inicial &lt; o.date_end  or line_vacations.fecha_inicial == o.date_end)">
+                                                        <td><span t-field="table_line.employee_id.name"/></td>
+                                                        <td><span t-field="line_vacations.fecha_inicial"/></td>
+                                                        <td><span t-field="line_vacations.dias"/></td>
+                                                        <td><span t-field="line_vacations.dias_de_vacaciones_disponibles"/></td>
+                                                    </t>
+                                                    <t t-else=""></t>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <report string="Reporte Incidencias (Vacaciones)"
+                id="report_print_incidents_vac"
+                model="hr.payslip.run"
+                report_type="qweb-pdf"
+                name="complementos_nomina.report_vacations"/>
+    </data>
+</odoo>

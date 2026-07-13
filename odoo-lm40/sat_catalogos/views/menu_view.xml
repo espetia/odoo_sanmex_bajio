@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+
+        <menuitem id="catalogos_sat_menu" name="Catálogos SAT CFDI" 
+                  parent="account.menu_finance_configuration" sequence="99"/>
+        
+        <menuitem id="catalogos_conta_menu" name="Catálogos Contabilidad Electrónica" 
+                  parent="account.menu_finance_configuration" sequence="99"/>
+        <menuitem id="catalogos_pac_menu" name="Catálogo Pacs" 
+                  parent="account.menu_finance_configuration" sequence="99"/>
+        
+</odoo>

@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_sale_renting_out_sanmex_view" model="ir.actions.report">
+        <field name="name">Hoja Entrega Sanmex</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">campos_sanmex.report_rental_out_sanmex</field>
+        <field name="report_file">campos_sanmex.report_rental_out_sanmex</field>
+        <field name="print_report_name">'Hoja de Entrega - %s' % object.name</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_rental_out_sanmex">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="campos_sanmex.report_sale_renting_out_view_sanmex" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_sale_renting_out_view_sanmex">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+            <!-- <t t-set="address">
+                <div t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}" t-options-fields="['name']" class="text-left h1"/>
+            </t> -->
+            <!-- <t t-if="doc.partner_shipping_id == doc.partner_invoice_id and doc.partner_invoice_id != doc.partner_id or doc.partner_shipping_id != doc.partner_invoice_id">
+                <t t-set="information_block">
+                    <strong t-if="doc.partner_shipping_id == doc.partner_invoice_id">Invoicing and Shipping Address:</strong>
+                    <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                        <strong>
+                            <font style="font-size: 24px;">Dirección de Entrega:</font>
+                        </strong>
+                        <span t-field="doc.x_studio_nombre_obra_o_proyecto" class="h4 o_bold"/>
+            
+                        <div t-field="doc.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" t-options-fields="['address']" class="h4"/>
+                    </t>
+                </t>
+            </t> -->
+            <div class="page">
+                <div class="oe_structure"/>
+                 <div class="row address">
+                    <div class="col-5 offset-2"/>
+                    </div>
+                    <div class="row">
+                    <div class="col-3"/>
+                    <div class="col-3"/>
+                    <div class="col-3"/>
+                    </div>
+    <div class="row">
+        <div class="col-6 h2">
+            <span>
+                <b>
+                    <font style="font-size: 18px;">
+                    <font style="font-size: 36px;">Dirección de Entrega:</font>
+                    </font>
+                </b>
+            </span>
+            <span t-field="doc.partner_shipping_id.name" style="color:#081258" class="o_bold h2"/>
+            
+            <span/>
+  
+            <span>
+    
+            <span t-if="doc.partner_shipping_id.street">-</span>
+                <!-- <span t-field="doc.partner_shipping_id.street"/> -->
+            </span>
+  
+            <span>
+                <!-- <span t-field="doc.partner_shipping_id.street2"/>
+                <span t-if="doc.partner_shipping_id.street2">Int.</span> -->
+            </span>
+  
+            <!-- <span>
+    
+                <span t-field="doc.partner_shipping_id.street_number2"/>
+                <span t-if="doc.partner_shipping_id.l10n_mx_edi_colony">Col.</span>
+            </span> -->
+  
+            <!-- <span>
+    
+                <span t-field="doc.partner_shipping_id.l10n_mx_edi_colony"/>
+                <span t-if="doc.partner_shipping_id.l10n_mx_edi_locality_id">Localidad</span>
+            </span> -->
+  
+            <span>
+                <!-- <span t-field="doc.partner_shipping_id.zip"/>
+                <span t-field="doc.partner_shipping_id.city"/>
+                <span t-field="doc.partner_shipping_id.state_id.display_name"/> -->
+            </span>
+        </div>
+        <div class="col-6 text-right">
+            <span t-field="doc.partner_id.name" class="o_bold h1" style="color:#081258"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <span>
+                <b>
+                    <!-- <font style="font-size: 36px;" t-if="doc.x_studio_notas_1">Referencia</font> -->
+                </b>
+            </span>
+            <!-- <span t-field="doc.x_studio_notas_1" class="h3" t-if="doc.x_studio_notas_1"/> -->
+        </div>
+        <div class="col-6 text-right">
+            <span> </span>
+            <!-- <span t-field="doc.x_studio_cliente_sucursales_sm" class="h2 o_bold" style="color:#CE0000" t-if="doc.x_studio_cliente_sucursales_sm"/> -->
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-7 h4" t-if="information_block">
+        <span>
+      <b t-if="information_block is False">Ref. Entrega:</b>
+    </span>
+  </div>
+      <div class="col-5">
+        <span> </span>
+  </div>
+    </div>
+  
+    <div class="row">
+      <div class="col h2">
+        <span> </span>
+  </div>
+    </div>
+  
+  
+  
+                <h2 class="mt16 h1 o_bold">
+                    <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
+                        <span t-if="doc.state not in ['draft','sent']">
+      
+    </span>
+  </t>              <font style="font-size: 48px;">Entrega No.</font>
+                    <span t-field="doc.name" class="h1 o_bold"/>
+                </h2>
+    <div class="row">
+      <div class="col-3"/>
+      <div class="col-3"/>
+      <div class="col-3"/>
+      </div>
+    <div class="row">
+      <div class="col-3"/>
+      <div class="col-3"/>
+      <div class="col-3"/>
+    </div>
+    <div class="row">
+      <div class="col h2">
+        <span> </span>
+  </div>
+    </div>
+  
+  
+  
+                <div class="row mt32 mb32" id="informations">
+                    </div>
+    <div class="row">
+      <div class="col-3 text-center h4">
+    <span>
+      <strong>Vendedor</strong>
+  <br/>
+    </span>
+  
+    <span t-field="doc.user_id"/>
+  </div>
+      <div class="col-3"/>
+      <div class="col-3"/>
+      <div class="col-3 text-center h3">
+        <span>
+          <strong>Fecha de Entrega</strong>
+  <br/>
+        </span>
+        <span t-field="doc.fecha_entrega_log" t-options-widget="&quot;date&quot;"/>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-3 text-center h4">
+        <span>
+          <strong>Contacto de Solicitud</strong>
+  <br/>
+        </span>
+        <span t-field="doc.contacto_de_solicitud"/>
+      </div>
+      <div class="col-3 text-center h4">
+    <span>
+      <strong>Tel. Contacto Solicitud</strong>
+  <br/>
+    </span>
+  
+    <span t-field="doc.telefono_solicitud"/>
+  </div>
+      <div class="col-3 text-center h4">
+    <span>
+      <strong>Contacto que Recibe</strong>
+  <br/>
+    </span>
+  
+    <span t-field="doc.contacto_que_recibe"/>
+  </div>
+      <div class="col-3 text-center h4">
+    <span>
+      <strong>Tel. de Quien Recibe</strong>
+  <br/>
+    </span>
+  
+    <span t-field="doc.tel_de_quien_recibe"/>
+  </div>
+    </div>
+    <div class="row">
+      </div>
+    <div class="row">
+      <div class="col-6">
+        <span> </span>
+  </div>
+      <div class="col-6">
+        <span> </span>
+  </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <span> </span>
+  </div>
+      <div class="col-6">
+        <span> </span>
+  </div>
+    </div>
+  
+  
+  
+    <div class="row">
+      <div class="col text-center o_bold bg-200 h3">
+        <span>EQUIPO(S) A ENTREGAR</span>
+  </div>
+    </div>
+  
+  
+    <table class="table table-bordered o_report_block_table">
+      <thead>
+        <tr>
+          <th class="text-center h3">
+            <span>Descripción</span>
+  </th>
+    <th class="text-center h3">
+      <span>Cantidad</span>
+  </th>
+  
+        </tr>
+      </thead>
+      <tbody>
+        <tr t-foreach="doc.order_line" t-as="table_line">
+          <td class="h3 text-right">
+            <span t-field="table_line.product_id.display_name" t-if="table_line.price_unit &gt; 0"/>
+          </td>
+    <td class="text-center bg-white h3">
+      <span t-field="table_line.product_uom_qty" t-if="table_line.price_unit &gt; 0"/>
+    </td>
+  
+        </tr>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-3"/>
+      <div class="col-3"/>
+      <div class="col-3"/>
+    </div>
+    <div class="row">
+      <div class="col-3"/>
+      <div class="col-3"/>
+      <div class="col-3"/>
+    </div>
+  
+  
+    <div class="row">
+      <div class="col-3"/>
+      <div class="col-3"/>
+      <div class="col-3"/>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- <span t-field="doc.task_id.parent_id.x_studio_operador"/> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3"/>
+      <div class="col-3"/>
+    </div>
+    <div class="row">
+      </div>
+  
+  
+  
+    <div class="row">
+      </div>
+    <div class="row">
+      <div class="col-3"/>
+      <div class="col-3"/>
+      <div class="col-3"/>
+    </div>
+    <div class="row">
+      </div>
+    <div class="row">
+      </div>
+    <div class="row">
+      <div class="col">
+        <span>
+      <p style="margin-bottom: 0px;" class="h3">
+        <!-- <span style="font-weight: bolder;" t-if="doc.x_studio_inp_servicios_incluidos">Incluye:</span>
+    <span t-field="doc.x_studio_inp_servicios_incluidos"/> -->
+  
+      </p>
+    </span>
+  </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-6">
+        <span>
+      <font style="vertical-align: inherit;">
+        <font style="vertical-align: inherit;"> </font>
+      </font>
+    </span>
+  </div>
+      <div class="col-6">
+        <span>
+      <font style="vertical-align: inherit;">
+        <font style="vertical-align: inherit;"> </font>
+      </font>
+    </span>
+  </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-6">
+        <span>
+      <font style="vertical-align: inherit;">
+        <font style="vertical-align: inherit;"> </font>
+      </font>
+    </span>
+  </div>
+      <div class="col-6">
+        <span>
+      <font style="vertical-align: inherit;">
+        <font style="vertical-align: inherit;"> </font>
+      </font>
+    </span>
+  </div>
+    </div>
+    <div class="row">
+      <div class="col-6 bg-200 h3">
+        <span>Color:</span>
+  </div>
+      <div class="col-6 bg-200 h3">
+        <span>Serie Entregada:</span>
+  </div>
+    </div>
+  
+  
+    <div class="row">
+      <div class="col-6 bg-200 h3">
+        <span>
+      <font style="vertical-align: inherit;">
+        <font style="vertical-align: inherit;">Operador:</font>
+      </font>
+    </span>
+  </div>
+      <div class="col-6 bg-200 h3">
+        <span>
+      <font style="vertical-align: inherit;">
+        <font style="vertical-align: inherit;">Unidad:</font>
+      </font>
+    </span>
+  </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <span/>
+  </div>
+      <div class="col-6 bg-200 h3">
+        <span>Firma de Operador:</span>
+  </div>
+    </div>
+  
+  
+  
+  
+    <div class="row">
+      <div class="col-12 h1">
+        <span>
+          <!-- <strong t-if="doc.x_studio_notas">Notas:</strong> -->
+          <br/>
+        </span>
+        <!-- <span t-field="doc.x_studio_notas" style="color:#081258" class="o_bold"/> -->
+      </div>
+      <div class="col-3"/>
+      <div class="col-3"/>
+      <div class="col-3"/>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <span> </span>
+  </div>
+      <div class="col-6">
+        <span> </span>
+  </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <span> </span>
+  </div>
+      <div class="col-6">
+        <span> </span>
+  </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-6">
+        <span> </span>
+  </div>
+      <div class="col-6">
+        <span> </span>
+  </div>
+    </div>
+  
+  
+    <table class="table table-bordered o_report_block_table h3">
+        <thead>
+            <tr class="bg-200">
+                <th class="text-center">
+                    <span>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">NOMBRE DE QUIEN RECIBE</font>
+                    </font>
+                    </span>
+                </th>
+                <th class="text-center">
+                    <span>
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">FIRMA DE QUIEN RECIBE</font>
+                        </font>
+                    </span>
+                </th>
+            </tr>
+        </thead>
+      <tbody>
+        <tr t-foreach="docs" t-as="table_line">
+            <td>
+            <div class="ml-2 mr-2 mt-2 mb-2"><br></br></div>
+            <!-- <span t-field="doc.x_studio_nombre_del_cliente"/> -->
+            </td>
+            <td class="bg-white">
+            <div class="ml-2 mr-2 mt-2 mb-2"><br></br></div>
+            <!-- <span t-field="doc.x_studio_firma_del_cliente"/> -->
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  
+  
+  
+  
+  
+            </div>
+        </t>
+    </template>
+
+</odoo>

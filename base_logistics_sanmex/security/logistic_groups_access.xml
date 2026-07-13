@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record model="ir.module.category" id="module_logistics_sanmex">
+            <field name="name">Logistica</field>
+            <field name="description">User access levels for Overtime module</field>
+            <field name="sequence">10</field>
+       </record>
+       <record id="logistics_user_access" model="res.groups">
+            <field name="name">Usuario</field>
+            <field name="category_id" ref="module_logistics_sanmex"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="logistics_manager_access" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_logistics_sanmex"/>
+            <field name="implied_ids" eval="[(4, ref('logistics_user_access'))]"/>
+        </record>
+
+</odoo>

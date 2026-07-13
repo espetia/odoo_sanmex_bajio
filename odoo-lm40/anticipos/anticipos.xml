@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    
+<!-- control anticipos -->
+
+       <record id="anticipos_list" model="ir.ui.view">
+            <field name="name">anticipo.tree</field>
+            <field name="model">anticipos</field>
+            <field name="arch" type="xml">
+                 <tree string="Registro de Anticipos" create="0" delete="0">
+                    <field name="name" />
+                    <field name="cliente_id"/>
+                    <field name="fecha_emision" />
+                    <field name="fecha_pago"/>
+                    <field name="monto_document" />
+                    <field name="monto_aplicado"/>
+                    <field name="disponible" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="anticipos_form" model="ir.ui.view">
+            <field name="name">anticipos.form</field>
+            <field name="model">anticipos</field>
+            <field name="arch" type="xml">
+                <form string="Registro de Anticipos" create="0" delete="0">
+                    <sheet>
+                         <group>
+                            <field name="name" />
+                            <field name="cliente_id"/>
+                            <field name="type_document_id"/>
+                            <field name="fecha_emision" />
+                            <field name="fecha_pago"/>
+                            <field name="monto_document" />
+                            <field name="monto_aplicado"/>
+                            <field name="disponible" />
+                         </group>
+                         <notebook>
+                            <page string="Relacion de Anticipos">
+                                <field name="anticipos_ids" readonly="1">
+                                    <tree>
+                                        <field name="folio_factura"/>
+                                        <field name="folio_anticipo"/>
+                                        <field name="folio_nc"/>
+                                        <field name="fecha_Aplica"/> 
+                                        <field name="aplicado"/>                                   
+                                                                            
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                         <group class="oe_subtotal_footer oe_right">
+                                
+                                <field name="total_pagos" class="oe_subtotal_footer_separator"/>
+                                
+                            </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+        
+
+    <record id="action_anticipos" model="ir.actions.act_window">
+            <field name="name">Registro de Anticipos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">anticipos</field>
+            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="anticipos_list"/>
+        </record>
+
+
+<menuitem id="menu_anticipos" name="Anticipos" parent="account.menu_finance" groups="account.group_account_manager" sequence="80"/>
+
+<menuitem action="action_anticipos"
+                  id="action_anticipos_menu" sequence="0"
+                  parent="menu_anticipos" />
+
+
+           
+
+
+</odoo>

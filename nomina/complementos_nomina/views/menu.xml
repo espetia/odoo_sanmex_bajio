@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="om_hr_payroll.menu_hr_payroll_root" web_icon="complementos_nomina,static/description/icon.png"/>
+     
+    <record id="action_importar_movimientos_faltas" model="ir.actions.act_window">
+        <field name="name">Importar Movimientos: Faltas</field>
+        <field name="res_model">importar.movimientos.faltas</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_importar_movimientos_vacaciones" model="ir.actions.act_window">
+        <field name="name">Importar Movimientos: Vacaciones</field>
+        <field name="res_model">importar.movimientos.vacaciones</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_importar_movimientos_horas_extras" model="ir.actions.act_window">
+        <field name="name">Importar Movimientos: Horas Extras</field>
+        <field name="res_model">importar.movimientos.horas.extras</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_importar_movimientos_retardos" model="ir.actions.act_window">
+        <field name="name">Importar Movimientos: Retardos</field>
+        <field name="res_model">importar.movimientos.retardos</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_importar_movimientos_incapacidades" model="ir.actions.act_window">
+        <field name="name">Importar Movimientos: Incapacidades</field>
+        <field name="res_model">importar.movimientos.incapacidades</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_importar_movimientos_feriados" model="ir.actions.act_window">
+        <field name="name">Importar Movimientos: Feriados</field>
+        <field name="res_model">importar.movimientos.feriados</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem  id="importar_movimientos_menu" name="Importar movimientos" parent="nomina_cfdi_ee.menu_main_movimivientos" sequence="100"/>
+    <menuitem  id="importar_movimientos_faltas" name="Importar Faltas" parent="importar_movimientos_menu" sequence="110" action="action_importar_movimientos_faltas"/>
+    <menuitem  id="importar_movimientos_vacaciones" name="Importar Vacaciones" parent="importar_movimientos_menu" sequence="120" action="action_importar_movimientos_vacaciones"/>
+    <menuitem  id="importar_movimientos_horas_extras" name="Importar Horas Extras" parent="importar_movimientos_menu" sequence="130" action="action_importar_movimientos_horas_extras"/>
+    <menuitem  id="importar_movimientos_retardos" name="Importar Retardos" parent="importar_movimientos_menu" sequence="140" action="action_importar_movimientos_retardos"/>
+    <menuitem  id="importar_movimientos_incapacidades" name="Importar Incapacidades" parent="importar_movimientos_menu" sequence="150" action="action_importar_movimientos_incapacidades"/>
+    <menuitem  id="importar_movimientos_dias_feriados" name="Importar Días Feriados" parent="importar_movimientos_menu" sequence="160" action="action_importar_movimientos_feriados"/>
+
+</odoo>

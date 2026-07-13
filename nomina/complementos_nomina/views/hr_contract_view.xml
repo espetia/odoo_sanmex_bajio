@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="hr_contract_form_kuh7_add_payroll_number" model="ir.ui.view">
+        <field name="name">hr.contract.form.kuh7.add.field</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="payroll_number_employee" />
+            </xpath>
+            <xpath expr="//field[@name='date_end']" position="after">
+                <field name="antiquity_years"  attrs="{'invisible': [('antiquity_years', '=', 0)]}" />
+                <field name="anniversary_year" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='structure_type_id']" position="after">
+                <field name="first_week_month" invisible="1" />
+                <field name="pay_attendance_bonus" invisible="1" />
+                <!-- comentar si aun no esta lista la prueba -->
+                <field name="last_year_update" invisible="1"/>
+                <field name="active_update_year" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='hr_responsible_id']" position="after">
+                <field name="apply_bonus_automatically" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='infonavit_porc']" position="after">
+                <field name="infonavit_mov_perm"/>
+                <field name="infonavit_mov_perm_monto" attrs="{'invisible': [('infonavit_mov_perm', '=', False)], 'required': [('infonavit_mov_perm', '=', True)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='date_start']" position="after">
+                <field name="fch_antiguedad"/>
+                <field name="fch_antiguedad_automatico" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='percepcion_adicional_amount']" position="after">
+                <field name="transporte"/>
+                <field name="transporte_monto" attrs="{'invisible':[('transporte','=',False)], 'required': [('transporte', '=', True)]}"/>
+                <field name="retroactivo"/>
+                <field name="retroactivo_monto" attrs="{'invisible':[('retroactivo','=',False)], 'required': [('retroactivo', '=', True)]}"/>
+                <field name="bono_retroactivo_porcentaje" attrs="{'invisible':[('retroactivo','=',False)], 'required': [('retroactivo', '=', True)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='pens_alim_fijo']" position="after">
+                <field name="seguro_vivienda"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_contract_cfdi_new_fields" model="ir.ui.view">
+        <field name="name">hr.contract.nomina.cfdi.aditional.fields</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="nomina_cfdi_ee.hr_contract_view_form_nomina_cfdi"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='percepcion_adicional_amount']" position="after">
+                <field name="quality_bonus" invisible="1" />
+                <field name="laundry_bonus" invisible="1" />
+                <field name="loyalty_bonus" invisible="1" force_save="1"/>
+            </xpath>
+            <xpath expr="//field[@name='deduccion_adicional_amount']" position="after">
+                <field name="intern_inability" invisible="1" />
+                <field name="days_intern_inability" attrs="{'invisible' : [('intern_inability','=',False)], 'required': [('intern_inability', '=', True)]}" />
+                <field name="porcentage_intern_inability" attrs="{'invisible' : [('intern_inability','=',False)], 'required': [('intern_inability', '=', True)]}" />
+            </xpath>
+            <xpath expr="//field[@name='sueldo_base_cotizacion']" position="after">
+                <field name="pay_pantry_vouchers" invisible="1" string="Pagar vales de despensa"/>
+            </xpath>
+            <xpath expr="//field[@name='bono_asistencia_amount']" position="after">
+                <field name="bono_asistencia_porcentaje" attrs="{'invisible':[('bono_asistencia','=',False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='bono_puntualidad_amount']" position="after">
+                <field name="bono_puntualidad_porcentaje" attrs="{'invisible':[('bono_puntualidad','=',False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+   <record id="hr_contract_form_add_fields" model="ir.ui.view">
+        <field name="name">hr.contract.nomina.cfdi.add.ina.intern.kuh7</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="nomina_cfdi_extras_ee.view_hr_contract_historial_salario_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='historial_salario_ids']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='fecha_sueldo']" position="before">
+                <field name="department_employee" />
+                <field name="position_employee" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_contract_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">hr.contract.view.kanban.inherit</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_kanban"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="fch_antiguedad_automatico" invisible="1"/>
+            </field>
+        </field>
+    </record>
+    
+</odoo>

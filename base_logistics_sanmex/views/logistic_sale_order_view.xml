@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_sale_order_logistics_sanmex" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit.logistics.sanmex</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_quotation_send']" position="after">
+                    <button name="action_call_logistics_assign" string='Planeación' type="object" class="btn-primary" attrs="{'invisible':['|', ('state_sanmex_logistics','not in',['to_delivery','to_return']), ('state', 'not in', ['sale', 'done'])]}"/>
+                    <button name="popupNofication" string="Notificar" type="object" class="btn-primary"/>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="state_sanmex_logistics" />
+            </xpath>
+        </field>
+    </record>
+
+
+   <!-- <record id="base_sanmex_rental_order_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="sale_renting.rental_order_view_kanban"/>
+        <field name="act_window_id" ref="rent_logistics_action_dashboard_list"/>
+    </record>
+    <record id="base_sanmex_rental_order_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="sale_renting.rental_order_view_tree"/>
+        <field name="act_window_id" ref="rent_logistics_action_dashboard_list"/>
+    </record>
+    <record id="base_sanmex_rental_order_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale_renting.rental_order_primary_form_view"/>
+        <field name="act_window_id" ref="rent_logistics_action_dashboard_list"/>
+    </record>-->
+</odoo>

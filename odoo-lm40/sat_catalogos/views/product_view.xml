@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- CATEGORIAS -->
+        <record model="ir.ui.view" id="form_product_category_fields_3_3_einvoice_inhrt">
+            <field name="name">product.category.cfdi.33</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="stock_account.view_category_property_form"/>
+            <field name="arch" type="xml">
+                 
+                <group name="account_property"  position="after">
+                    <group name="product_sat" string="Atributos CFDI 3.3" groups="account.group_account_manager">
+                        <group>
+                            <field name="sat_product_id" options="{'no_create_edit': True,'no_create': True}" />
+                        </group>
+                        <group>
+                           
+                        </group>
+                    </group>
+                </group>
+            </field>
+        </record>
+
+        <record id="counted_view_category_property_form" model="ir.ui.view">
+            <field name="name">counted.product.category.property.form</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="account.view_category_property_form"/>
+            <field name="priority">50</field>
+            <field name="arch" type="xml">
+                <field name="property_account_expense_categ_id" position="before">
+                        <field name="account_income"  />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="tree_product_category_fields_3_3_einvoice_inhrt">
+            <field name="name">product.category.cfdi.33</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_list_view"/>
+            <field name="arch" type="xml">
+                <field name="display_name" position="after">
+                    <field name="sat_product_id" />
+               </field>
+            </field>
+        </record>
+		
+<!-- HERENCIA A PRODUCT TEMPLATE -->
+        <record model="ir.ui.view" id="form_product_template_fields_3_3_einvoice_inhrt">
+            <field name="name">product.template.cfdi.33</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_form_view"/>
+            <field name="arch" type="xml">
+
+                <field name="property_account_income_id" position="after">
+                        <field name="account_income"  />
+                </field>
+
+                <group name="properties" position="before">
+                    <group name="product_sat" string="Atributos CFDI 3.3" groups="account.group_account_manager">
+                        <group>
+                            <field name="sat_product_id" options="{'no_create_edit': True,'no_create': True}" required="1"/>
+                        </group>
+                        <group>
+                            <field name="no_identity_type" required="1"/>
+                            <field name="no_identity_other" attrs="{'invisible':[('no_identity_type','!=','manual')],'required':[('no_identity_type','=','manual')]}"/>
+                        </group>
+                        <separator string="Configuracion Contable" />
+                    </group>
+                </group>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="tree_product_template_fields_3_3_einvoice_inhrt">
+            <field name="name">product.template.cfdi.33</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="sat_product_id" />
+               </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="tree_product_product_fields_3_3_einvoice_inhrt">
+            <field name="name">product.product.cfdi.33</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="sat_product_id" />
+               </field>
+            </field>
+        </record>
+
+<!-- UNIDADES DE MEDIDA -->
+
+      <!--  <record model="ir.ui.view" id="tree_product_UOM_fields_3_3_einvoice_inhrt">
+            <field name="name">product.uom.cfdi.33</field>
+            <field name="model">uom.uom</field>
+            <field name="inherit_id" ref="uom.product_uom_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="category_id" position="after">
+                    <field name="sat_uom_id" />
+               </field>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="form_product_UOM_fields_3_3_einvoice_inhrt">
+            <field name="name">product.uom.cfdi.33</field>
+            <field name="model">uom.uom</field>
+            <field name="inherit_id" ref="uom.product_uom_form_view"/>
+            <field name="arch" type="xml">
+                <field name="active" position="replace">
+                    <field name="sat_uom_id" required="1" options="{'no_create_edit': True,'no_create': True}"/>
+               </field>
+               <field name="rounding" position="after">
+                    <field name="active"/>
+               </field>
+            </field>
+        </record>-->
+        <record model="ir.ui.view" id="form_product_UOM_fields_3_3_einvoice_inhrt">
+            <field name="name">product.uom.cfdi.33</field>
+            <field name="model">uom.category</field>
+            <field name="inherit_id" ref="uom.product_uom_categ_form_view"/>
+            <field name="arch" type="xml">
+               
+                 <xpath expr="//tree/field[@name='active']" position='replace'>
+                   <field name="sat_uom_id" required="1" options="{'no_create_edit': True,'no_create': True}"/>      
+                 </xpath>
+                    <xpath expr="//tree/field[@name='rounding']" position='after'>
+                    <field name="active"/>      
+                 </xpath>
+             
+            </field>
+        </record>
+<!-- IMPUESTOS -->
+
+        <record model="ir.ui.view" id="tree_account_tax_fields_3_3_einvoice_inhrt">
+            <field name="name">account.tax.cfdi.33</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_tree"/>
+            <field name="arch" type="xml">
+                <field name="type_tax_use" position="after">
+                    <field name="sat_code_tax"/>
+                    <field name="sat_tipo_factor_id" />                    
+                    <field name="sat_tasa_cuota"/>
+               </field>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="form_account_tax_fields_3_3_einvoice_inhrt">
+            <field name="name">account.tax.cfdi.33</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <field name="children_tax_ids" position="before">
+                    <group string="CFDI 3.3">
+                        <group>
+                            <field name="sat_tasa_cuota" required="1" options="{'no_create': True, 'no_open': True}"/>
+                             <field name="sat_code_tax"  required="1" options="{'no_create': True, 'no_open': True}"/>                           
+                            
+                        </group>
+                        <group>
+                           <field name="sat_tipo_factor_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                           <field name="estimulo_frontera"/>
+                        </group>
+                    </group>
+               </field>
+              
+            </field>
+        </record>
+ 
+</odoo>

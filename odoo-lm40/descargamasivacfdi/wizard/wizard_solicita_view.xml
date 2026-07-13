@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_descarga_wizard" model="ir.ui.view">
+            <field name="name">Solicitud de Descarga</field>
+            <field name="model">solictud.descarga</field>
+            <field name="arch" type="xml">
+                <form string="Solicitud de Descarga">
+                    <p class="oe_grey">
+                        Solicitud de Descarga.
+                    </p>
+                    <group>
+                        
+                     <field name="rfc_solicita"/>                      
+                     <field name="certificate_file" />
+                     <field name="certificate_key_file" />
+                     <field name="certificate_password" password="True"/>
+                     <field name="tipo_petición" />
+                     <field name="tipo_cfdi" />
+                     <field name="date_init" /> 
+                     <field name="date_end" /> 
+                     <field name="company_id" invisible="1"/>
+                    </group>
+                   
+                  
+             
+                    <footer>                       
+                        <button name="solictar_descarga" string="Solicitar Descargar" type="object"
+                            class="btn-primary"/>                   
+                        
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        
+        
+        
+        <record id="action_view_solicitud_wizard" model="ir.actions.act_window">
+            <field name="name">Asistente Solicitud de Descarga de CFDI</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">solictud.descarga</field>            
+            <field name="view_mode">form</field>
+            <field name="target">new</field>  
+            
+        </record>
+
+        <menuitem id="menu_descarga" name="Descarga CFDI" parent="account.menu_finance" sequence="2" groups="descargamasivacfdi.res_group_descargas_cfdi"/>
+
+       <menuitem action="action_view_solicitud_wizard"
+                         id="view_solicitud_wizard_menu" sequence="0"
+                         parent="menu_descarga" />
+         
+</odoo>

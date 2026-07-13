@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record model="ir.ui.view" id="account_invoice_form_inherit_cancelaciones">
+            <field name="name">account.invoice.cancelaciones</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="sat_catalogos.account_invoice_form_inherit_cfdi_33"/>
+            <field name="arch" type="xml">         
+            
+                 <field name="cancel_solicitud" position='before'>
+                 	<field name="cancelaciones_id" invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')"/>
+                 	<field name="uuid_sustituye" attrs="{'invisible':[('cancelaciones_id','!=', 1)]}"/>
+                 	</field>
+                            
+                
+                
+                
+            </field>
+            </record>
+
+     <record id="view_cancelaciones_list" model="ir.ui.view">
+            <field name="name">cancelaciones.tree</field>
+            <field name="model">cancelaciones.cfdinuevo</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo Motivo Cancelación">
+                    <field name="code"/>
+                    <field name="name"/>
+                    
+                </tree>
+            </field>
+        </record>
+
+        <record id="cancelaciones_form" model="ir.ui.view">
+            <field name="name">cancelaciones.form</field>
+            <field name="model">cancelaciones.cfdinuevo</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo Motivo Cancelación">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="code"/>
+                    		<field name="name"/>
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+         <record id="action_cancelaciones" model="ir.actions.act_window">
+            <field name="name">Motivo Cancelación</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cancelaciones.cfdinuevo</field>
+            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_cancelaciones_list"/>
+        </record>
+
+<menuitem action="action_cancelaciones"
+                  id="action_cancelaciones_menu" sequence="0"
+                  parent="sat_catalogos.catalogos_sat_menu" />
+
+ 		<data noupdate="1">
+          
+
+             <record id="cod_01" model="cancelaciones.cfdinuevo">
+                <field name="name">Comprobantes emitidos con errores con relación</field>
+                <field name="code">01</field>
+               
+
+            </record>
+			<record id="cod_02" model="cancelaciones.cfdinuevo">
+                <field name="name">Comprobantes emitidos con errores sin relación</field>
+                <field name="code">02</field>             
+
+            </record>
+            <record id="cod_03" model="cancelaciones.cfdinuevo">
+                <field name="name">No se llevó a cabo la operación</field>
+                <field name="code">03</field>             
+
+            </record>
+            <record id="cod_04" model="cancelaciones.cfdinuevo">
+                <field name="name">Operación nominativa relacionada en una factura global</field>
+                <field name="code">04</field>             
+
+            </record>
+
+     </data>
+
+ <record id="view_account_payment_form_cfdi_cancelaciones" model="ir.ui.view">
+            <field name="name">account_payment_form_cancelaciones</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="pagos.view_account_payment_form_cfdi_pagos_cancel"/>
+            <field name="arch" type="xml">    
+
+                
+               
+                        
+                           <field name="cfdi_fecha_cancelacion" position='before'>
+                                    <field name="cancelaciones_id" attrs="{'invisible':[('payment_type','!=','inbound')]}"/>
+                                     <field name="uuid_sustituye"  attrs="{'invisible':[('cancelaciones_id','!=', 1)]}"/>
+                                         
+                                
+                         </field>   
+            </field>
+        </record>        
+</odoo>

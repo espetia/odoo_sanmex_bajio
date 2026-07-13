@@ -1,0 +1,1189 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* complementos_nomina
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-02 17:53+0000\n"
+"PO-Revision-Date: 2021-09-02 17:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_antiquity_gral
+msgid "# Empleado"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.cfdi_payroll_layout
+msgid "&amp;bull;"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_antiquity_gral
+msgid "<b>REPORTE DE ANTIGÜEDAD DEL PERSONAL</b>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_aditional_hours
+msgid "<span>Doble</span>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+msgid "<span>N/A</span>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_aditional_hours
+msgid "<span>Simple</span>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_aditional_hours
+msgid "<span>Triple</span>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong> Nombre</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong> Puesto</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>CURP</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Cadena Original del Complemento digital del SAT</strong> <br/>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Datos de la nómina</strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Depto.</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid ""
+"<strong>ESTE DOCUMENTO ES UNA REPRESENTACIÓN IMPRESA DE UN CFDI</strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Emisor</strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Fecha de ingreso</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Fecha emisión: </strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Fecha y Hora de Certificación</strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Firma del empleado</strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Folio fiscal</strong><br/>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Folio:</strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Forma de pago</strong><br/>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Jornada</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Lugar de expedición: </strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Método de pago</strong><br/>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>No. de Serie del Certificado Emisor</strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>No. de Serie del Certificado del SAT</strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Número de empleado</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Periodicidad de pago</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Periodo: </strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>RFC</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Receptor</strong>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Registro Patronal</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Salario integrado</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Seguro social</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Sello del SAT</strong><br/>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Sello digital del CFDI</strong><br/>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Tipo de comprobante</strong><br/>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Total de días pagados</strong>:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "<strong>Uso CFDI(cliente)</strong><br/>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__active_update_year
+msgid "Active update year"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.view_hr_payslip_form_kuh7_new_fields
+msgid "Acumulado incapacidad interna"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__aditional_hour_ids
+msgid "Aditional Hours Payroll"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_antiquity_gral
+msgid "Alta"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__anniversary_year
+msgid "Anniversary year"
+msgstr "Año de aniversario"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_antiquity_gral
+msgid "Antigüedad"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__antiquity_years
+msgid "Antiquity years"
+msgstr "Años de antigüedad"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__apply_bonus_automatically
+msgid "Apply bonus automatically"
+msgstr "Aplicar bonos automáticamente"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_run__filecontent
+msgid "Archivo"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_faltas__archivo
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_feriados__archivo
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_horas_extras__archivo
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_incapacidades__archivo
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_retardos__archivo
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_vacaciones__archivo
+msgid "Archivo (*.xlsx)"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_employee__certificate_dos__master
+msgid "Bachillerato"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__06
+msgid "Bimensual"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_faltas_form_view
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_feriados_form_view
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_horas_extras_form_view
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_incapacidades_form_view
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_retardos_form_view
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_vacaciones_form_view
+msgid "Cancel"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__03
+msgid "Catorcenal"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__certificate_dos
+msgid "Certificate Level"
+msgstr "Escolaridad"
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_run__state__close
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__08
+msgid "Comisión"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_run__company_id
+msgid "Compañía"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.hr_payslip_run_inherit_form_kuh7
+msgid "Confirmar Todas"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_contract_historial_salario
+msgid "ContractHistorialSalario"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+msgid "Control"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.cfdi_payroll_layout
+msgid "Correo Electrónico:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_faltas__create_uid
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_feriados__create_uid
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_horas_extras__create_uid
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_incapacidades__create_uid
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_retardos__create_uid
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_vacaciones__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_faltas__create_date
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_feriados__create_date
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_horas_extras__create_date
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_incapacidades__create_date
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_retardos__create_date
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_vacaciones__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__days_intern_inability
+msgid "Days intern inability"
+msgstr "Días incapacidad interna"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "Deducciones"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__delays_ids
+msgid "Delays Payroll"
+msgstr "Retardos de Nómina"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_antiquity_gral
+msgid "Departamento"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_contract_historial_salario__department_employee
+msgid "Department"
+msgstr "Departamento"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.form_archivo_txt
+msgid "Descarga Archivo TXT"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__01
+msgid "Diario"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_dias_feriados
+msgid "DiasFeriados"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_calculo_liquidaciones__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_contract_historial_salario__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_dias_feriados__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_employee_loan__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_faltas_nomina__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_employees__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_input__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_run__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_faltas__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_feriados__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_horas_extras__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_incapacidades__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_retardos__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_vacaciones__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_incapacidades_nomina__display_name
+#: model:ir.model.fields,field_description:complementos_nomina.field_vacaciones_nomina__display_name
+msgid "Display Name"
+msgstr "Nombre en pantalla"
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_employee__certificate_dos__doctor
+msgid "Doctorado"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_run__state__done
+msgid "Done"
+msgstr "Hecho"
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_run__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_incidents_fouls
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_vacations
+msgid "Días"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_vacations
+msgid "Días disponibles"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_calculo_liquidaciones__employee_id
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_aditional_hours
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_delays
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_holiday_day
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_incidents_fouls
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_vacations
+msgid "Empleado"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_hr_contract
+msgid "Employee Contract"
+msgstr "Contrato de Empleado"
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_faltas_nomina
+msgid "FaltasNomina"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__fch_antiguedad_automatico
+msgid "Fch Antiguedad Automatico"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_aditional_hours
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_delays
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_holiday_day
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_incidents_fouls
+msgid "Fecha"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__fch_antiguedad
+msgid "Fecha antigüedad reconocida"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_employees__fch_fin
+msgid "Fecha fin"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_vacations
+msgid "Fecha inicial"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_employees__fch_inicio
+msgid "Fecha inicio"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_run__first_payslip_month
+msgid "First payslip of month"
+msgstr "Primer nómina del mes"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__first_week_month
+msgid "First week month"
+msgstr "Primer semana del mes"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+msgid "Folio"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__fouls_employee_ids
+msgid "Fouls Payroll"
+msgstr "Faltas Nómina"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.form_archivo_txt
+msgid "Genera Archivo TXT"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_calculo_liquidaciones
+msgid "GeneraLiquidaciones"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_hr_payslip_employees
+msgid "Generate payslips for all selected employees"
+msgstr "Generar las nóminas para todos los empleados seleccionados"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.cfdi_payroll_layout
+msgid "Hoja: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__holidays_days_ids
+msgid "Holiday Days Payroll"
+msgstr "Días Festivos Nómina"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_aditional_hours
+msgid "Horas"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_calculo_liquidaciones__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_contract_historial_salario__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_dias_feriados__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_employee_loan__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_faltas_nomina__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_employees__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_input__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_run__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_faltas__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_feriados__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_horas_extras__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_incapacidades__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_retardos__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_vacaciones__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_incapacidades_nomina__id
+#: model:ir.model.fields,field_description:complementos_nomina.field_vacaciones_nomina__id
+msgid "ID"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_faltas_form_view
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_feriados_form_view
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_horas_extras_form_view
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_incapacidades_form_view
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_retardos_form_view
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.importar_movimientos_vacaciones_form_view
+msgid "Importar"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.ui.menu,name:complementos_nomina.importar_movimientos_dias_feriados
+msgid "Importar Días Feriados"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.ui.menu,name:complementos_nomina.importar_movimientos_faltas
+msgid "Importar Faltas"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.ui.menu,name:complementos_nomina.importar_movimientos_horas_extras
+msgid "Importar Horas Extras"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.ui.menu,name:complementos_nomina.importar_movimientos_incapacidades
+msgid "Importar Incapacidades"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.act_window,name:complementos_nomina.action_importar_movimientos_faltas
+msgid "Importar Movimientos: Faltas"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.act_window,name:complementos_nomina.action_importar_movimientos_feriados
+msgid "Importar Movimientos: Feriados"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.act_window,name:complementos_nomina.action_importar_movimientos_horas_extras
+msgid "Importar Movimientos: Horas Extras"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.act_window,name:complementos_nomina.action_importar_movimientos_incapacidades
+msgid "Importar Movimientos: Incapacidades"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.act_window,name:complementos_nomina.action_importar_movimientos_retardos
+msgid "Importar Movimientos: Retardos"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.act_window,name:complementos_nomina.action_importar_movimientos_vacaciones
+msgid "Importar Movimientos: Vacaciones"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.ui.menu,name:complementos_nomina.importar_movimientos_retardos
+msgid "Importar Retardos"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.ui.menu,name:complementos_nomina.importar_movimientos_vacaciones
+msgid "Importar Vacaciones"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.ui.menu,name:complementos_nomina.importar_movimientos_menu
+msgid "Importar movimientos"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.report,name:complementos_nomina.report_payslips_2
+msgid "Imprimir Nomina x2"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__inability_ids
+msgid "Inability Payroll"
+msgstr "Incapacidades Nómina"
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_incapacidades_nomina
+msgid "IncapacidadesNomina"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__seguro_vivienda
+msgid "Incluir pago de seguro de vivienda"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__infonavit_mov_perm
+msgid "Infonavit movimiento permanente"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__intern_inability
+msgid "Intern inability"
+msgstr "Incapacidad Interna"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_calculo_liquidaciones____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_contract_historial_salario____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_dias_feriados____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_employee_loan____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_faltas_nomina____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_employees____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_input____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_run____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_faltas____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_feriados____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_horas_extras____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_incapacidades____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_retardos____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_vacaciones____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_incapacidades_nomina____last_update
+#: model:ir.model.fields,field_description:complementos_nomina.field_vacaciones_nomina____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_faltas__write_uid
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_feriados__write_uid
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_horas_extras__write_uid
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_incapacidades__write_uid
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_retardos__write_uid
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_vacaciones__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_faltas__write_date
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_feriados__write_date
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_horas_extras__write_date
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_incapacidades__write_date
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_retardos__write_date
+#: model:ir.model.fields,field_description:complementos_nomina.field_importar_movimientos_vacaciones__write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__last_year_update
+msgid "Last year update"
+msgstr "Último año actualizado"
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_employee__certificate_dos__graduate
+msgid "Licenciatura"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__calculo_liquidaciones__tipo_de_baja__02
+msgid "Liquidación"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.hr_payslip_run_inherit_form
+msgid "Listado de nómina (Excel)"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__loyalty_bonus
+msgid "Bono de Lealtad"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__05
+msgid "Mensual"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__infonavit_mov_perm_monto
+msgid "Monto Infonavit movimiento permanente"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__retroactivo_monto
+msgid "Monto Retroactivo"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__transporte_monto
+msgid "Monto Transporte"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "Neto a pagar:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_antiquity_gral
+msgid "Nombre"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip__no_empleado
+msgid "Número de empleado"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__99
+msgid "Otra periodicidad"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_employee__certificate_dos__other
+msgid "Otro"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "Otros pagos"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.view_hr_contract_cfdi_new_fields
+msgid "Pagar vales de despensa"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__10
+msgid "Pago por consignación"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_hr_payslip
+msgid "Pay Slip"
+msgstr "Nómina"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__pay_attendance_bonus
+msgid "Pay attendance bonus"
+msgstr "Pagar premio de asistencia"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__pay_pantry_vouchers
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_run__pay_pantry_vouchers
+msgid "Pay pantry vouchers"
+msgstr "Pagar vales de despensa"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_employee_loan__payroll_number_employee
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__payroll_number_employee
+msgid "Payroll number employee"
+msgstr "Número de  empleado"
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_hr_payslip_run
+msgid "Payslip Batches"
+msgstr "Procesamientos de nóminas"
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_hr_payslip_input
+msgid "Payslip Input"
+msgstr "Entrada de nómina"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "Percepciones"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip__acum_incap_inte
+msgid "Percepciones gravadas"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_employees__periodicidad_pago
+msgid "Periodicidad de pago CFDI"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_aditional_hours
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_delays
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_holiday_day
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_incidents_fouls
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_vacations
+msgid "Periodo de nómina :"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__phone_two
+msgid "Phone"
+msgstr "Teléfono"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__porcentage_intern_inability
+msgid "Porcentage intern inability"
+msgstr "Porcentaje incapacidad interna"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+msgid "Porcentaje"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_contract_historial_salario__position_employee
+msgid "Position"
+msgstr "Puesto"
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__09
+msgid "Precio alzado"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.hr_employee_form_remove_payroll_number
+msgid "Prestamo"
+msgstr "Préstamo"
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_employee__certificate_dos__basics
+msgid "Primaria"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.cfdi_payroll_layout
+msgid "Página web:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__quality_bonus
+msgid "Quality Bonus ($)"
+msgstr "Bono de Calidad ($)"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__laundry_bonus
+msgid "Quality Laundry"
+msgstr "Bono de lavandería"
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__04
+msgid "Quincenal"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_incidents_fouls
+msgid "REPORTE DE FALTAS"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_holiday_day
+msgid "REPORTE DE INCIDENCIAS DE DIAS FERIADOS"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_aditional_hours
+msgid "REPORTE DE INCIDENCIAS DE HORAS EXTRA"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+msgid "REPORTE DE INCIDENCIAS DE INCAPACIDADES"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_delays
+msgid "REPORTE DE INCIDENCIAS DE RETARDOS"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_vacations
+msgid "REPORTE DE INCIDENCIAS DE VACACIONES"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+msgid "Rama de seguro"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "Recibo de nómina"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid ""
+"Recibí de esta empresa la cantidad que señala este recibo de pago, estando conforme con las\n"
+"                    percepciones y las retenciones descritas, por lo que certifico que no se me adeuda cantidad alguna\n"
+"                    por ningún concepto. <br/> <br/>"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__registro_patronal
+msgid "Registro patronal"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.report,name:complementos_nomina.report_print_incidents_holiday_days
+msgid "Reporte Incidencias (Días Festivos)"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.report,name:complementos_nomina.report_print_incidents_fouls
+msgid "Reporte Incidencias (Faltas)"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.report,name:complementos_nomina.report_print_incidents_ah
+msgid "Reporte Incidencias (Horas Extra)"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.report,name:complementos_nomina.report_print_incident_inability
+msgid "Reporte Incidencias (Incapacidades)"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.report,name:complementos_nomina.report_print_incidents_delays
+msgid "Reporte Incidencias (Retardos)"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.report,name:complementos_nomina.report_print_incidents_vac
+msgid "Reporte Incidencias (Vacaciones)"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.actions.report,name:complementos_nomina.report_print_use_vacations
+msgid "Reporte de antiguedad"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__retroactivo
+msgid "Retroactivo"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.hr_payslip_run_inherit_form_kuh7
+msgid "Reversar Todas"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_input__salary_rule_id
+msgid "Salary rule"
+msgstr "Regla Salarial"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_antiquity_gral
+msgid "Saldos"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+msgid "Secuela"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_employee__certificate_dos__bachelor
+msgid "Secundaria"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__02
+msgid "Semanal"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__calculo_liquidaciones__tipo_de_baja__01
+msgid "Separación voluntaria"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__loan_request
+msgid "Solicitud del prestamo por año"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_payslip_run__state
+msgid "Status"
+msgstr "Estado"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.cfdi_payroll_layout
+msgid "Teléfono:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_holiday_day
+msgid "Tipo"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_calculo_liquidaciones__tipo_de_baja
+msgid "Tipo de baja"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_incidents_fouls
+msgid "Tipo de falta"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_aditional_hours
+msgid "Tipo de horas extra"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_inability
+msgid "Tipo de riesgo"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "Total"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "Total de deducciones:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "Total de otros pagos:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "Total de percepciones:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "Total:"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_contract__transporte
+msgid "Transporte"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields.selection,name:complementos_nomina.selection__hr_payslip_employees__periodicidad_pago__07
+msgid "Unidad obra"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_vacaciones_nomina
+msgid "VacacionesNomina"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__vacations_ids
+msgid "Vacation Payroll"
+msgstr "Vacaciones Nómina"
+
+#. module: complementos_nomina
+#: model:ir.model.fields,field_description:complementos_nomina.field_hr_employee__work_location
+msgid "Work Location"
+msgstr "Ubicación de trabajo"
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "______________________________"
+msgstr ""
+
+#. module: complementos_nomina
+#: model_terms:ir.ui.view,arch_db:complementos_nomina.report_payslip_document
+msgid "diario"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_employee_loan
+msgid "employee_loan"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_importar_movimientos_faltas
+msgid "importar.movimientos.faltas"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_importar_movimientos_feriados
+msgid "importar.movimientos.feriados"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_importar_movimientos_horas_extras
+msgid "importar.movimientos.horas.extras"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_importar_movimientos_incapacidades
+msgid "importar.movimientos.incapacidades"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_importar_movimientos_retardos
+msgid "importar.movimientos.retardos"
+msgstr ""
+
+#. module: complementos_nomina
+#: model:ir.model,name:complementos_nomina.model_importar_movimientos_vacaciones
+msgid "importar.movimientos.vacaciones"
+msgstr ""

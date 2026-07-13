@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  
+    <record model="ir.ui.view" id="categ_view_atribute">
+      <field name="name">categ_view_product_attribute</field>
+      <field name="model">product.category</field>
+      <field name="inherit_id" ref="stock_account.view_category_property_form"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='property_stock_account_input_categ_id']" position='attributes'>
+        <attribute name="domain">[('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>
+        <xpath expr="//field[@name='property_stock_account_output_categ_id']" position='attributes'>
+        <attribute name="domain">[('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>
+        <xpath expr="//field[@name='property_stock_valuation_account_id']" position='attributes'>
+        <attribute name="domain">[('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="categ_view_atribute_purchase">
+      <field name="name">categ_view_product_attribute_purchase</field>
+      <field name="model">product.category</field>
+      <field name="inherit_id" ref="purchase.view_category_property_form"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='property_account_creditor_price_difference_categ']" position='attributes'>
+        <attribute name="domain">[('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>        
+      </field>
+    </record>
+    <record model="ir.ui.view" id="categ_view_atribute_sat">
+      <field name="name">categ_view_product_attribute_sat</field>
+      <field name="model">product.category</field>
+      <field name="inherit_id" ref="sat_catalogos.counted_view_category_property_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='account_income']" position='attributes'>
+        <attribute name="domain">[('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>        
+      </field>
+    </record>
+    <record model="ir.ui.view" id="categ_view_atribute_product">
+      <field name="name">categ_view_product_attribute_product</field>
+      <field name="model">product.category</field>
+      <field name="inherit_id" ref="account.view_category_property_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='property_account_income_categ_id']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('user_type_id','!=','view')]</attribute>
+        </xpath>    
+        <xpath expr="//field[@name='property_account_expense_categ_id']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('user_type_id','!=','view')]</attribute>
+        </xpath>    
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_view_atribute">
+      <field name="name">product_view_product_attribute</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="account.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='property_account_expense_id']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>           
+      </field>
+    </record>
+    <record model="ir.ui.view" id="product_view_atribute_diferent">
+      <field name="name">product_view_product_attribute_diferent</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="purchase.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='property_account_creditor_price_difference']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>           
+      </field>
+    </record>
+    <!--<record model="ir.ui.view" id="product_view_atribute_stock">
+      <field name="name">product_view_product_attribute_stock</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="stock_account.view_template_property_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='property_stock_account_input']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>   
+        <xpath expr="//field[@name='property_stock_account_output']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>        
+      </field>
+    </record>-->
+    <!--<record model="ir.ui.view" id="tax_view_atribute">
+      <field name="name">tax_view_product_attribute</field>
+      <field name="model">account.tax</field>
+      <field name="inherit_id" ref="account.view_tax_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='account_id']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>   
+        <xpath expr="//field[@name='refund_account_id']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>
+        <xpath expr="//field[@name='cash_basis_account']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>        
+      </field>
+    </record>-->
+    <record model="ir.ui.view" id="tax_view_atribute_cash">
+      <field name="name">tax_view_product_attribute_cash</field>
+      <field name="model">account.tax</field>
+      <field name="inherit_id" ref="account_tax_cash_basis.view_tax_form_cash_basis_inherit_argil"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='tax_cash_basis_account']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>      
+      </field>
+    </record>
+    <!--<record model="ir.ui.view" id="journal_view_atribute">
+      <field name="name">journal_view_product_attribute</field>
+      <field name="model">account.journal</field>
+      <field name="inherit_id" ref="account.view_account_journal_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='default_debit_account_id']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath> 
+        <xpath expr="//field[@name='default_credit_account_id']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view')]</attribute>
+        </xpath>     
+      </field>
+    </record>-->
+    <!--<record model="ir.ui.view" id="activos_view_atribute">
+      <field name="name">activos_view_product_attribute</field>
+      <field name="model">account.asset.category</field>
+      <field name="inherit_id" ref="account_asset.view_account_asset_category_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='account_asset_id']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view'),('company_id', '=', company_id)]</attribute>
+        </xpath> 
+        <xpath expr="//field[@name='account_depreciation_id']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view'),('company_id', '=', company_id)]</attribute>
+        </xpath>    
+        <xpath expr="//field[@name='account_depreciation_expense_id']" position='attributes'>
+        <attribute name="domain">[('internal_type','=','other'),('deprecated', '=', False),('internal_type','!=','view'),('company_id', '=', company_id)]</attribute>
+        </xpath> 
+      </field>
+    </record>-->
+</odoo>

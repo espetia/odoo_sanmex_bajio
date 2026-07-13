@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>  
+
+
+           <!-- asistente para consulta de peticiones de descarga-->
+
+        <record id="view_verificacion_wizard" model="ir.ui.view">
+            <field name="name">Verificar Petición de Descarga</field>
+            <field name="model">verificar.solicitud</field>
+            <field name="arch" type="xml">
+                <form string="Verificar">
+                    <p class="oe_grey">
+                        Verificar solicitud.
+                    </p>
+                    <group>
+                        
+                     <field name="rfc_solicita"/>                      
+                    <field name="id_peticion"/>
+                    <field name="certificate_file"/>
+                    <field name="certificate_key_file"/>
+                    <field name="certificate_password" password="True"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="solicitud_id" invisible="1"/>   
+                    </group>
+                   
+                      
+             
+                    <footer>                       
+                        <button name="consulta_solicitud" string="Consultar" type="object"/>                   
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_verificar_wizard" model="ir.actions.act_window">
+            <field name="name">Verificar Petición de Descarga</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">verificar.solicitud</field>            
+            <field name="view_mode">form</field>
+            <field name="target">new</field>           
+            <field name="binding_model_id" ref="descargamasivacfdi.model_verificar_solicitud" />
+        </record>
+
+         <!-- asistente para Descarga de paquete-->
+
+        <record id="view_descargacfdi_wizard" model="ir.ui.view">
+            <field name="name">Descarga de CFDI</field>
+            <field name="model">descarga.cfdi</field>
+            <field name="arch" type="xml">
+                <form string="Verificar">
+                    <p class="oe_grey">
+                        Descargar CFDI.
+                    </p>
+                    <group>
+                        
+                     <field name="rfc_solicita"/>                      
+                    <field name="id_paquete"/>
+                    <field name="certificate_file"/>
+                    <field name="certificate_key_file"/>
+                    <field name="certificate_password" password="True"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="solicitud_id" invisible="1"/>   
+                    </group>
+                   
+                      
+             
+                    <footer>                       
+                        <button name="descargacfdi" string="Descargar" type="object"/>                   
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_descargacfdi_wizard" model="ir.actions.act_window">
+            <field name="name">Descarga de CFDI</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">descarga.cfdi</field>            
+            <field name="view_mode">form</field>
+            <field name="target">new</field>           
+            <field name="binding_model_id" ref="descargamasivacfdi.model_verificar_solicitud" />
+        </record>
+
+
+
+
+
+           <!-- Peticiones de descarga-->
+
+        <record model="ir.ui.view" id="peticiones_descrgas_cfdi_filter">
+            <field name="name">peticiones.descargas.cfdi.filter</field>
+            <field name="model">peticiones.cfdi</field>            
+            <field name="arch" type="xml">
+              <search >
+                     <field name="tipo_peticion"  string="Tipo ..." filter_domain="['|', ('tipo_peticion','ilike',self),('id_peticion','ilike',self)]"/>
+                    <field name="tipo_factura"/>
+                    <field name="id_peticion"/>
+                    
+                    
+               
+               
+                    <filter name="paquetes" string="Paquetes Descargados" domain="[('descarga','=',True)]"/>                    
+                    <filter name="paquetespor" string="Paquetes por descargar" domain="[('descarga','=',False)]"/>
+                                        
+                    
+                   
+                    <filter name="estados" string="Estatus de Solicitud" context="{'group_by':'estado_solicitud'}"/>
+                    <filter name="tipo_solitud" string="Tipo de Solicitud" context="{'group_by':'tipo_peticion'}"/>
+                    <filter name="tipo_peticion" string="Tipo de Petición" context="{'group_by':'tipo_factura'}"/>
+                    
+                
+
+             </search>   
+            </field>
+
+        </record>
+
+        <record id="peticiones_list" model="ir.ui.view">
+             <field name="name">peticones.cfdi.tree</field>
+             <field name="model">peticiones.cfdi</field>
+             <field name="arch" type="xml">
+                  <tree string="Peticiones" create="0" delete="0" edit="0">
+                               <field name="name"/>                               
+                               <field name="id_peticion"/>
+                               <field name="descarga"/>
+                               <field name="tipo_factura"/>
+                               <field name="tipo_peticion"/>                                            
+                               <field name="date_ini"/>
+                               <field name="date_end"/>
+                               <field name="status"/>                               
+                               <field name="estado_solicitud"/>
+                               <field name="numero_cfdis"/>                               
+                               <field name="usuario_id"/>
+                               <button name="%(action_view_verificar_wizard)d" type="action" string="Verificar solicitud" class="btn-primary" attrs="{'invisible':[('estado_solicitud', 'in', ('3','6','5'))]}"/>
+                              
+                 </tree>
+             </field>
+         </record>
+
+             <record id="peticiones_form" model="ir.ui.view">
+                 <field name="name">peticones.cfdi.form</field>
+                 <field name="model">peticiones.cfdi</field>
+                 <field name="arch" type="xml">
+                     <form string="Peticiones" create="0" delete="0" edit="0">
+                      <header>
+                  <button  name="%(action_view_verificar_wizard)d" type="action" string="Verificar solicitud" class="btn-primary" attrs="{'invisible':[('estado_solicitud', 'in', ('3','6','5'))]}"/>
+                 
+                
+                </header>
+                         <sheet>
+                              <group string="Información de Solicitud">
+                                 <field name="name"/>
+                                 <field name="id_peticion"/>
+                                 <field name="descarga"/>
+                                 <field name="tipo_factura"/>
+                                 <field name="tipo_peticion"/>                                                  
+                                 <field name="date_ini"/>
+                                 <field name="date_end"/>
+                                 <field name="status"/>  
+
+                                 <field name="usuario_id"/>
+                              </group>
+                            <group string="Resultado de Verificación">
+                             <field name="estado_solicitud"/>
+                               <field name="numero_cfdis"/>
+                               
+                        </group>
+                        <notebook>
+                        <page string="Paquetes"> 
+                         <field name="paquetes_ids">
+                              <tree string="Paquetes a Descargar" editable="bottom">                        
+                                  
+                                  <field name="id_paquete"/>  
+                                  <field name="codigo_descarga"/> 
+                                  <field name="filename" invisible="1"/>
+                                  <field name="attachment_id" readonly="1" filename="filename" string="Archivo generado" colspan="4" nolabel="1"/>
+                                  <button  name="%(action_view_descargacfdi_wizard)d" type="action" string="Descarga CFDI" class="btn-primary" attrs="{'invisible':[('codigo_descarga', '!=',False)]}"/>  
+                                  <button name="descomprimir"  type="object" string="Desempaquetar" class="oe_highlight" attrs="{'invisible':[('unzip_file', '=',True)]}"/>   
+                                  <field name="unzip_file"/>  
+                                
+                              </tree>
+                              </field>             
+                     </page>          
+                
+                   
+               </notebook>
+                         </sheet>                    
+                     </form>
+                 </field>
+             </record>
+
+
+             
+
+         <record id="action_peticiones" model="ir.actions.act_window">
+                 <field name="name">Peticiones</field>
+                 <field name="type">ir.actions.act_window</field>
+                 <field name="res_model">peticiones.cfdi</field>                 
+                 <field name="view_mode">tree,form</field>
+                 <field name="view_id" ref="peticiones_list"/>
+             </record>      
+
+       <menuitem action="action_peticiones"
+                         id="action_peticiones_menu" sequence="0"
+                         parent="menu_descarga" />
+
+                         <!-- CFDI DEscargados-->
+
+            <record model="ir.ui.view" id="registro_descargas_cfdi_filter">
+            <field name="name">registro.descargas.cfdi.filter</field>
+            <field name="model">registro.descargas</field>            
+            <field name="arch" type="xml">
+              <search string="Busqueda cfdi">
+                     <field name="rfc_emisor" filter_domain="['|', ('rfc_emisor','ilike',self),('rfc_emisor','ilike',self)]" string="RFC ..."/>
+                    <field name="tipo_docto"/>
+                    <field name="tipo_peticion"/>
+                    
+                    
+                
+               
+                    <filter name="cfdirela" string="CFDI Relacionados" domain="[('registro','=',True)]"/>                    
+                    <filter name="cfdinorela" string="CFDI sin Relacionar" domain="[('registro','=',False)]"/>
+                                        
+                    
+                   
+                    <filter name="rfc_emisor" string="RFC Emisor" context="{'group_by':'rfc_emisor'}"/>
+                    <filter name="tipo_docto" string="Tipo de Documento" context="{'group_by':'tipo_docto'}"/>
+                    <filter name="status_cfdi" string="Estatus SAT" context="{'group_by':'status_cfdi'}"/>
+                    <filter name="fecha_cfdi" string="Fecha de Emisión" context="{'group_by':'fecha_cfdi'}"/>
+                    <filter name="tipo_peticion" string="Tipo de Petición" context="{'group_by':'tipo_peticion'}"/>
+                    
+                
+
+                </search>
+            </field>
+        </record>
+
+
+      <record id="registro_list" model="ir.ui.view">
+             <field name="name">registro.cfdi.tree</field>
+             <field name="model">registro.descargas</field>
+             <field name="arch" type="xml">
+                  <tree string="CFDI Descargados" create="0" delete="0" edit="0">
+                               <field name="name"/>                                 
+                               <field name="uuid_xml"/>
+                               <field name="rfc_emisor"/>
+                               <field name="rfc_receptor"/>
+                               <field name="folio_factura"/>
+                               <field name="serie_factura"/>
+                               <field name="tipo_docto"/>
+                               <field name="amount_total"/>
+                               <field name="currency_id" invisible="1"/>                                       
+                               <field name="fecha_cfdi"/>
+                               <field name="registro"/>   
+                               <field name="invoice_id"/>                            
+                               <field name="id_peticion"/>
+                               <field name="tipo_peticion"/>
+                               <field name="status_cfdi"/>
+                               <field name="usuario_id"/>
+                              
+                 </tree>
+             </field>
+         </record>
+
+             <record id="registro_form" model="ir.ui.view">
+                 <field name="name">registro.cfdi.form</field>
+                 <field name="model">registro.descargas</field>
+                 <field name="arch" type="xml">
+                     <form string="CFDI Descargados" create="0" delete="0" edit="0">
+                      <header>
+                        <button name="buscar_factura"  type="object" string="Comparar" class="oe_highlight" attrs="{'invisible':[('registro', '=',True)]}"/>
+                        <button name="consulta_estatus"  type="object" string="Estatus CFDI" class="oe_highlight"/>
+                      </header>
+                         <sheet>
+                              <group>
+                               <field name="name"/>                                                   
+                               <field name="uuid_xml"/>
+                               <field name="rfc_emisor"/>
+                               <field name="rfc_receptor"/>
+                               <field name="folio_factura"/>
+                               <field name="serie_factura"/>
+                               <field name="tipo_docto"/>
+                               <field name="amount_total"/>
+                               <field name="currency_id" invisible="1"/>                                       
+                               <field name="fecha_cfdi"/>
+                               <field name="registro"/>  
+                               <field name="invoice_id"/>                             
+                               <field name="id_peticion"/>
+                               <field name="tipo_peticion"/>
+                               <field name="usuario_id"/>
+                               <field name="filename" invisible="1"/>
+                              </group>
+                            <group string="Estatus SAT">
+                            <field name="codigo_status"/>
+                            <field name="status_cfdi"/>
+                            <field name="es_cancelable"/>
+                            
+                        </group>
+                        <group string="Archivo XML Descargado" colspan="4">
+                          
+                           <field name="file_xml" readonly="1" filename="filename" string="Archivo XML generado" colspan="4" nolabel="1"/>
+                               <!--<field name="file_xml"/>-->         
+                        </group>
+                         </sheet>                    
+                     </form>
+                 </field>
+             </record>
+
+
+             
+
+         <record id="action_registro" model="ir.actions.act_window">
+                 <field name="name">CFDI Descargados</field>
+                 <field name="type">ir.actions.act_window</field>
+                 <field name="res_model">registro.descargas</field>
+                
+                 <field name="view_mode">tree,form</field>
+                 <field name="view_id" ref="registro_list"/>
+             </record>      
+
+       <menuitem action="action_registro"
+                         id="action_registro_menu" sequence="0"
+                         parent="menu_descarga" />
+
+       
+
+</odoo>

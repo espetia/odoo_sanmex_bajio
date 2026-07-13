@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="hr_contract_view_form_nomina_cfdi" model="ir.ui.view">
+        <field name="name">hr.contract.nomina</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='infonavit_porc']" position="after">
+                <field name="infonavit_mov_perm"/>
+                <field name="infonavit_mov_perm_monto" attrs="{'invisible': [('infonavit_mov_perm', '=', False)], 'required': [('infonavit_mov_perm', '=', True)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='date_start']" position="after">
+                <field name="fch_antiguedad"/>
+                <field name="fch_antiguedad_automatico" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='percepcion_adicional_amount']" position="after">
+                <field name="transporte"/>
+                <field name="transporte_monto" attrs="{'invisible':[('transporte','=',False)], 'required': [('transporte', '=', True)]}"/>
+                <field name="retroactivo"/>
+                <field name="retroactivo_monto" attrs="{'invisible':[('retroactivo','=',False)], 'required': [('retroactivo', '=', True)]}"/>
+                <field name="seguro_vivienda"/>
+            </xpath>
+
+            <!--<xpath expr="//field[@name='pens_alim_fijo']" position="after">
+                <field name="seguro_vivienda"/>
+            </xpath>-->
+
+        </field>
+    </record>
+
+    <record id="hr_contract_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">hr.contract.view.kanban.inherit</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_kanban"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="fch_antiguedad_automatico" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

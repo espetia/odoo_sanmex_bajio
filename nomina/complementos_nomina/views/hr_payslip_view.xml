@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="view_hr_payslip_nomina_kuh7_complement" model="ir.ui.view">
+        <field name="name">hr.payslip.nomina.kuh7.complement</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="nomina_cfdi_ee.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ultima_nomina']" position="after">
+                <field name="pay_pantry_vouchers" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_tree_inherit_nomina_cfdi_kuh7" model="ir.ui.view">
+        <field name="name">view.hr.payslip.tree.inherit.nomina.cfdi.kuh7</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='number']" position="after">
+                <field name="no_empleado" string="No. Empleado"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

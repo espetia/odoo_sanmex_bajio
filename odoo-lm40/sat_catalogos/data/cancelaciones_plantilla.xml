@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    
+   
+        
+        <!--Email template -->
+        <record id="email_template_acuse_cancelacion" model="mail.template">
+            <field name="name">Acuse de Solicitud de Cancelación - Send by Email</field>
+            <field name="email_from">${object.create_uid.email}</field>
+            <field name="email_to">${object.factura.partner_id.email}</field>
+            <field name="reply_to">${object.create_uid.email}</field>
+            <field name="subject">Acuse de Cancelación:: ${object.name or 'n/a' }</field>
+            <field name="model_id" ref="model_cancelaciones"/>
+            <field name="auto_delete" eval="False"/>
+            
+            <field name="report_name">${(object.name or '').replace('/','_')}</field>
+
+            <field name="lang">${object.factura.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "> <p>Estimado usuario: </p>
+                <p>Usted tiene una solictud de cancelación con folio interno N° <b> ${object.name or 'n/a' } </b> de la factura N° <b> ${object.factura.move_name or 'n/a' } </b>, por un monto de $ <b> ${object.total_docto or 'n/a' } </b> en proceso de la Empresa <b> ${object.factura.compañia_emisora_id.name or 'n/a' } </b> </p>   
+                <p> Cualquier duda o aclaración con gusto le atenderemos</p>             
+            </div>
+            ]]></field>
+        </record>
+        
+        
+   
+</odoo>

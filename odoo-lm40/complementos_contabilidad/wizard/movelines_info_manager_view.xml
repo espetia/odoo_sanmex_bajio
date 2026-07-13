@@ -1,0 +1,46 @@
+<odoo>
+    
+    <data>
+        
+        <record id="moveline_info_manager_form" model="ir.ui.view">
+            <field name="name">moveline.info.manager.form</field>
+            <field name="model">moveline.info.manager</field>
+            <field name="arch" type="xml">
+                <form string="Información para Contabilidad Electrónica">
+                    <group col="4" colspan="4">
+                        <separator colspan="4" string="Asiento relacionado"/>
+
+                            <field name="line_name"/>
+                            <field name="line_account"/>
+                            <field name="debit" attrs="{'invisible' : [('credit', '!=', 0.0)]}"/>
+                            <field name="credit" attrs="{'invisible' : [('debit', '!=', 0.0)]}"/>
+
+
+                        <field name="complement_ids" mode="tree" nolabel="1" colspan="4"
+                                context="{'default_move_line_id' : context['active_ids'], 'default_amount' : context['c_amount'], 'default_compl_date' : context['c_date']}">
+                            <tree>
+                               <field name="type_id" string="Tipo"/>
+                               <field name="rfc" />
+                               <field name="rfc2" />
+                               <field name="foreign_taxid" invisible="1"/>
+                               <field name="compl_date"/>
+                               <field name="payee_id"  invisible="1"/>
+                               <field name="payee_acc_id"  invisible="1"/>
+                               <field name="amount"/>
+                               <field name="uuid" />
+                               <field name="cbb_series" invisible="1"/>
+                               <field name="cbb_number" invisible="1"/>
+                               <field name="foreign_invoice" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button type="object" name="save_changes" string="Guardar" class="oe_highlight"/> 
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+    </data>
+    
+</odoo>

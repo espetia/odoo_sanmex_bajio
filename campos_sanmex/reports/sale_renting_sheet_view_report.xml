@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_sale_renting_sheet_sanmex_view" model="ir.actions.report">
+        <field name="name">Hoja Pedido Sanmex</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">campos_sanmex.report_rental_sheet_sanmex</field>
+        <field name="report_file">campos_sanmex.report_rental_sheet_sanmex</field>
+        <field name="print_report_name">'Hoja de Pedido - %s' % object.name</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_rental_sheet_sanmex">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="campos_sanmex.report_sale_renting_sheet_view_sanmex" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_sale_renting_sheet_view_sanmex">
+    <t t-call="web.external_layout">
+        <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+        <t t-set="address">
+            <!-- <div t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}" t-options-fields="['name']" class="h3 o_bold"/> -->
+        </t>
+        <t t-if="doc.partner_shipping_id == doc.partner_invoice_id                              and doc.partner_invoice_id != doc.partner_id                              or doc.partner_shipping_id != doc.partner_invoice_id">
+            <t t-set="information_block">
+                <strong t-if="doc.partner_shipping_id == doc.partner_invoice_id">Invoicing and Shipping Address:</strong>
+                <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                    <strong style="margin-right:200px;width:4px">
+            <font style="font-size: 12px;">
+                <b>
+                <font style="font-size: 18px;">Dirección de Entrega:</font>
+                </b>
+                </font>
+              </strong>
+              </t>
+                        </t>
+                    </t>
+        <div class="page">
+          <div class="oe_structure"/>
+                <div class="row">
+                  <div class="col-3"/>
+                  <div class="col-3"/>
+                  <div class="col-3"/>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <span>
+                  <b>
+                  <font style="font-size: 14px;">
+                  <font style="font-size: 14px;">
+                  <font style="font-size: 14px;">
+                  <font style="font-size: 18px;">Dirección de Entrega:</font>
+                </font>
+              </font>
+              </font>
+              </b>
+              </span>
+              <span t-field="doc.partner_shipping_id.name" style="color:#081258" class="o_bold"/>
+              
+                <span t-field="doc.partner_shipping_id.street"/>
+              
+                <span t-field="doc.partner_shipping_id.street2"/>
+              
+                <span t-field="doc.partner_shipping_id.city"/>
+              
+                <span t-field="doc.partner_shipping_id.state_id.name"/>
+              
+                <span/>
+              
+                  </div>
+                  <div class="col-6 o_bold" style="color:#081258">
+                    <span> </span>
+              <span t-field="doc.partner_id.name" class="o_bold h4"/>
+              
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <span>
+                  <b t-if="doc.ref_entrega">Referencia:</b>
+                </span>
+              <span t-field="doc.ref_entrega"/>
+              
+                  </div>
+                  <div class="col-6 text-right">
+                    <span> </span>
+              <!-- <span t-field="doc.x_studio_cliente_sucursales_sm" class="h4 o_bold" style="color:#CE0000" t-if="doc.x_studio_cliente_sucursales_sm"/> -->
+              
+                  </div>
+                </div>
+              
+              
+              
+                <div class="row">
+                  <div class="col-3 o_bold">
+                <span>
+                  <b> </b>
+              </span>
+              </div>
+                  <div class="col-3"/>
+                  </div>
+                <div class="row">
+                  </div>
+              
+              
+
+                        <h2 class="mt16">
+                            <t t-if="env.context.get('proforma', False) or is_pro_forma">
+                                <span>Pro-Forma Invoice # </span>
+                            </t>
+                            </h2>
+                <div class="row">
+                  <div class="col-3"/>
+                  <div class="col-3"/>
+                  <div class="col-3"/>
+                  </div>
+                <div class="row">
+                  </div>
+                <div class="row">
+                  </div>
+              
+              
+                <table class="table table-bordered o_report_block_table">
+                  <tbody>
+                    <tr t-foreach="doc.partner_id.category_id" t-as="table_line">
+                      <td>
+                        <span t-field="table_line.display_name"/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              
+              
+                <table class="table table-bordered o_report_block_table">
+                  <thead>
+                    <tr>
+                      
+                </tr>
+                  </thead>
+                  <tbody>
+                    <tr t-foreach="doc.order_line" t-as="table_line">
+                      
+                </tr>
+                  </tbody>
+                </table>
+              
+              
+
+                        <div class="row">
+                  </div>
+                <div class="row">
+                  </div>
+                <div class="row">
+                  </div>
+              
+              
+              
+                <table class="table table-bordered o_report_block_table">
+                  <thead>
+                    <tr>
+                      
+                
+                
+                
+                
+                
+                <th style="background-color:#000241" class="small text-center bg-200 text-black">
+                  <span>Nombre de Sucursal</span>
+                </th>
+              <th style="background-color:#000241" class="text-center small bg-200 text-black">
+                  <span>Fecha de Entrega</span>
+                </th>
+              <th style="background-color:#000241" class="text-center small bg-200 text-black">
+                  <span>Contacto de Solicitud</span>
+                </th>
+                <th class="text-center small bg-200 text-black" style="background-color:#000241">
+                  <span>Tel. de Quien Solicito</span>
+              </th>
+              
+              <th style="background-color:#000241" class="text-center small bg-200 text-black">
+                  <span>Contacto que Recibe</span>
+                </th>
+                <th style="background-color:#000241" class="text-center small bg-200 text-black">
+                  <span>Tel. de quien recibe</span>
+                </th>
+              
+              <th style="background-color:#000241" class="text-white small bg-200 text-black">
+                  <p style="margin-bottom: 0px;">
+                    <span>
+                  <p style="margin-bottom: 0px;">
+                    <font class="text-900">HORA DE INICIO</font>
+                  </p>
+                </span>
+              </p>
+                </th>
+              <th style="background-color:#000241" class="text-center small bg-200 text-black">
+                  <span>HORA DE TERMINACIÓN</span>
+                </th>
+              <th style="background-color:#000241" class="text-center small bg-200 text-black">
+                        <span>SANMEX</span>
+                <span t-field="doc.partner_id.ref"/>
+              
+              </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr t-foreach="docs" t-as="table_line">
+                      
+                
+                
+                
+                
+                
+                <td class="small">
+                  <!-- <span t-field="doc.x_studio_nombre_de_sucursal"/> -->
+                </td>
+              <td class="small text-center">
+                  <!-- <span t-field="doc.x_studio_fecha_de_entrega"/> -->
+                </td>
+              <td class="small text-center">
+                  <!-- <span t-field="doc.x_studio_contacto_de_solicitud"/> -->
+                </td>
+                <td class="small text-center">
+                  <!-- <span t-field="doc.x_studio_telefono"/> -->
+                </td>
+              
+              <td class="small text-center">
+                  <!-- <span t-field="doc.x_studio_contacto_que_recibe"/> -->
+                </td>
+                <td class="small text-center">
+                  <!-- <span t-field="doc.x_studio_tel_de_quien_recibe"/> -->
+                </td>
+              
+              <td class="small">
+                  <!-- <span t-field="doc.x_studio_hora_de_inicio"/> -->
+                </td>
+              <td class="small">
+                  <!-- <span t-field="doc.x_studio_hora_de_terminacin"/> -->
+                </td>
+              <td class="bg-white small text-center">
+                        <span t-field="table_line.display_name"/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="row">
+                  </div>
+                <div class="row">
+                  <div class="col o_bold text-white bg-200 text-black text-center" style="background-color:#000241">
+                    <span>
+                  <p style="margin-bottom: 0px;">
+                    <font class="text-900">TRABAJOS A REALIZAR</font>
+                  </p>
+                </span>
+              </div>
+                </div>
+              
+              
+
+                        <!-- Is there a discount on at least one line? -->
+                        <t t-set="display_discount" t-value="any([l.discount for l in doc.order_line])"/>
+
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th name="th_description" class="text-center bg-200 text-black" style="background-color:#000241">Description</th>
+                <th class="text-center bg-200 text-black" style="background-color:#000241">
+                  <span>CANTIDAD</span>
+                </th>
+              
+                <th name="th_discount" t-if="display_discount" class="text-right" groups="product.group_discount_per_so_line">
+                                        <span>Disc.%</span>
+                                    </th>
+                                    </tr>
+                            </thead>
+                            <tbody class="sale_tbody">
+
+                                <t t-set="current_subtotal" t-value="0"/>
+
+                                <t t-foreach="doc.order_line" t-as="line">
+
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+
+                                    <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                        <t t-if="not line.display_type">
+                                            <td name="td_name" class="text-right"><span t-field="line.name" t-if="line.price_unit&gt;0"/></td>
+                <td>
+                  <!-- <span t-field="doc.x_studio_cantidad"/> -->
+                </td>
+              
+                <td t-if="display_discount" class="text-right" groups="product.group_discount_per_so_line">
+                                                <span t-field="line.discount"/>
+                                            </td>
+                                            </t>
+                                        <t t-if="line.display_type == 'line_section'">
+                                            <td name="td_section_line" colspan="99">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                            <t t-set="current_section" t-value="line"/>
+                                            <t t-set="current_subtotal" t-value="0"/>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_note'">
+                                            <td name="td_note_line" colspan="99" class="small bg-white text-600" t-if="line.price_unit&gt;0">
+                                                <span/>
+                                            </td>
+                                        </t>
+                                    </tr>
+
+                                    <t t-if="current_section and (line_last or doc.order_line[line_index+1].display_type == 'line_section')">
+                                        <tr class="is-subtotal text-right">
+                                            <td name="td_section_subtotal" colspan="103">
+                                                <strong class="mr16">Subtotal</strong>
+                                                <span t-esc="current_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="clearfix" name="so_total_summary">
+                            <div id="total" class="row" name="total">
+                                <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div t-if="doc.signature" class="mt32 ml64 mr4" name="signature">
+                            <div class="offset-8">
+                                <strong>Signature</strong>
+                            </div>
+                            <div class="offset-8">
+                                <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
+                            </div>
+                            <div class="offset-8 text-center">
+                                <p t-field="doc.signed_by"/>
+                            </div>
+                        </div>
+                    <div t-if="doc.sale_order_option_ids and doc.state in ['draft', 'sent']">
+                        <t t-set="has_option_discount" t-value="any(doc.sale_order_option_ids.filtered(lambda o: o.discount != 0.0))"/>
+                        <h4>
+                            <span>Options</span>
+                        </h4>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">Description</th>
+                                    <th t-if="has_option_discount" groups="product.group_discount_per_so_line" class="text-left">Disc.%</th>
+                                    <th class="text-right">Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody class="sale_tbody">
+                                <tr t-foreach="doc.sale_order_option_ids" t-as="option">
+                                    <td>
+                                        <span t-field="option.name"/>
+                                    </td>
+                                    <td t-if="has_option_discount" groups="product.group_discount_per_so_line">
+                                        <strong t-if="option.discount != 0.0" class="text-info">
+                                            <t t-esc="((option.discount % 1) and '%s' or '%d') % option.discount"/>%
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong class="text-right">
+                                            <div t-field="option.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}" t-att-style="option.discount and 'text-decoration: line-through' or None" t-att-class="option.discount and 'text-danger' or None"/>
+                                            <div t-if="option.discount">
+                                                <t t-esc="'%.2f' % ((1-option.discount / 100.0) * option.price_unit)"/>
+                                            </div>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                
+
+                        <div class="oe_structure"/>
+                <table class="table table-bordered o_report_block_table">
+                  <tbody>
+                    <tr t-foreach="doc.sale_order_option_ids" t-as="table_line">
+                      <td>
+                        <span t-field="table_line.display_name"/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="row">
+                  <div class="col-6">
+                    <span> </span>
+                <span>OBSERVACIONES OPERADOR:</span>
+              </div>
+                  <div class="col-6">
+                    <span> </span>
+              </div>
+                </div>
+                <table class="table table-bordered o_report_block_table">
+                  <thead>
+                    <tr>
+                      
+                <th class="bg-200 text-center small o_bold">
+                  <span>Operador</span>
+                </th>
+                <th class="bg-200 text-center text-black small o_bold">
+                  <span>Unidad</span>
+                </th>
+                </tr>
+                  </thead>
+                  <tbody>
+                    <tr t-foreach="docs" t-as="table_line">
+                      
+                <td class="small">
+                  <!-- <span t-field="doc.x_studio_operador"/> -->
+                </td>
+                <td class="bg-white small">
+                  <!-- <span t-field="doc.x_studio_unidad"/> -->
+                </td>
+                </tr>
+                  </tbody>
+                </table>
+              
+              
+                <div class="row">
+                  </div>
+                <div class="row">
+                  </div>
+                <div class="row">
+                  <div class="col">
+                    <!-- <span t-field="doc.x_studio_como_califica_el_servicio"/> -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <!-- <span t-field="doc.x_studio_como_califica_el_servicio"/> -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <span> </span>
+              </div>
+                  <div class="col-6">
+                    <span> </span>
+              </div>
+                </div>
+              
+                <div class="row">
+                  <div class="col o_bold text-white bg-200 text-black text-center" style="background-color:#000241">
+                    <span>
+                  <p style="margin-bottom: 0px;">
+                    <font class="text-900">CLIENTE</font>
+                  </p>
+                </span>
+              </div>
+                </div>
+              
+                <div class="row">
+                  <div class="col text-center o_bold">
+                    <span>
+                  <b>¿Cómo califica el Servicio?</b>
+                </span>
+              </div>
+                </div>
+                <table class="table table-bordered o_report_block_table">
+                  <thead>
+                    <tr>
+                      
+                
+                
+                
+                <th class="text-center bg-200 small o_bold">
+                  <span>EXCELENTE</span>
+                </th>
+              <th class="text-center small bg-200 o_bold">
+                  <span>BUENO</span>
+                </th>
+              <th class="bg-200 text-center small o_bold">
+                  <span>MALO</span>
+                </th>
+              <th class="bg-200 text-center small o_bold">
+                  <span>REGULAR</span>
+                </th>
+                <th class="bg-200 text-center small o_bold">
+                  <span>OBSERVACIONES DE CLIENTE</span>
+                </th>
+              
+              </tr>
+                  </thead>
+                  <tbody>
+                    <tr t-foreach="docs" t-as="table_line">
+                      
+                
+                
+                
+                <td>
+                  <!-- <span t-field="doc.x_studio_excelente"/> -->
+                </td>
+              <td>
+                  <!-- <span t-field="doc.x_studio_bueno"/> -->
+                </td>
+              <td>
+                  <!-- <span t-field="doc.x_studio_malo"/> -->
+                </td>
+              <td class="bg-white">
+                  <!-- <span t-field="doc.x_studio_regular"/> -->
+                </td>
+                <td class="text-center bg-white">
+                  <!-- <span t-field="doc.x_studio_observaciones_de_cliente"/> -->
+                </td>
+              
+              </tr>
+                  </tbody>
+                </table>
+                <table class="table table-bordered o_report_block_table">
+                  <thead>
+                    <tr>
+                      
+                </tr>
+                  </thead>
+                  <tbody>
+                    <tr t-foreach="doc.order_line" t-as="table_line">
+                      
+                </tr>
+                  </tbody>
+                </table>
+                <div class="row">
+                  <div class="col text-center bg-100" style="background-color:#000241">
+                    <span>Recibimos de San Mex del Norte, S.A. de C.V. los servicios señalados en este Soporte</span>
+              </div>
+                </div>
+              
+                <table class="table table-bordered o_report_block_table">
+                  <thead>
+                    <tr>
+                      
+                <th style="background-color:#000241" class="text-center small text-black bg-200">
+                  <span>NOMBRE DEL CLIENTE</span>
+                </th>
+                <th style="background-color:#000241" class="text-center small bg-200 text-black">
+                  <span>FIRMA DEL CLIENTE</span>
+                </th>
+              
+              </tr>
+                  </thead>
+                  <tbody>
+                    <tr t-foreach="docs" t-as="table_line">
+                      
+                <td class="h1">
+                  <!-- <span t-field="doc.x_studio_nombre_del_cliente"/> -->
+                </td>
+                <td class="h1 bg-white">
+                  <!-- <span t-field="doc.x_studio_firma_del_cliente"/> -->
+                </td>
+              
+              </tr>
+                  </tbody>
+                </table>
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                <p id="fiscal_position_remark" t-if="doc.fiscal_position_id and doc.fiscal_position_id.sudo().note">
+                            <strong>Fiscal Position Remark:</strong>
+                            <span t-field="doc.fiscal_position_id.sudo().note"/>
+                        </p>
+                    </div>
+            </t>
+    </template>
+
+</odoo>

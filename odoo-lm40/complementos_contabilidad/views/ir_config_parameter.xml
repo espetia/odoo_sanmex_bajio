@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+
+	<!-- Range to validate when Supplier Invoice Total amount has difference with XML CFDI File -->
+	<record model="ir.config_parameter" id="argil_tolerance_range_between_invoice_record_and_cfdi_xml_file">               
+      <field name="key">argil_tolerance_range_between_invoice_record_and_cfdi_xml_file</field> 
+      <field name="value">1.0</field>
+    </record>
+
+
+</data>
+</odoo>

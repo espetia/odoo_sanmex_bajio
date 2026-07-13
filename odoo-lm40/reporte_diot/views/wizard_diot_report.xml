@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	
+
+<!-- wizard for obligaciones -->
+
+	<record id="action_wz_declar_diot" model="ir.actions.wizard">
+	  <field name="name">Declaracion Operaciones con Terceros [ DIOT ] </field>
+	  <field name="wiz_name">wizard.declar.diot</field>
+	</record>
+
+    <menuitem id="menu_diot_report" name="DIOT" parent="menu_registro_diot"/>
+        
+	<menuitem 
+		action="action_wz_declar_diot" 
+		id="menu_declar_diot_wz" 
+		parent="reporte_diot.menu_diot_report" 
+		type="wizard" 
+		/>
+
+
+	
+
+</odoo>

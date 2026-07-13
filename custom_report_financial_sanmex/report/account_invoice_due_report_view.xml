@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+     
+        <record id="acccount_invoice_due_report_sanmex_view_pivot" model="ir.ui.view">
+            <field name="name">acccunt.invoice.due.sanmex.view.pivot</field>
+            <field name="model">account.due.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Facturas Vencidas" >
+                    <field name="partner_id" type="row"/>
+                    <field name="invoice_date" type="col"/>
+                    <field name="amount_residual" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        
+        <record id="account_invoice_due_report__sanmex_view_graph" model="ir.ui.view">
+            <field name="name">account.invoice.due.report.view.graph</field>
+            <field name="model">account.due.report</field>
+            <field name="arch" type="xml">
+                <graph string="Facturas Vencidas" type="bar">
+                    <field name="partner_id" />
+                    <field name="amount_residual" type="measure" />
+                    <field name="tota_due_30" type="measure" />
+                </graph>
+            </field>
+        </record>
+
+        <record id="account_invoice_due_report_sanmex_view_tree" model="ir.ui.view">
+            <field name="name">account.invoice.due.report.sanmex.view.tree</field>
+            <field name="model">account.due.report</field>
+            <field name="arch" type="xml">
+                <tree string="Facturas Vencidas">
+                    <field name="move_id" />
+                    <field name="partner_id" />
+                    <field name="invoice_date" />
+                    <field name="totalinvoice" sum="total" widget="monetary"/>
+                    <field name="amount_residual" sum="total" widget="monetary"/>
+                    <field name="tota_due_30" sum="total" widget="monetary"/>
+                    <field name="tota_due_60" sum="total" widget="monetary"/>
+                    <field name="tota_due_90" sum="total" widget="monetary"/>
+                    <field name="tota_due_more" sum="total" widget="monetary"/>
+                    <field name="company_id"  groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_invoice_due_report_sanmex_view_search" model="ir.ui.view">
+            <field name="name">account_invoice_due_report_sanmex.view.search</field>
+            <field name="model">account.due.report</field>
+            <field name="arch" type="xml">
+                <search string="Reporte de deuda">
+                    <field name="invoice_date" />
+                    <field string="Cliente" name="partner_id" operator="child_of"/>
+                    <separator/>
+                    <filter name="filter_invoice_date" date="invoice_date"/>
+                    <group expand="1" string="Agrupar por">
+                        <filter name="partner_id" string="Cliente"  context="{'group_by': 'partner_id'}" />
+                        <filter name="journal_id" string="Diario"  context="{'group_by': 'journal_id'}" />
+                        <separator orientation="vertical" />
+                        <filter string="Fecha de Factura" name="invoice_date" context="{'group_by':'invoice_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_account_invoice_due_report_sanmex" model="ir.actions.act_window">
+            <field name="name">Facturas vencidas</field>
+            <field name="res_model">account.due.report</field>
+            <field name="view_mode">graph,pivot</field>
+            <field name="search_view_id" ref="account_invoice_due_report_sanmex_view_search"/>
+        </record>
+    </data>
+    
+
+</odoo>

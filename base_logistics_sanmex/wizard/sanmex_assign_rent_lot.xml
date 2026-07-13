@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View sanmex_assign_rent_lot form -->
+    <record id="wizard_view_sanmex_assign_rent_lot_form" model="ir.ui.view">
+        <field name="name">view.sanmex_assign_rent_lot.form</field>
+        <field name="model">sanmex.assign.rent.lot</field>
+        <field name="arch" type="xml">
+            <form string="Asignar Serie a Rentar" js_class="planning_barcode">
+                <div class="oe_title">
+                    <div class="oe_title">
+                        <h1>
+                            <field name="sale_id" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="route_id" readonly="1"/>
+                            <field name="stock_house_id" readonly="1"/>
+                            <field name="barcode" invisible="1" force_save="1" />
+                        
+                        </group>
+                        <group>
+                            <!--<button class="oe_highlight o_barcode_button" string="Scan Barcode" t-on-click.synthetic="_PlanningBarcodeConsole" icon="fa-barcode" data-hotkey="x"/>-->
+                            <button class="oe_highlight o_qrcode_button" string="Scan QRcode" icon="fa-qrcode"/>
+                        </group>
+                        <group>
+                            <field name="user_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="assign_line_rent_ids">
+                            <tree editable="top">
+                                <field name="lot_id" invisible="1"/>
+                                <field name="lot_name" />
+                                <field name="lot_qty" readonly="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                </div>
+                <footer>
+                    <button name="add" type="object" string="Terminar" class="oe_highlight"/>
+                    <button name="print_report" type="object" string="Imprimir" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action sanmex_assign_rent_lot
+    <record id="action_wizard_sanmex_assign_rent_lot" model="ir.actions.act_window">
+        <field name="name">Sanmex_assign_rent_lot</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sanmex.assign.rent.lot</field>
+        <field name="view_mode">form</field>
+        <field name="binding_model_id" ref="addon.model_model_name"/>
+        <field name="target">new</field>
+    </record> -->
+
+</odoo>

@@ -1,0 +1,472 @@
+<odoo>
+    
+        
+        <record id="eaccount_complements_form" model="ir.ui.view">
+            <field name="name">eaccount.complements.form</field>
+            <field name="model">eaccount.complements</field>
+            <field name="priority" eval="10"/>
+            <field name="arch" type="xml">
+                <form string="Contabilidad electrónica - Complementos">
+                   	<group>
+                   	    <field name="type_id" widget="selection" string="Tipo de Complemento"/>
+                        <field name="type_key" invisible="1"/>
+                        <field name="origin_bank_key" invisible="1"/>
+                        <field name="destiny_bank_key" invisible="1"/>
+                   	</group>
+                    <table align="center" style="width: 96%;"> 
+                        <tr attrs="{'invisible': [('type_key','!=','payment')]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="pay_method_id"/>
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="pay_method_id" nolabel="1"
+                               attrs="{'readonly' : [('type_key', '!=', 'payment')], 'required' : [('type_key', '=', 'payment')], 'invisible': [('type_key','!=','payment')]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;"></td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key','not in',['cfdi','other'])]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="file_data"/>
+                            </td>
+                            <td style="border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;" colspan="4">
+                                <field name="file_data" invisible="1" nolabel="1"/>
+                            </td>
+                        </tr>
+                        <tr attrs="{'invisible': [('type_key','!=','cfdi')]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="uuid"/>
+                            </td>
+                            <td style="border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;" colspan="4">
+                                <field name="uuid"  nolabel="1"
+                                attrs="{'readonly' : [('type_key', '!=', 'cfdi')], 'required' : [('type_key', '=', 'cfdi')], 'invisible': [('type_key','!=','cfdi')]}"/>
+                            </td>
+                        </tr>
+                        <tr attrs="{'invisible': [('type_key','not in',['cfdi','other'])]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="cbb_series" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="cbb_series" nolabel="1"
+                                    attrs="{'readonly' : [('type_key', 'not in', ['cfdi','other'])], 'invisible': [('type_key','not in',['cfdi','other'])]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="cbb_number" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="cbb_number" nolabel="1"
+                                    attrs="{'readonly' : [('type_key', 'not in', ['cfdi','other'])], 'required' : [('type_key', '=', 'other')], 'invisible': [('type_key','not in',['cfdi','other'])]}"/>
+                            </td>                        
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', '!=', 'foreign')]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="foreign_invoice" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="foreign_invoice" nolabel="1"
+                                    attrs="{'readonly' : [('type_key', '!=', 'foreign')], 'required' : [('type_key', '=', 'foreign')], 'invisible' : [('type_key', '!=', 'foreign')]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="foreign_taxid" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="foreign_taxid" nolabel="1"
+                                    attrs="{'readonly' : [('type_key', '!=', 'foreign')], 'required' : [('type_key', '=', 'foreign')], 'invisible' : [('type_key', '!=', 'foreign')]}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="amount" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="amount" nolabel="1"
+                                       attrs="{'required' : [('type_key', 'in', ['cfdi','check','transfer','payment','other','foreign'])]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="compl_date" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="compl_date" nolabel="1"
+                                       attrs="{'required' : [('type_key', 'in', ['cfdi', 'other', 'foreign', 'check','transfer','payment'])]}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="compl_currency_id" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="compl_currency_id" nolabel="1"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="exchange_rate" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="exchange_rate" nolabel="1"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="rfc" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="rfc" nolabel="1"
+                                attrs="{'readonly' : [('type_key', 'in', ['foreign', 'payment'])], 'required' : [('type_key', 'in', ['cfdi','check','transfer','other'])]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="rfc2" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="rfc2" nolabel="1"
+                                    attrs="{'readonly' : [('type_key', '=', 'foreign')], 'required' : [('type_key', 'in', ['cfdi','check','transfer','payment','other'])]}"/>
+                            </td>
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}" >
+                            <td colspan="5" style="padding: 8px 5px 3px 3px;">
+                                <separator string="Información Transacción Bancaria" 
+                                   attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}" />
+                            </td>
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}">
+                            <td colspan="2" style="padding: 3px 3px 3px 8px;text-align: center;">
+                                <separator string="Origen         " />
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td colspan="2" style="padding: 3px 3px 3px 8px;text-align: center;">
+                                <separator string="Destino         " />
+                            </td>
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="origin_account_id" attrs="{'invisible' : [('show_native_accs', '=', True)]}"/>
+                                <label for="origin_native_accid" attrs="{'invisible' : [('show_native_accs', '!=', True)]}"/>
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="origin_account_id" nolabel="1"
+                                       context="{'is_origin' : True}" 
+                                        attrs="{'invisible' : [('show_native_accs', '=', True)], 'readonly' : [('type_key', 'not in', ['check', 'transfer'])], 
+                                                'required' : [('type_key', '=', 'check'), ('show_native_accs', '!=', True)]}"/>
+                                <field name="origin_native_accid" nolabel="1"
+                                       context="{'is_native' : True, 'is_origin' : True}" 
+                                       attrs="{'invisible' : [('show_native_accs', '!=', True)], 'readonly' : [('type_key', 'not in', ['check', 'transfer'])], 
+                                               'required' : [('type_key', '=', 'check'), ('show_native_accs', '=', True)]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="destiny_account_id" attrs="{'invisible' : [('show_native_accs1', '=', True)]}"/>
+                                <label for="destiny_native_accid" attrs="{'invisible' : [('show_native_accs1', '!=', True)]}"/>
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="destiny_account_id" nolabel="1"
+                                       
+                                        attrs="{'invisible' : [('show_native_accs1', '=', True)], 'readonly' : [('type_key', '!=', 'transfer')], 
+                                                'required' : [('type_key', '=', 'transfer'), ('show_native_accs1', '!=', True)]}"
+                                        context="{'type_key' : type_key}"/>
+                                <field name="destiny_native_accid" nolabel="1"
+                                       context="{'is_native' : True, 'type_key' : type_key}"
+                                       attrs="{'invisible' : [('show_native_accs1', '!=', True)], 'readonly' : [('type_key', '!=', 'transfer')], 
+                                               'required' : [('type_key', '=', 'transfer'), ('show_native_accs1', '=', True)]}"/>
+                            </td>
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="show_native_accs" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="show_native_accs" nolabel="1"
+                                       context="{'is_origin' : True, 'is_native' : show_native_accs}"
+                                        attrs="{'invisible' : [('type_key', 'not in', ['check','transfer'])]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="show_native_accs1" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="show_native_accs1" nolabel="1"
+                                       context="{'is_native' : show_native_accs1, 'type_key' : type_key}"
+                                       attrs="{'invisible' : [('type_key', '!=', 'transfer')]}"/>
+                            </td>                            
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="origin_bank_id" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="origin_bank_id" nolabel="1"
+                                       context="{'is_origin' : True}"
+                                        attrs="{'readonly' : [('type_key', 'not in', ['check', 'transfer'])], 'required' : [('type_key', 'in', ['check', 'transfer'])]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="destiny_bank_id" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="destiny_bank_id" nolabel="1"
+                                        attrs="{'readonly' : [('type_key', '!=', 'transfer')], 'required' : [('type_key', '=', 'transfer')]}"/>
+                            </td>
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="origin_frgn_bank" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="origin_frgn_bank" nolabel="1"
+                                        attrs="{'readonly' : [('type_key', 'not in', ['check', 'transfer'])], 'required' : [('origin_bank_key', '=', '999')]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="destiny_frgn_bank" />
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="destiny_frgn_bank" nolabel="1"
+                                        attrs="{'readonly' : [('type_key', '!=', 'transfer')], 'required' : [('destiny_bank_key', '=', '999')]}"/>
+                            </td>
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="check_number"/>
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="check_number" nolabel="1"
+                                       attrs="{'readonly' : [('type_key', '!=', 'check')], 'required' : [('type_key', '=', 'check')]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;"></td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}">
+                            <td colspan="5" style="padding: 3px 3px 3px 8px;">
+                                <separator string="Beneficiario"
+                                       attrs="{'readonly' : [('type_key', 'not in', ['check','transfer','payment'])]}"/>
+                            </td>
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}">
+                            <td colspan="5" style="padding: 3px 3px 3px 8px;">
+                                <label for="payee_id" attrs="{'invisible' : [('show_native_accs2', '=', True)]}"
+                                        style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;"/>
+                                <label for="payee_acc_id" attrs="{'invisible' : [('show_native_accs2', '=', False)]}"
+                                        style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;"/>
+                                <field name="payee_id" context="{'is_native' : True, 'type_key' : type_key}" nolabel="1" 
+                                        style="width:80%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;"
+                                    attrs="{'invisible' : [('show_native_accs2', '=', True)], 'readonly' : [('type_key', 'not in', ['check','transfer','payment'])], 
+                                            'required' : [('type_key', 'in', ['check','transfer','payment']), ('show_native_accs2', '!=', True)]}"/>
+                                <field name="payee_acc_id" nolabel="1"
+                                       style="width:80%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;"
+                                       context="{'type_key' : type_key}"
+                                        attrs="{'invisible' : [('show_native_accs2', '=', False)], 'readonly' : [('type_key', 'not in', ['check','transfer','payment'])], 
+                                                'required' : [('type_key', 'in', ['check','transfer','payment']), ('show_native_accs2', '=', True)]}"/>
+                            </td>
+                            
+                        </tr>
+                        <tr attrs="{'invisible' : [('type_key', 'in', ['cfdi','other','foreign', False])]}">
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;">
+                                <label for="show_native_accs2"/>
+                            </td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;">
+                                <field name="show_native_accs2" nolabel="1"
+                                       context="{'type_key' : type_key, 'is_native' : not show_native_accs2}"
+                                       attrs="{'invisible' : [('type_key', 'not in', ['check','transfer','payment'])]}"/>
+                            </td>
+                            <td style="width:4%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                            <td style="width:14%; border-right: 1px solid #ddd;padding: 3px 3px 3px 8px;font-weight: bold;"></td>
+                            <td style="width:34%; border-right: 0px solid #ddd;padding: 3px 3px 3px 8px;"></td>
+                        </tr>                        
+                    </table>                    
+                </form>
+            </field>
+        </record>
+    <record id="eaccount_complements_list" model="ir.ui.view">
+            <field name="name">eaccount.complements.tree</field>
+            <field name="model">eaccount.complements</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <tree string="Contabilidad electrónica - Complementos"> 
+                  <field name="type_id" widget="selection"/>
+                  <field name="type_key" invisible="1"/>
+                  <field name="origin_bank_key" invisible="1"/>
+                  <field name="destiny_bank_key" invisible="1"/>            
+                  <field name="compl_currency_id" />
+                  <field name="exchange_rate" />
+                  <field name="rfc" 
+                                attrs="{'readonly' : [('type_key', 'in', ['foreign', 'payment'])], 'required' : [('type_key', 'in', ['cfdi','check','transfer','other'])]}"/>
+                   <field name="rfc2" 
+                                attrs="{'readonly' : [('type_key', '=', 'foreign')], 'required' : [('type_key', 'in', ['cfdi','check','transfer','payment','other'])]}"/>
+  
+        </tree>
+        </field>
+      </record>
+        <record id="action_sat_complementos" model="ir.actions.act_window">
+            <field name="name">Complementos Contabilidad Eléctronica</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">eaccount.complements</field>
+            <!--<field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="eaccount_complements_list"/>
+        </record>
+
+<menuitem action="action_sat_complementos"
+                  id="action_sat_complementos_menu" sequence="0"
+                  parent="menu_mexican_eaccount_options" />                
+                    
+        
+        
+        <record id="move_complements_form" model="ir.ui.view">
+            <field name="name">move.complements.form</field>
+            <field name="model">account.move</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <form string="Contabilidad electrónica - complementos">
+                   	<h1>
+                   	    <field name="name" readonly="True" attrs="{'invisible':[('name','=','/')]}"/>
+                   	</h1>
+                    <group col="4" colspan="4">
+                        <field name="complement_line_ids" nolabel="1" colspan="4" readonly="1">
+                            <tree>
+                               <field name="type_id" string="Tipo"/>
+                               <field name="rfc" />
+                               <field name="rfc2" />
+                               <field name="foreign_taxid" invisible="1"/>
+                               <field name="compl_date"/>
+                               <field name="payee_id"  invisible="1"/>
+                               <field name="payee_acc_id"  invisible="1"/>
+                               <field name="amount"/>
+                               <field name="uuid" />
+                               <field name="cbb_series" invisible="1"/>
+                               <field name="cbb_number" invisible="1"/>
+                               <field name="foreign_invoice" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        
+                        <button special="cancel" string="Cerrar" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <!-- server action -->
+        
+        <record id="account_moves_xml_action" model="ir.actions.server">
+            <field name="name">XML del SAT - Pólizas</field>
+            <field name="type">ir.actions.server</field>
+            <!--<field name="condition">True</field>-->
+            <field name="state">code</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="sequence" eval="5"/>
+            <field name="code">action = object.launch_period_validator()</field>
+        </record>        
+        
+        
+        <record id="helpers_xml_action" model="ir.actions.server">
+            <field name="name">XML del SAT - Auxiliar de folios</field>
+            <field name="type">ir.actions.server</field>
+            <!--<field name="condition">True</field>-->
+            <field name="state">code</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="sequence" eval="5"/>
+            <field name="code">
+context['target'] = 'helpers'
+action = object.with_context(context).launch_period_validator()
+            </field>
+        </record>
+        
+        
+        <!-- file processes from this form -->
+        
+        <record id="vouchers_holder_form" model="ir.ui.view">
+            <field name="name">vouchers_holder_form</field>
+            <field name="model">vouchers.xml.creator</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <group colspan="4" col="6">
+                        <field name="vouchers_reqtype"/>
+                        <field name="vouchers_ordnum" attrs="{'invisible' : [('vouchers_reqtype', 'not in', ['AF', 'FC'])], 'required' : [('vouchers_reqtype', 'in', ['AF', 'FC'])]}"/>
+                        <field name="vouchers_procnum" attrs="{'invisible' : [('vouchers_reqtype', 'not in', ['CO', 'DE'])], 'required' : [('vouchers_reqtype', 'in', ['CO', 'DE'])]}"/>
+                    </group>
+                    <footer>
+                        <button type="object" name="start_processing" string="Procesar archivo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="declaraciones_sat_form" model="ir.ui.view">
+            <field name="name">declaraciones.sat.form</field>
+            <field name="model">declaraciones.sat</field>
+            <field name="priority" eval="10"/>
+            <field name="arch" type="xml">
+                
+                <form string="Contabilidad electrónica - Declaraciones" create="0" delete="0">
+                   
+                    <sheet>
+                    <group>
+                        <field name="state" invisible="1"/>
+                        <field name="name"/>
+                        <field name="fecha_creacion"/>
+                        <field name="fecha_envio"/>
+                        <field name="periodo_declaracion"/>
+                        <field name="año_fiscal"/>
+                        <field name="archivo_generado"/>
+                        <field name="user_id"/>
+                        <button name="presentar_declaracion" type="object" string="Presentar Declaración" class="oe_highlight"/>  
+                    </group>
+                     <notebook>
+                            <page string="Declaraciones Presentadas">
+                                <field name="presentadas_ids" readonly="0">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="id_declaracion"/>
+                                        <field name="tipo_declaracion"/>
+                                        <field name="fecha_recepcion"/> 
+                                        <field name="folio_recepcion"/> 
+                                        <field name="archivo_adj"/>                  
+                                                                            
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                  </sheet>                      
+                </form>
+            </field>
+        </record>
+    <record id="declaraciones_sat_list" model="ir.ui.view">
+            <field name="name">declaraciones.sat.tree</field>
+            <field name="model">declaraciones.sat</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <tree string="Contabilidad electrónica - Declaraciones" create="0" delete="0"> 
+                  <field name="name"/>
+                  <field name="fecha_creacion"/>
+                  <field name="fecha_envio"/>
+                  <field name="periodo_declaracion"/>
+                  <field name="año_fiscal"/>
+                  <field name="archivo_generado"/>
+                  <field name="user_id"/>
+                  <field name="state"/>
+                    
+        </tree>
+        </field>
+      </record>
+        <record id="action_sat_declaraciones" model="ir.actions.act_window">
+            <field name="name">Declaraciones de Contabilidad Eléctronica</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">declaraciones.sat</field>
+            <!--<field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="declaraciones_sat_list"/>
+        </record>
+
+<menuitem action="action_sat_declaraciones"
+                  id="action_sat_declaraciones_menu" sequence="0"
+                  parent="menu_mexican_eaccount_options" />
+        
+
+    
+</odoo>

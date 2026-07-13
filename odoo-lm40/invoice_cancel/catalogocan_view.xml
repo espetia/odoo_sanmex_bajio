@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+            <record id="cod_01" model="catalogo.cancelacion">
+                <field name="name">No cancelable</field>
+                <field name="code">001</field>
+                
+            </record>
+
+             <record id="cod_02" model="catalogo.cancelacion">
+                <field name="name">Cancelable Sin Aceptación</field>
+                <field name="code">002</field>
+                
+
+            </record>
+
+             <record id="cod_03" model="catalogo.cancelacion">
+                <field name="name">Cancelable Con Aceptación</field>
+                <field name="code">003</field>
+               
+            </record>
+
+            <record id="cod_04" model="catalogo.cancelacion">
+                <field name="name">Cancelado</field>
+                <field name="code">004</field>
+               
+            </record>
+
+     </data>
+
+        <record id="sat_cancelacion_list" model="ir.ui.view">
+            <field name="name">sat.cancelacion.tree</field>
+            <field name="model">catalogo.cancelacion</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de cancelaciones SAT">
+                    <field name="code" />
+                    <field name="name" />                    
+                </tree>
+            </field>
+        </record>
+
+        <record id="sat_cancelacion_form" model="ir.ui.view">
+            <field name="name">sat.cancelacion.form</field>
+            <field name="model">catalogo.cancelacion</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de cancelaciones">
+                    <sheet> 
+                    <group>                        
+                        <field name="code"/>                        
+                        <field name="name"/>
+                    </group>                            
+                    </sheet>                    
+                </form>
+            </field>
+        </record>       
+
+    <record id="action_sat_cancelacion" model="ir.actions.act_window">
+            <field name="name">Catálogo de Cancelaciones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">catalogo.cancelacion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sat_cancelacion_list"/>
+        </record>
+
+<menuitem action="action_sat_cancelacion"
+                  id="action_sat_cancelacion_menu" sequence="1"
+                  parent="account.menu_finance_configuration" />
+
+</odoo>

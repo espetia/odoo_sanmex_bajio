@@ -1,0 +1,66 @@
+v15.30
+-Solo mostrar boton "Validar y Generar REP" en pagos de clientes
+
+v15.29
+Redondeos en impuestos locales
+
+v15.28
+-Multiples predial, validar linea de factura sin producto.
+
+v15.27
+-Omite timbrar productos con precio unitario cero.
+
+v15.26
+-Corregir impuestos con producto con 100% de descuento
+
+v15.25
+-Corregir error en QR de pagos
+
+v15.24
+-Cancelación rechazada si está vacío el estado de cancelación.
+
+v15.23
+-Se hicieron ajustes para el timbrado de pagos 2.0B
+
+v15.22
+-Se agregó la acción de cargar XML para pagos
+
+v15.21
+-Corregir varible de a cuenta de tercero.
+
+v15.20
+-Verificar estado de CFDI de las notas de crédito.
+
+v15.19
+-Cambiar nombre de campo para evitar conflicto con factoraje.
+
+v15.18
+-Impuesto ISR Resico a 4 decimales
+
+v15.17
+-Alerta cuando no se tengan habilitado el proceso de timbrado.
+-Cambiar act window por record
+
+v15.16
+-Alerta cuando no se tengan montos de impuestos en factura.
+
+v15.15
+-Alerta con equivalencia en cero.
+-Nuevos CSD.
+
+v15.14
+-Quitar formato de moneda en pagos relacionados.
+
+v15.13
+-Corrección en reporte de facturas de proveedor.
+
+v15.12
+-Calculo de Objetoimp automático si se deja vacío en producto.
+
+v15.11
+-Agregar nodo de parte para conceptos.
+-Seleccionar fecha para REP.
+-Aparezcan cuentas bancarias en pago al usar traslado / cheque
+
+v15.10
+-Colocar manualmente montos de saldo anterior, pagado, insoluto y equivalenciadr para REP.

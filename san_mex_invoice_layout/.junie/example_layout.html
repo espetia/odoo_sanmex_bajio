@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura SANMEX - Optimizado para Odoo</title>
+    <!-- La fuente Lato se mantiene, Odoo suele resolverla bien si está instalada -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================
+           ESTILOS BASE (Sin variables CSS para compatibilidad wkhtmltopdf)
+           Colores fijos:
+           Azul: #272356 | Rojo: #FF1616 | Gris: #54595F
+           Fondo claro: #f9fafb | Borde claro: #e5e7eb
+           ========================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', Helvetica, Arial, sans-serif;
+            color: #54595F; /* var(--sanmex-gray) */
+            background-color: #f3f4f6;
+            -webkit-font-smoothing: antialiased;
+            padding: 2rem 0;
+        }
+
+        /* Contenedor A4 para visualización (Odoo ignorará esto al imprimir y usará su propio page-layout) */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: #ffffff;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 15mm;
+            position: relative;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        @media print {
+            body { background-color: white; padding: 0; }
+            .a4-page { box-shadow: none; margin: 0; width: 100%; padding: 0; min-height: auto; }
+        }
+
+        /* Clases de Utilidad */
+        .text-blue { color: #272356; }
+        .text-red { color: #FF1616; }
+        .text-gray { color: #54595F; }
+        .font-bold { font-weight: 700; }
+        .font-black { font-weight: 900; }
+        .uppercase { text-transform: uppercase; }
+        .text-xs { font-size: 12px; }
+        .text-sm { font-size: 13px; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+
+        .mb-1 { margin-bottom: 4px; }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        .mb-8 { margin-bottom: 32px; }
+        .mt-1 { margin-top: 4px; }
+        .mt-3 { margin-top: 12px; }
+
+        /* ==========================================
+           SISTEMA DE TABLAS PARA LAYOUT (Bulletproof para PDF)
+           ========================================== */
+        .layout-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 0;
+        }
+        .layout-table td {
+            vertical-align: top;
+        }
+
+        /* Cabecera */
+        .header-logo h1 {
+            font-size: 32px;
+            line-height: 1;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+        .header-logo .subtitle {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .header-details h2 {
+            font-size: 26px;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .header-details .invoice-num {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        .invoice-meta-box {
+            background-color: #f9fafb;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+            display: inline-block;
+            text-align: left;
+        }
+        .invoice-meta-box table { border-collapse: collapse; }
+        .invoice-meta-box td { padding-right: 15px; padding-bottom: 2px; }
+
+        /* Cajas de Cliente y Pago */
+        .client-box {
+            border: 1px solid #272356;
+            padding: 15px;
+            border-radius: 8px;
+            height: 100%;
+            min-height: 160px;
+        }
+        .payment-info-box {
+            border: 1px solid #d1d5db;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9fafb;
+            height: 100%;
+            min-height: 160px;
+        }
+        .section-title {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+        }
+
+        /* Tabla de Productos */
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+        .invoice-table th {
+            background-color: #272356;
+            color: white;
+            padding: 8px;
+            font-weight: normal;
+        }
+        .invoice-table th:first-child { border-top-left-radius: 8px; }
+        .invoice-table th:last-child { border-top-right-radius: 8px; }
+        .invoice-table td {
+            padding: 8px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+        .invoice-table tr.row-light td { background-color: #f9fafb; }
+        .desc-italic { color: #6b7280; font-style: italic; font-size: 11px; }
+
+        /* Anchos de columna */
+        .col-code { width: 12%; }
+        .col-qty { width: 8%; }
+        .col-unit { width: 8%; }
+        .col-price { width: 15%; }
+        .col-total { width: 15%; }
+
+        /* Totales */
+        .amount-words-box {
+            background-color: #f9fafb;
+            padding: 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .totals-table { width: 100%; border-collapse: collapse; }
+        .totals-table td { padding: 4px 0; }
+        .totals-table .total-row td {
+            font-size: 16px;
+            padding-top: 8px;
+        }
+        .border-b { border-bottom: 1px solid #e5e7eb; }
+
+        /* Datos Bancarios */
+        .bank-info {
+            background-color: #eff6ff;
+            border: 1px solid #272356;
+            border-radius: 8px;
+            padding: 15px;
+            position: relative;
+        }
+        .bank-info table { width: 100%; }
+
+        /* CFDI y QR */
+        .cfdi-section {
+            border-top: 2px solid #272356;
+            padding-top: 15px;
+            font-size: 9px;
+            text-align: justify;
+            word-break: break-all;
+            line-height: 1.3;
+            padding-bottom: 15px;
+        }
+        .qr-placeholder {
+            width: 120px;
+            height: 120px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 10px, #f3f4f6 10px, #f3f4f6 20px);
+            border: 2px solid #54595F;
+            text-align: center;
+            color: #54595F;
+            font-size: 10px;
+        }
+        .cfdi-text-block { margin-bottom: 8px; color: #6b7280; }
+        .cfdi-certs {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 8px;
+            margin-top: 8px;
+            color: #4b5563;
+        }
+        .cfdi-certs table { width: 100%; }
+
+        /* Footer Inferior */
+        .footer-absolute {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            padding: 0 15mm;
+        }
+        .footer-absolute hr {
+            border: 0;
+            border-top: 1px solid #d1d5db;
+            margin: 0 auto 8px auto;
+        }
+        .footer-contact table {
+            width: 100%;
+            text-align: center;
+            color: #272356;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="a4-page">
+
+        <!-- ==========================================
+             CABECERA (Usando Tabla Layout)
+             ========================================== -->
+        <table class="layout-table mb-6">
+            <tr>
+                <td width="55%" class="header-logo">
+                    <h1 class="font-black"><span class="text-red">SAN</span><span class="text-blue">MEX</span></h1>
+                    <p class="subtitle font-bold text-blue uppercase">Desde 1990</p>
+                    <div class="text-xs">
+                        <p class="font-bold text-blue">SAN-MEX DEL NORTE Y DEL SURESTE</p>
+                        <p>CARPINTEROS, MANZANA 6 LOCAL 5-1, ZONA INDUSTRIAL</p>
+                        <p>PLAYA DEL CARMEN, ROO. Mexico, C.P. 77727</p>
+                        <p><strong>RFC:</strong> SMN110809DV2 | <strong>Régimen Fiscal:</strong> 601</p>
+                    </div>
+                </td>
+                <td width="45%" class="header-details text-right">
+                    <h2 class="font-bold text-blue uppercase">Factura</h2>
+                    <p class="invoice-num font-bold text-red">SMP82453</p>
+                    <div class="invoice-meta-box text-xs mt-3">
+                        <table>
+                            <tr><td class="font-bold text-blue">Fecha de emisión:</td><td>02/03/2026 18:11:30</td></tr>
+                            <tr><td class="font-bold text-blue">Fecha de venc.:</td><td>09/03/2026</td></tr>
+                            <tr><td class="font-bold text-blue">Tipo comprobante:</td><td>Ingreso</td></tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- ==========================================
+             DATOS DEL CLIENTE Y PAGO (Usando Tabla Layout)
+             ========================================== -->
+        <table class="layout-table mb-6">
+            <tr>
+                <td width="65%" style="padding-right: 15px;">
+                    <div class="client-box">
+                        <h3 class="section-title font-bold text-blue uppercase text-xs">Datos del Cliente</h3>
+                        <p class="font-bold text-sm">ANJAMI SERVICIOS INTEGRALES, ROYALTON ISLANDER CANCUN</p>
+                        <p class="text-xs mt-1">AV FRANCISCO VILLA NUM EXT 1010/NUM INT 4TO PISO OF-17</p>
+                        <p class="text-xs">Jalisco, Puerto Vallarta, C.P. 48328</p>
+                        <p class="text-xs mt-1"><strong>RFC:</strong> ASI161201M67</p>
+                    </div>
+                </td>
+                <td width="35%">
+                    <div class="payment-info-box text-xs">
+                        <h3 class="section-title font-bold text-blue uppercase text-xs">Información de Pago</h3>
+                        <p class="mb-1"><strong>Uso CFDI:</strong> G03 - Gastos en general</p>
+                        <p class="mb-1"><strong>Forma de pago:</strong> 99 - Por definir</p>
+                        <p class="mb-1"><strong>Método de pago:</strong> PPD - Pago en parcialidades</p>
+                        <p><strong>Plazo de pago:</strong> 7 días</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- ==========================================
+             TABLA DE PRODUCTOS (Ya era compatible)
+             ========================================== -->
+        <table class="invoice-table text-xs">
+            <thead>
+                <tr class="uppercase text-left">
+                    <th class="col-code">Cod. SAT</th>
+                    <th>Descripción</th>
+                    <th class="col-qty text-center">Cant.</th>
+                    <th class="col-unit text-center">Unidad</th>
+                    <th class="col-price text-right">Precio U.</th>
+                    <th class="col-total text-right">Importe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-code">76121502</td>
+                    <td>
+                        <p class="font-bold">[DF-BAN] DISPOSICIÓN FINAL - BAÑOS</p>
+                        <p class="desc-italic mt-1">CORRESPONDIENTE AL MES DE MARZO DEL 2026</p>
+                    </td>
+                    <td class="col-qty text-center">3.000</td>
+                    <td class="col-unit text-center">E48</td>
+                    <td class="col-price text-right">$250.00</td>
+                    <td class="col-total text-right font-bold">$750.00</td>
+                </tr>
+                <tr class="row-light">
+                    <td class="col-code">80131506</td>
+                    <td>
+                        <p class="font-bold">[B-OB-EST-TER] RENTA DE SANITARIO ESTÁNDAR OBRA - LIMPIEZA TERCIADA</p>
+                    </td>
+                    <td class="col-qty text-center">3.000</td>
+                    <td class="col-unit text-center">E48</td>
+                    <td class="col-price text-right">$2,863.06</td>
+                    <td class="col-total text-right font-bold">$8,589.18</td>
+                </tr>
+                <tr>
+                    <td class="col-code">80131506</td>
+                    <td>
+                        <p class="font-bold">[B-OB-EST-TER] RENTA DE SANITARIO ESTÁNDAR OBRA - LIMPIEZA TERCIADA</p>
+                        <p class="desc-italic mt-1">CORRESPONDIENTE DEL 23 AL 31 DE MARZO DEL 2026. NOTA: SE FACTURA POR 9 DÍAS</p>
+                    </td>
+                    <td class="col-qty text-center">1.000</td>
+                    <td class="col-unit text-center">E48</td>
+                    <td class="col-price text-right">$856.08</td>
+                    <td class="col-total text-right font-bold">$856.08</td>
+                </tr>
+                <tr class="row-light">
+                    <td class="col-code">76121502</td>
+                    <td>
+                        <p class="font-bold">[DF-BAN] DISPOSICIÓN FINAL - BAÑOS</p>
+                    </td>
+                    <td class="col-qty text-center">1.000</td>
+                    <td class="col-unit text-center">E48</td>
+                    <td class="col-price text-right">$74.79</td>
+                    <td class="col-total text-right font-bold">$74.79</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ==========================================
+             TOTALES (Usando Tabla Layout)
+             ========================================== -->
+        <table class="layout-table mb-8">
+            <tr>
+                <td width="65%" style="padding-right: 30px;">
+                    <p class="text-xs mb-1"><strong>Importe con letra:</strong></p>
+                    <div class="amount-words-box text-xs">ONCE MIL NOVECIENTOS TRECE PESOS 26/100 M.N.</div>
+                    <p class="text-xs mt-3">Utilice la siguiente referencia al realizar su pago: <strong>SMP82453</strong></p>
+                </td>
+                <td width="35%">
+                    <table class="totals-table text-sm">
+                        <tr>
+                            <td class="text-right font-bold text-gray">Subtotal:</td>
+                            <td class="text-right" width="40%">$ 10,270.05</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right font-bold text-gray border-b">IVA 16%:</td>
+                            <td class="text-right border-b">$ 1,643.21</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td class="text-right font-bold text-blue">Total:</td>
+                            <td class="text-right font-bold text-blue">$ 11,913.26</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- ==========================================
+             DATOS BANCARIOS (Layout Simplificado)
+             ========================================== -->
+        <div class="bank-info mb-6">
+            <!-- La barra lateral roja se puede hacer con un border-left -->
+            <div style="border-left: 6px solid #FF1616; padding-left: 10px;">
+                <h3 class="font-bold text-blue uppercase text-sm mb-2">
+                    <!-- Icono SVG en línea compatible -->
+                    <svg xmlns="http://www.w3.org/2000/svg" style="width:16px; height:16px; vertical-align:middle; margin-right:5px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                    Datos para depósito o transferencia
+                </h3>
+                <table class="text-sm text-gray" style="width: 100%;">
+                    <tr>
+                        <td width="33%"><strong>Banco:</strong> BBVA</td>
+                        <td width="33%"><strong>No. Cuenta:</strong> XXXXXXXXX</td>
+                        <td width="33%"><strong>Cuenta Clave:</strong> XXXXXXXXXXX</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             SELLOS CFDI (Usando Tabla Layout)
+             ========================================== -->
+        <div class="cfdi-section">
+            <table class="layout-table">
+                <tr>
+                    <td width="130px">
+                        <div class="qr-placeholder">
+                            <br><br><br>QR Factura
+                        </div>
+                    </td>
+                    <td style="padding-left: 15px;">
+                        <p class="font-bold text-blue mb-1">Cadena Original del Complemento de Certificación Digital del SAT</p>
+                        <p class="cfdi-text-block">||1.1|65eb710d-3965-4120-9031-390054678701|2026-03-02T17:11:37|OZMPkjriVWknyPwq/PichsPL6BC4RJWJqngGdxmVrL4IG/mh+1HzBBpNMvcAWajzNgMfnLk69zwNLOKxbXollgirENKcXLOw4BBWY+jyftKqtnBwEINZFVXGj9PtU9re70+FPFquGFJusyU/UePMcSjwlyHeiwN2sZtSWNKPU0coCf5igvel4H6lbogoNkZAKRcbDdwUExZKnFwaEizmJL8BnOE+THAXA70FW2YWKdTVCro3Zwb0do4QU+NhVKz7YdY4pMTI3kBTEotMh6oEv3Pn4kFKWHo4+LJW3u9Yswivh+3thZXkzv9bckhdFaXAOQ4F5ew213+5g6dGXwQQ|00001000000719545303||</p>
+
+                        <p class="font-bold text-blue mb-1">Sello Digital del CFDI</p>
+                        <p class="cfdi-text-block">OZMPkjriWkny7Pwg/PichsPL6BC4R/WjqngGdxmVrL4IG/mh+1HzBBpNMvcAWajzNgMmLk6zwNLOKxbXoligirENKzXLOw4BBWY+jyftKqtnBwEIN7FVXGJ9PtU9re70+FPFquGFJusyU/UePMcSJwfyHewN2sZtSWNKPU0coCtSigvel4H61b0goNkZAKRcbDdwUExZKnFwaElzmULBBnOE+ThAXAF7OFW2YWKTVCreu3Zwb0do4QU+NAVXz7YdY4pMT3kBTEMh6oEx3Phi4kFKWHo4+UW3u9Yswivh+3tZXkzv9bckhdFaXAOQ4F5w213+Sg6dGXUQQ==</p>
+
+                        <div class="cfdi-certs font-bold">
+                            <table>
+                                <tr>
+                                    <td>Certificado SAT: 00001000000719545303</td>
+                                    <td class="text-center">Certificado Emisor: 00001000000703524333</td>
+                                    <td class="text-right">Folio Fiscal: 65eb710d-3965-4120-...</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ==========================================
+             FOOTER
+             ========================================== -->
+        <div class="footer-absolute text-xs font-bold">
+            <hr>
+            <div class="text-center text-blue mb-1">ESTE DOCUMENTO ES UNA REPRESENTACIÓN IMPRESA DE UN CFDI</div>
+            <table class="layout-table text-center" style="color: #272356; font-weight: normal;">
+                <tr>
+                    <td width="33%">📞 984 206 1919</td>
+                    <td width="33%">✉️ ventasqroo@sanmex.com.mx</td>
+                    <td width="33%">🌐 sanmex.com.mx</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

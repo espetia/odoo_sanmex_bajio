@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="res_partner_view_search_lm" model="ir.ui.view">
+            <field name="name">res.partner.search.lm.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.res_partner_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='customer']" position="attributes">
+                   <attribute name="invisible">"1"</attribute>
+                </xpath>   
+                <xpath expr="//filter[@name='supplier']" position="attributes">
+                   <attribute name="invisible">"1"</attribute>
+                </xpath>
+                   
+                <xpath expr="//filter[@name='customer']" position="replace">
+                   <filter string="Cliente" name="customer" domain="[('customer','=', True)]"/> 
+                   </xpath>
+                  <xpath expr="//filter[@name='supplier']" position="replace">    
+                   <filter string="Proveedor" name="supplier" domain="[('supplier','=', True)]"/> 
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="form_res_partner_address_fields_3_3">
+            <field name="name">res.partner.cfdi.33</field>
+            <field name="model">res.partner</field>
+            <field name="type">form</field>
+            <field name="priority">50</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="vat" position="after" >
+                    <field name="uso_cfdi_id" />
+                </field>
+                <field name="company_type" position="replace" >
+                    <field name="company_type" invisible="1" />
+                        <field name="company_type2" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
+                    
+                </field>
+                <field name="user_id" position="before" >
+                    <field name="persona_fisica" invisible="1"/>
+                    
+                </field>
+                <field name="category_id" position="after" >
+                    <field name="country_code_rel" invisible="1" />
+                    <field name="num_reg_trib" string="Numero de Identificacion Fiscal"/>
+                </field>
+                <field name="website" position="before">
+                    <field name="street_reference" />
+                </field>
+                <field name="vat" position="after" >
+                    <field name="curp" attrs="{'invisible':[('company_type2','!=','physical_person')]}"/>
+                </field> 
+                <field name="property_account_payable_id" position="after" >
+                        <field name="anticipo_proveedor"/>
+                        <field name="envio_cfdi"/>
+                    </field>
+                    <field name="property_account_receivable_id" position="after" >
+                        <field name="anticipo_cliente"/>
+                    </field>
+                    <field name="property_payment_term_id" position="after">
+                        <field name="customer"/>
+                    </field>
+                    <field name="property_supplier_payment_term_id" position="before">
+                        <field name="supplier"/>
+                    </field>
+
+                    <group name="accounting_entries" position="after">
+                    <group name="diot" attrs="{'invisible':[('supplier','=',False)]}">
+                        <separator string="DIOT" colspan="2"/>
+                        <field name="tipo_tercero" attrs="{'required':[('supplier','=',True)]}"/>
+                        <field name="nif_diot" 
+                               attrs="{'invisible':[('tipo_tercero','!=', '05')],'required':[('supplier','=',True),('tipo_tercero','=', '05')]}"/>
+                        <field name="tipo_operacion" attrs="{'required':[('supplier','=',True)]}"/>
+                        <field name="paises_diot" 
+                               attrs="{'invisible':[('tipo_tercero','!=', '05')],'required':[('supplier','=',True),('tipo_tercero','=', '05')]}"/>
+                        <field name="nacionalidad" 
+                               attrs="{'invisible':[('tipo_tercero','!=', '05')],'required':[('supplier','=',True),('tipo_tercero','=', '05')]}"/>
+                    </group>
+                </group>
+
+                    
+            </field>
+        </record>
+
+        
+
+</odoo>

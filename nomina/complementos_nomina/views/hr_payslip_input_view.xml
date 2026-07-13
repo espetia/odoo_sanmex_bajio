@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_hr_payslip_tree_kuh7" model="ir.ui.view">
+        <field name="name">hr.payslip.nomina.kuh7</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='input_line_ids']/tree/field[@name='name']" position="before">
+                <field name="salary_rule_id" />
+            </xpath>
+            <xpath expr="//field[@name='input_line_ids']/tree/field[@name='code']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='input_line_ids']/tree/field[@name='name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='input_line_ids']/form/group/field[@name='name']" position="before">
+                <field name="salary_rule_id" />
+            </xpath>
+            <xpath expr="//field[@name='input_line_ids']/form/group/field[@name='code']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='input_line_ids']/form/group/field[@name='name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_hr_payslip_form_kuh7_new_fields" model="ir.ui.view">
+        <field name="name">hr.payslip.nomina.kuh7.info.aditi</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="nomina_cfdi_ee.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='acum_per_grav']" position="after">
+                <field name="acum_incap_inte"  string="Acumulado incapacidad interna" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

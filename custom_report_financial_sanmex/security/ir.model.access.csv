@@ -1,0 +1,2 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_account_report_due,report_due_sanmex_manager_access,model_account_due_report,base.group_user,1,1,1,1

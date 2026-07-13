@@ -1,0 +1,18 @@
+<odoo>
+<data>
+
+        <record id="view_account_journal_form_inherit_cancel_invoice" model="ir.ui.view">
+            <field name="name">account.journal.form.cancel_invoice</field>
+            <field name="model">account.journal</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <field name="restrict_mode_hash_table" position="after">
+                    <field name="use_for_invoice_cancel" />
+                    <field name="use_for_invoice_cancel_purchase"/>
+                </field>
+            </field>
+        </record>
+
+</data>
+</odoo>

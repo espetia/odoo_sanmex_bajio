@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+  <data>
+<!--
+Modificamos para que se pueda mostrar los campos de las cuentas contables
+-->
+
+    <record id="view_location_form_inherit_warehouse_acc" model="ir.ui.view">
+        <field name="name">stock.location.form.inherit.warehouse.acc</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock_account.view_location_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group[3]" position="replace"> <!-- En "3" depende de los modulos instalados -->
+                <group string="Accounting Information" attrs="{'invisible':[('usage','not in',('inventory','production','internal','transit'))]}">
+                    <field name="valuation_in_account_id"/>
+                    <field name="valuation_out_account_id"/>
+                    <field name="accout_local_cost"/>
+                    <field name="account_cost_inventory" attrs="{'invisible':[('usage','!=','internal')]}"/>
+                    <field name="change_std_price_account_id" string="Cuenta para cambio de Costo Estándar" attrs="{'invisible':[('usage','!=','internal')]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+  </data>
+</odoo>

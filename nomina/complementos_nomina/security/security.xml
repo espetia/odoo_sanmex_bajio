@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="faltas_nomina_restriccion_por_compania" model="ir.rule">
+        <field name="name">faltas.nomina.restriccion.por.compania</field>
+        <field name="model_id" ref="model_faltas_nomina"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('employee_id.company_id','=',False),('employee_id.company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="vacaciones_nomina_restriccion_por_compania" model="ir.rule">
+        <field name="name">vacaciones.nomina.restriccion.por.compania</field>
+        <field name="model_id" ref="model_vacaciones_nomina"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('employee_id.company_id','=',False),('employee_id.company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="incapacidades_nomina_restriccion_por_compania" model="ir.rule">
+        <field name="name">incapacidades.nomina.restriccion.por.compania</field>
+        <field name="model_id" ref="model_incapacidades_nomina"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('employee_id.company_id','=',False),('employee_id.company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="dias_feriados_restriccion_por_compania" model="ir.rule">
+        <field name="name">dias.feriados.restriccion.por.compania</field>
+        <field name="model_id" ref="model_dias_feriados"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('employee_id.company_id','=',False),('employee_id.company_id', 'in', company_ids)]</field>
+    </record>
+    
+     <record id="nomina_empleado_restriccion_por_compania" model="ir.rule">
+        <field name="name">nomina.empleado.restriccion.por.compania</field>
+        <field name="model_id" ref="model_hr_payslip"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    
+    <record id="procesamiento_nomina_restriccion_por_compania" model="ir.rule">
+        <field name="name">procesamiento.nomina.restriccion.por.compania</field>
+        <field name="model_id" ref="model_hr_payslip_run"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="registro_patronal_restriccion_por_compania" model="ir.rule">
+        <field name="name">registro.patronal.restriccion.por.compania</field>
+        <field name="model_id" ref="model_registro_patronal"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

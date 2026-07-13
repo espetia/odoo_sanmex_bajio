@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>   
+	<act_window name="Verificar estatus SAT"         
+            res_model="wizard.status.cfdi"
+            binding_model="registro.descargas"
+            view_mode="form"
+            target="new"
+            
+            id="action_status_cfdi"/>
+
+	
+	<record model='ir.ui.view' id='view_status_cfdi'>
+		<field name='name'>Verificar estatus SAT</field>
+		<field name='model'>wizard.status.cfdi</field>
+		<field name='arch' type='xml'>
+			<form name='Verificar estatus SAT'>
+				<footer>
+					<button name='estatus_cfdi' type='object' string='Consultar estatus' class='oe_highlight'/> 
+					<button special="cancel" string="Cancelar"/> 
+				</footer>
+			</form>
+		</field>
+	</record>
+
+
+	<record id="action_status_cfdi" model='ir.actions.act_window'>
+		<field name='name'>Verificar estatus SAT</field>		
+		<field name='res_model'>wizard.status.cfdi</field>		
+		<field name='view_mode'>form</field>
+		<field name='target'>new</field>
+ 	</record>
+
+
+</odoo>

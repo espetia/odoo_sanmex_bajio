@@ -1,0 +1,189 @@
+<div class="container">
+    <!-- Title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="oe_slogan">
+                <h2 class="oe_slogan">Replace "Email From" and "Reply To"</h2>
+                <div>
+                    This module helps to replace/overwrite email_from and reply_to parameters of outgoing emails and notifications
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h4>Key Features:</h4>
+            <ul>
+                <li>
+                    <i class="fa fa-check-circle"></i>
+                    "Email From" and "Reply To" can be configured depending on data model and company
+                </li>
+                <li>
+                    <i class="fa fa-check-circle"></i>
+                    You can send default sender address to avoid outgoing server errors
+                </li>
+                <li>
+                    <i class="fa fa-check-circle"></i>
+                    Multi Company feature of the Odoo System is supported
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h3>After installation the module new menuitem is appeared:</h3>
+            <p>
+                <img class="oe_screenshot" src="technical_email_settings.png" alt="custom email_from reply_to settings" width="100%" style="max-width: 550px;"/>
+            </p>
+            <hr>
+
+            <h3>Examples of how you can set up rules:</h3>
+            <p>
+                <img class="oe_screenshot" src="mail_replace_rule_tree.png" alt="mail replacement rules" width="100%"/>
+            </p>
+            <hr>
+
+            <h3>Custom email_from and reply_to overwriting examples:</h3>
+            <p>
+                <img class="oe_screenshot" src="mail_replace_rule_form1.png" alt="Overwrite email_from" width="100%"/>
+            </p>
+            <p>
+                <img class="oe_screenshot" src="mail_replace_rule_form2.png" alt="Substitute email_from and reply_to" width="100%"/>
+            </p>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 oe_spaced">
+            <h4>
+                Replacement rule priority:
+            </h4>
+            <ul>
+                <li>
+                    1. <b>Strict rule</b>:
+                    model and company are set.
+                    It is the highest priority.
+                </li>
+                <li>
+                    2. <b>Model-based rule</b>:
+                    model is set, company is empty.
+                    This rule will be used only if a strict rule does not exist.
+                </li>
+                <li>
+                    3. <b>Company-based rule</b>:
+                    model is empty, company is set.
+                    Such rule will be used only if
+                    there are no strict and model-based rules.
+                </li>
+                <li>
+                    4. <b>Global rule</b>:
+                    model and company are not set.
+                    Global rule is used only if there are no other rules.
+                </li>
+            </ul>
+            <p>
+                P.S. The equal rules can be ordered by sequence.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 oe_spaced">
+            <h3>Steps to start using module:</h3>
+            <ul>
+                <li>1) Install Module</li>
+                <li>2) Add Replacement Rules</li>
+                <li>3) Remove built-in ir.config_parameter to avoid errors:
+                    <div>Settings -> Technical -> Parameters -> System Parameters.</div>
+                    <div><img class="oe_screenshot" src="remove_mail_config_parameters.png" alt="Remove mail config parameters" width="100%"/></div>
+                </li>
+            </ul>
+            <p>
+                If your Mail Transfer Agent (MTA) server supports SRS (Sender Rewriting Scheme),
+                and it was configured properly you can skip the step 3.
+                However, that is more complex and requires more technical knowledge.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 oe_spaced">
+            <h3>Additional Screenshots with Examples:</h3>
+            <p>
+                This images show that the parameters "Email From" and "Reply To"
+                of received emails are overwritten according rules.
+            </p>
+            <p>
+                <small>
+                    Please use "right mouse click -> open image in new tab"
+                    to show full size of screenshots.
+                </small>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb16 col-md-6">
+            Invoice Message
+            <div class="oe_demo oe_screenshot">
+                <img src="examples/invoice_message_example.png" alt="Invoice Message" title="Invoice Message">
+            </div>
+        </div>
+        <div class="mb16 col-md-6">
+            Invoice Email
+            <div class="oe_demo oe_screenshot">
+                <img src="examples/invoice_email_example.png" alt="Invoice Email" title="Invoice Email">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb16 col-md-6">
+            Project Task Message
+            <div class="oe_demo oe_screenshot">
+                <img src="examples/projects_message_example.png" alt="Project Task Message" title="Project Task Message">
+            </div>
+        </div>
+        <div class="mb16 col-md-6">
+            Project Task Email
+            <div class="oe_demo oe_screenshot">
+                <img src="examples/projects_email_example.png" alt="Project Task Email" title="Project Task Email">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb16 col-md-4">
+            Document Approval Message
+            <div class="oe_demo oe_screenshot">
+                <img src="examples/document_message_example.png" alt="Document Approval Message" title="Document Approval Message">
+            </div>
+        </div>
+        <div class="mb16 col-md-4">
+            Document Approval Mail
+            <div class="oe_demo oe_screenshot">
+                <img src="examples/document_mail_example.png" alt="Document Approval Mail" title="Document Approval Mail">
+            </div>
+        </div>
+        <div class="mb16 col-md-4">
+            Document Approval Email
+            <div class="oe_demo oe_screenshot">
+                <img src="examples/document_email_example.png" alt="Document Approval Email" title="Document Approval Email">
+            </div>
+        </div>
+    </div>
+
+    <!-- Contacts -->
+    <div class="row">
+        <div class="col-12 oe_spaced">
+            <div class="text-center">
+                <img src="https://erp.xfanis.dev/web/logo/xf_replace_email_params/15" alt="Logo" width="200">
+            </div>
+            <div class="oe_slogan text-center">
+                Contact me for Support, Customization, Implementation:<br/>
+                <b>Email</b>: <a href="mailto:xfanis.dev@gmail.com">xfanis.dev@gmail.com</a><br/>
+                <b>Telegram</b>: https://t.me/xfanis<br/>
+                <b>Twitter</b>: https://twitter.com/XFanis_Dev<br/>
+            </div>
+        </div>
+    </div>
+</div>

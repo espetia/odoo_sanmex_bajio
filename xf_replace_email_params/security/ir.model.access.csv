@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mail_replace_rule_public,access_mail_replace_rule_public,model_mail_replace_rule,base.group_public,1,0,0,0
+access_mail_replace_rule_portal,access_mail_replace_rule_portal,model_mail_replace_rule,base.group_portal,1,0,0,0
+access_mail_replace_rule_user,access_mail_replace_rule_user,model_mail_replace_rule,base.group_user,1,0,0,0
+access_mail_replace_rule_system,access_mail_replace_rule_system,model_mail_replace_rule,base.group_system,1,1,1,1

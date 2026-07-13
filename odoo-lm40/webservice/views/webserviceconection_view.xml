@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_account_config_settings_webservice" model="ir.ui.view">
+    <field name="name">account settings Webservice</field>
+    <field name="model">res.config.settings</field>      
+    <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[hasclass('settings')]" position="inside">
+        <div class="app_settings_block" data-string="webservice" string="Configuración para México" data-key="cfdi_conection">
+          <h2>Configuración Webservice</h2>
+          <div class="row mt16 o_settings_container">
+            <div class="col-xs-12 col-md-6 o_setting_box">
+              <div class="o_setting_right_pane">
+                <div class="content-group">
+                  <div class="row mt16">
+                    <label  for="razon_social" class="col-md-3 o_light_label" string="Razón Social"/>
+                    <field name="razon_social" readonly="0"/>
+                  </div> 
+                  <div class="row mt16">
+                    <label for="rfc_web" class="col-md-3 o_light_label" string="RFC"/>
+                    <field name="rfc_web" readonly="0"/>
+                  </div>                
+                  
+                  <div class="row mt16">
+                    <label for="password" class="col-md-3 o_light_label" string="Contraseña"/>
+                    <field name="password" readonly="0" password="1"/>
+                  </div> 
+                  <div class="row mt16">
+                    <label for="url" class="col-md-3 o_light_label" string="Url Webservice"/>
+                    <field name="url" widget="radio" readonly="0"/>
+                  </div> 
+                  <div class="row mt16">
+                    <label for="url_name_produc" class="col-md-3 o_light_label" string="Url" attrs="{'invisible': [('url', '=', 'test')]}"/>
+                    <field name="url_name_produc" attrs="{'invisible': [('url', '=', 'test')]}" readonly="0"/>
+                  </div>                   
+                  <div class="row mt16">
+                    <label for="url_name_prue" class="col-md-3 o_light_label" string="Url" attrs="{'invisible': [('url', '=', 'product')]}" />
+                    <field name="url_name_prue" attrs="{'invisible': [('url', '=', 'product')]}" readonly="0"/>
+                  </div>
+                     <div class="row mt16">
+                    <label for="multi_company" class="col-md-3 o_light_label" string="Multi-compañia"/>
+                    <field name="multi_company" readonly="0"/>
+                  </div>
+                    </div>
+              </div>
+            </div>             
+          </div> 
+          <h2>Datos para Facturación</h2>
+          <div class="row mt16 o_settings_container">
+            <div class="col-xs-12 col-md-6 o_setting_box">
+              <div class="o_setting_right_pane">
+                <div class="content-group">                   
+                    <div class="row mt16">
+                       <label for="deposit_product_id" class="col-md-3 o_light_label" string="Producto Anticipo"/>
+                       <field name="deposit_product_id"/>                          
+                      </div>       
+                   
+                    <div class="row mt16">
+                       <label for="taxes_id" class="col-md-3 o_light_label" string="Impuesto Para Estímulo"/>      
+                       <field name="taxes_id" domain="[('estimulo_frontera', '=', True),('type_tax_use', 'in', ('sale', 'all')), ('company_id', '=', company_id)]"/>
+
+                    </div>
+                    <div class="row mt16">
+                      <label for="producto_pago" class="col-md-3 o_light_label" string="Concepto para Pagos"/>
+                      <field name="producto_pago"/>
+                    </div>
+                    
+                </div> 
+              </div> 
+            </div>  
+          </div>
+        </div>
+      </xpath>
+    </field>
+  </record>
+
+   <record model="ir.ui.view" id="res_company_registro_company_form">
+            <field name="name">res.company.form.registre</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">  
+           <field name="website" position="after">
+                        <button name="registro_webservice" type="object" string="Registrar Compañia" class="oe_highlight"/>
+                         <field name="rfc_web_1" groups="base.group_multi_company"/>
+                        <field name="password_1" password="1" groups="base.group_multi_company"/>
+                </field>
+            </field>
+            </record>  
+    
+</odoo>

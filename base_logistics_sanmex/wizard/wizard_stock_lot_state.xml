@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View wizard_stock_lot_state form -->
+    <record id="view_wizard_stock_lot_state_form" model="ir.ui.view">
+        <field name="name">view.wizard_stock_lot_state.form</field>
+        <field name="model">wizard.stock.lot.state</field>
+        <field name="arch" type="xml">
+            <form string="Wizard_stock_lot_state" js_class="planning_barcode">
+                <div class="oe_title">
+                    <h4>
+                        <!--<field name="name" placeholder="Name..."/>-->
+                        Favor de escanear el codigo del baño
+                    </h4>
+                    <group>
+                        <button class="oe_highlight o_qrcode_button" string="Scan QRcode" icon="fa-qrcode"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="lot_id" />
+                            <field name="stage_product_id_actually" />
+                            <field name="stage_product_id_destination" />
+                            <field name="barcode" invisible="1" force_save="1" />
+                        </group>
+                    </group>
+                    
+                </div>
+                <footer>
+                    <button name="add" type="object" string="Actualizar" class="oe_highlight"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action wizard_stock_lot_state -->
+    <record id="action_wizard_stock_lot_state" model="ir.actions.act_window">
+        <field name="name">Actualizar estatus sanitarios</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.stock.lot.state</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="wizard_update_state_stock_lot_menu"
+            name="Estado de sanitarios"
+            action="action_wizard_stock_lot_state"
+            groups="logistics_user_access"
+            parent="menu_logistic_sanmex_store"
+            sequence="90"/>
+
+</odoo>

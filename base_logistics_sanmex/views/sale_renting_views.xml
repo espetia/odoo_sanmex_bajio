@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_sale_renting_inherit_tree_base_logistics_sanmex" model="ir.ui.view">
+        <field name="name">sale.renting.view.tree.inherit.base_logistics_sanmex</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_renting.rental_order_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="js_class">rent_logistics_list_dashboard</attribute>
+            </xpath>
+        </field>
+    </record>
+
+   <!-- <record id="inherit_sale_renting_inherit_kanban_base_logistics_sanmex" model="ir.ui.view">
+        <field name="name">sale.renting.view.kanban.inherit.base_logistics_sanmex</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_renting.rental_order_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="js_class">rent_logistics_kanban_dashboard</attribute>
+            </xpath>
+        </field>
+    </record>-->
+
+    <record id="rental_order_view_search_inherit_base_logistics_sanmex" model="ir.ui.view">
+        <field name="name">rental.order.view.search.inherit.base.logistics_sanmex</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_renting.rental_order_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='rental_late_orders']" position="after">
+                <filter name="to_delivery_smx" string="Para planear" domain="[('state_sanmex_logistics', '=', 'to_delivery')]"/>
+                <filter name="to_return_smx" string="Para retiro" domain="[('state_sanmex_logistics', '=', 'to_return')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="logistics_rental_order_action" model="ir.actions.act_window">
+        <field name="name">Rental Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="sale_renting.rental_order_view_search"/>
+        <field name="context">{'default_is_rental_order': 1, 'search_default_from_rental': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new quotation, the first step of a new rental!
+            </p><p>
+                Once the quotation is confirmed, it becomes a rental order.<br/> You will be able to create an invoice and collect the payment.
+            </p>
+        </field>
+    </record>
+
+    <record id="base_sanmex_rental_order_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="sale_renting.rental_order_view_kanban"/>
+        <field name="act_window_id" ref="logistics_rental_order_action"/>
+    </record>
+    <record id="base_sanmex_rental_order_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="sale_renting.rental_order_view_tree"/>
+        <field name="act_window_id" ref="logistics_rental_order_action"/>
+    </record>
+    <record id="base_sanmex_rental_order_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale_renting.rental_order_primary_form_view"/>
+        <field name="act_window_id" ref="logistics_rental_order_action"/>
+    </record>
+
+    <menuitem id="menu_logistic_sanmex_alquiler_ordenes" name="Ordenes" action="logistics_rental_order_action" parent="menu_logistic_sanmex_alquiler" sequence="1"/>
+    <!-- Dashboard action buttons -->
+    <!-- Dashboard action buttons: End in List view -->
+    <record id="rent_logistics_action_dashboard_list" model="ir.actions.act_window">
+        <field name="name">Para planificar</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
+        <field name="view_id" ref="sale_renting.rental_order_view_tree"/>
+        <field name="search_view_id" ref="sale_renting.rental_order_view_search"/>
+        <field name="target">main</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No hay ordenes para planificar
+            </p>
+        </field>
+    </record>
+    <record id="rent_logistics_action_dashboard_kanban" model="ir.actions.act_window">
+        <field name="name">Para planificar</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
+        <field name="view_id" ref="sale_renting.rental_order_view_kanban"/>
+        <field name="search_view_id" ref="sale_renting.rental_order_view_search"/>
+        <field name="target">main</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No hay ordenes para planificar
+            </p>
+        </field>
+    </record>
+</odoo>

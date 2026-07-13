@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    
+
+        <record model="ir.ui.view" id="res_company_descarga_sat_form">
+            <field name="name">res.company.form.descarga</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">                
+                
+                <notebook position="inside">
+                    <page string="Registro FIEL">
+                        <group string="Captura de Archivos FIEL" col="4" colspan="4" groups="base.group_no_one,account.group_account_manager">              
+                    
+                            <field name="certificate_file_FIEL" required="1"/>                               
+                            <field name="certificate_key_file_FIEL" required="1"/>
+                            
+                            
+                        </group>
+
+                    </page>
+                </notebook>
+
+             
+                </field>
+            </record> 
+
+
+   
+</odoo>

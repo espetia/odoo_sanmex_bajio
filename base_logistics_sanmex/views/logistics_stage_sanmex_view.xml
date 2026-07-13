@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="sanmex_stock_product_lot_action" model="ir.actions.act_window">
+            <field name="name">Estado de Equipos</field>
+            <field name="res_model">stock.production.lot</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain"></field>
+            <field name="context">{
+                'default_is_lot_sanmex': True,
+                'search_default_filter_to_sanmex': True,
+            }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new lot product!
+                  </p><p>
+                    You can also create additional products or services to sell by checking *Can be Sold* in the product form (e.g. insurance).
+                </p>
+            </field>
+        </record>
+
+       <record id="logistics_sanmex_stock_product_lot_kanban_view" model="ir.actions.act_window.view">
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="stock_production_lot_view_kanban_logistics_sanmex"/>
+            <field name="act_window_id" ref="sanmex_stock_product_lot_action"/>
+        </record>
+
+        <record id="logistics_sanmex_stock_product_lot_form_view" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_production_lot_form_inherit_logistics_sanmex"/>
+            <field name="act_window_id" ref="sanmex_stock_product_lot_action"/>
+        </record>
+        <!--<record id="logistics_sanmex_stock_product_lot_tree_view" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="stock.view_production_lot_tree"/>
+            <field name="act_window_id" ref="sanmex_stock_product_lot_action"/>
+        </record>-->
+
+
+        <menuitem
+        id="base_logistics_sanmex_stock_production_lot_menu"
+        name="Estado de Bodega"
+        action="sanmex_stock_product_lot_action"
+        parent="base_logistics_sanmex.menu_logistic_sanmex_store"
+        sequence="10"/>
+
+</odoo>

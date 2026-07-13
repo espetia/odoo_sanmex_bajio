@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="custom_dashboard.ChartRenderer" owl="1">
+        <canvas t-ref="chart"/>
+    </t>
+</templates>

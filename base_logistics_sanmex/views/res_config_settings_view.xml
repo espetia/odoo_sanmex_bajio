@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+        <record id="res_config_settings_inherit_form_logistics_sanmex" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.logistics_sanmex</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="10"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="Logistica" string="Logistica" data-key="base_logistics_sanmex" groups="sales_team.group_sale_manager">
+                        <h2>Logistica Sanmex</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <span class="o_form_label">Producto Default</span>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Producto" for="product_sanitary" class="col-lg-3 o_light_label"/>
+                                        <field name="product_sanitary" placeholder=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_logistics_sanmex_config_settings" model="ir.actions.act_window">
+            <field name="name">Ajustes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_id" ref="res_config_settings_inherit_form_logistics_sanmex" />
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module':'base_logistics_sanmex'}</field>
+        </record>
+
+        <menuitem
+            id="menu_logistics_settigns_menu"
+            name="Ajustes"
+            action="action_logistics_sanmex_config_settings"
+            groups="base.group_system"
+            parent="menu_logistic_sanmex_settings"
+            sequence="0"/>
+</odoo>

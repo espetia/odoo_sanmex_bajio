@@ -1,0 +1,620 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_move_subscription
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-17 20:20+0000\n"
+"PO-Revision-Date: 2016-08-17 15:47-0500\n"
+"Last-Translator: Israel Cruz Argil <israel.cruz@argil.mx>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_MX\n"
+"X-Generator: Poedit 1.8.8\n"
+
+#. module: account_move_subscription
+#: model:ir.actions.act_window,help:account_move_subscription.action_subscription_form
+msgid ""
+"A recurring entry occurs on a recurrent basis from a specific\n"
+"                date, i.e. corresponding to the signature of a contract or an\n"
+"                agreement with a customer or a supplier. You can create such\n"
+"                entries to automate the postings in the system."
+msgstr ""
+"Una póliza recurrente se puede aplicar para las pólizas que se repiten mes a mes,\n"
+"por ejemplo pólizas de amortización de gastos y/o inversiones,\n"
+"nómina administrativa y/o cualquier otra posible afectación cada\n"
+"cierre de mes."
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_account_id
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_use_model_model
+msgid "Account Model"
+msgstr "Póliza Modelo"
+
+#. module: account_move_subscription
+#: model:ir.model,name:account_move_subscription.model_account_model_line
+msgid "Account Model Entries"
+msgstr "Partidas de Póliza Modelo"
+
+#. module: account_move_subscription
+#: model:ir.model,name:account_move_subscription.model_account_model
+msgid "Account Model for Account Move Subscription"
+msgstr "Póliza Modelo a utilizar de manera recurrente"
+
+#. module: account_move_subscription
+#: model:ir.actions.act_window,name:account_move_subscription.action_model_form
+#: model:ir.ui.menu,name:account_move_subscription.menu_action_model_form
+msgid "Account Move Models"
+msgstr "Pólizas Modelo"
+
+#. module: account_move_subscription
+#: model:ir.model,name:account_move_subscription.model_account_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_search
+msgid "Account Subscription"
+msgstr "Pólizas Recurrentes"
+
+#. module: account_move_subscription
+#: model:ir.model,name:account_move_subscription.model_account_subscription_line
+msgid "Account Subscription Line"
+msgstr "Línea recurrente"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_amount_currency
+msgid "Amount Currency"
+msgstr "Monto Moneda"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_analytic_account_id
+msgid "Analytic Account"
+msgstr "Cuenta analítica"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_use_model_create_entry
+msgid "Are you sure you want to create entries?"
+msgstr "Está seguro que desea crear las pólizas?"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_subscription_wizard
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_use_model
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_use_model_create_entry
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_move_subscription
+#: model:ir.actions.act_window,help:account_move_subscription.action_subscription_form
+msgid "Click to define a new recurring entry."
+msgstr "Clic para definir una nueva póliza recurrente."
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,help:account_move_subscription.field_account_model_company_id
+msgid "Company related to this journal"
+msgstr "Compañia relacionada a este diario"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_form
+msgid "Compute"
+msgstr "Calcular"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_use_model
+msgid "Create Entries"
+msgstr "Crear Póliza"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_use_model
+msgid "Create Entries From Models"
+msgstr "Crear Pólizas de los Modelos"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_form
+msgid "Create entries"
+msgstr "Crear Pólizas"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_create_uid
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_create_uid
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_create_uid
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_line_create_uid
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_wizard_create_uid
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_use_model_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_create_date
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_create_date
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_create_date
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_line_create_date
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_wizard_create_date
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_use_model_create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_credit
+msgid "Credit"
+msgstr "Haber"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_line_date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_debit
+msgid "Debit"
+msgstr "Debe"
+
+#. module: account_move_subscription
+#: model:ir.ui.menu,name:account_move_subscription.menu_action_subscription_form
+msgid "Define Recurring Entries"
+msgstr "Definir Pólizas Recurrentes"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_display_name
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_display_name
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_display_name
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_line_display_name
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_wizard_display_name
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_use_model_display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: account_move_subscription
+#: selection:account.subscription,state:0
+msgid "Done"
+msgstr "Hecho"
+
+#. module: account_move_subscription
+#: selection:account.subscription,state:0
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_search
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_search
+msgid "Draft Subscription"
+msgstr "Recurrencia en Borrador"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_line_move_id
+msgid "Entry"
+msgstr "Póliza"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_search
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_tree
+msgid "Entry Subscription"
+msgstr "Póliza Recurrente"
+
+#. module: account_move_subscription
+#: code:addons/account_move_subscription/wizard/account_use_model.py:26
+#, python-format
+msgid "Error!"
+msgstr "Error!"
+
+#. module: account_move_subscription
+#: code:addons/account_move_subscription/account_subscription.py:73
+#, python-format
+msgid ""
+"Error!\n"
+"\n"
+"Maturity date of entry line generated by model line '%s' of model '%s' is based on partner payment term!\n"
+"Please define partner on it!"
+msgstr ""
+"Error!\n"
+"\n"
+"Fecha de vencimiento de la línea general por esta línea  '%s' del modelo '%s' está basada en los términos de pago de la empresa, pero no tiene dicho valor en la empresa!\n"
+"Por favor revise el registro de la empresa!"
+
+#. module: account_move_subscription
+#: model:ir.actions.act_window,name:account_move_subscription.action_account_subscription_wizard
+#: model:ir.ui.menu,name:account_move_subscription.menu_generate_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_subscription_wizard
+msgid "Generate Entries"
+msgstr "Generar Pólizas"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_wizard_date
+msgid "Generate Entries Before"
+msgstr "Generar Pólizas antes de"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_search
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_id
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_id
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_id
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_line_id
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_wizard_id
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_use_model_id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_journal_id
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_search
+msgid "Journal"
+msgstr "Diario"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_form
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_search
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_tree
+msgid "Journal Entry Model"
+msgstr "Póliza Modelo"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_line_form
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_line_tree
+msgid "Journal Entry Model Line"
+msgstr "Partida para la Línea del Modelo"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model___last_update
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line___last_update
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription___last_update
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_line___last_update
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_wizard___last_update
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_use_model___last_update
+msgid "Last Modified on"
+msgstr "Última Modifiación en"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_write_uid
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_write_uid
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_line_write_uid
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_wizard_write_uid
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_write_uid
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_use_model_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_write_date
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_write_date
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_line_write_date
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_wizard_write_date
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_write_date
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_use_model_write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_legend
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_form
+msgid "Legend"
+msgstr "Título"
+
+#. module: account_move_subscription
+#: model:ir.actions.act_window,name:account_move_subscription.action_account_use_model_create_entry
+msgid "Manual Recurring"
+msgstr "Recurrencia Manual"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_date_maturity
+msgid "Maturity Date"
+msgstr "Fecha Vencimiento"
+
+#. module: account_move_subscription
+#: code:addons/account_move_subscription/wizard/account_use_model.py:26
+#, python-format
+msgid ""
+"Maturity date of entry line generated by model line '%s' is based on partner payment term!\n"
+"Please define partner on it!"
+msgstr ""
+"Fecha de Vencimiento de la partida generada por la Línea del Modelo '%s' está basada en Términos de Pago de Empresa pero no tiene Empresa definida en la línea del Modelo!\n"
+"Por favor defina la empresa!"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_model_id
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_model_id
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_search
+msgid "Model"
+msgstr "Modelo"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_lines_id
+msgid "Model Entries"
+msgstr "Pólizas Modelo"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_name
+msgid "Model Name"
+msgstr "Nombre"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_name
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_move_subscription
+#: model:ir.actions.act_window,name:account_move_subscription.action_subscription_form_new
+msgid "New Subscription"
+msgstr "Nueva Recurrencia"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_notes
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_period_total
+msgid "Number of Periods"
+msgstr "Número de Periodos"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_use_model_create_entry
+msgid "Ok"
+msgstr "Aceptar"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_partner_id
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: account_move_subscription
+#: selection:account.model.line,date_maturity:0
+msgid "Partner Payment Term"
+msgstr "Términos de Pago"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_period_nbr
+msgid "Period"
+msgstr "Periodo"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_period_type
+msgid "Period Type"
+msgstr "Tipo Periodo"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_search
+msgid "Purchase"
+msgstr "Compra"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_quantity
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_form
+msgid "Recurring"
+msgstr "Recurrente"
+
+#. module: account_move_subscription
+#: model:ir.ui.menu,name:account_move_subscription.menu_recurring_entries
+msgid "Recurring Account Moves"
+msgstr "Pólizas Recurrentes"
+
+#. module: account_move_subscription
+#: model:ir.actions.act_window,name:account_move_subscription.action_subscription_form
+msgid "Recurring Lines"
+msgstr "Partidas Recurrentes"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_ref
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: account_move_subscription
+#: code:addons/account_move_subscription/wizard/account_subscription_wizard.py:41
+#, python-format
+msgid "Related Account Moves"
+msgstr "Pólizas resultantes"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_form
+msgid "Remove Lines"
+msgstr "Eliminar Líneas"
+
+#. module: account_move_subscription
+#: selection:account.subscription,state:0
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_search
+msgid "Running"
+msgstr "En proceso"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_search
+msgid "Running Subscription"
+msgstr "Corriendo Recurrencia"
+
+#. module: account_move_subscription
+#: model:ir.actions.act_window,name:account_move_subscription.action_subscription_form_running
+msgid "Running Subscriptions"
+msgstr "Corriendo Recurrencias"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_search
+msgid "Sale"
+msgstr "Venta"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_model_line_sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_form
+msgid "Set to Draft"
+msgstr "Cambiar a borrador"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_date_start
+msgid "Start Date"
+msgstr "Fecha inicial"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_state
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_search
+msgid "Status"
+msgstr "Estado"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_line_subscription_id
+msgid "Subscription"
+msgstr "Recurrencia"
+
+#. module: account_move_subscription
+#: model:ir.model,name:account_move_subscription.model_account_subscription_wizard
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_subscription_wizard
+msgid "Subscription Compute"
+msgstr "Calcular Líneas"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,field_description:account_move_subscription.field_account_subscription_lines_id
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_form
+msgid "Subscription Lines"
+msgstr "Líneas"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_line_form
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_line_form_complete
+#: model:ir.ui.view,arch_db:account_move_subscription.view_subscription_line_tree
+msgid "Subscription lines"
+msgstr "Líneas"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,help:account_move_subscription.field_account_model_line_amount_currency
+msgid "The amount expressed in an optional other currency."
+msgstr "El monto expresado en otra moneda es opcional"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,help:account_move_subscription.field_account_model_line_date_maturity
+msgid "The maturity date of the generated entries for this model. You can choose between the creation date or the creation date of the entries plus the partner payment terms."
+msgstr "En la Fecha de Vencimiento para esta partida del modelo puede seleccionar entre Fecha de Creación o basado en los Términos de Pago de la Empresa (Cliente / Proveedor)."
+
+#. module: account_move_subscription
+#: model:ir.model.fields,help:account_move_subscription.field_account_model_line_quantity
+msgid "The optional quantity on entries."
+msgstr "Campo Cantidad (opcional)"
+
+#. module: account_move_subscription
+#: model:ir.model.fields,help:account_move_subscription.field_account_model_line_sequence
+msgid "The sequence field is used to order the resources from lower sequences to higher ones."
+msgstr "El campo Secuencia es usado para ordenar las partidas."
+
+#. module: account_move_subscription
+#: model:ir.model.fields,help:account_move_subscription.field_account_model_name
+msgid "This is a model for recurring accounting entries"
+msgstr "Este es un modelo de Pólizas Contables Recurrentes"
+
+#. module: account_move_subscription
+#: selection:account.model.line,date_maturity:0
+msgid "Todays Date"
+msgstr "Hoy"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_use_model_create_entry
+msgid "Use Model"
+msgstr "Usar Modelo"
+
+#. module: account_move_subscription
+#: model:ir.model,name:account_move_subscription.model_account_use_model
+msgid "Use model"
+msgstr "Usar Modelo"
+
+#. module: account_move_subscription
+#: code:addons/account_move_subscription/wizard/account_subscription_wizard.py:36
+#, python-format
+msgid ""
+"Warning!\n"
+"Process did not return any Account Move. Please check."
+msgstr ""
+"Advertencia!\n"
+"El proceso no regresó ninguna Póliza Contable. Por favor revise."
+
+#. module: account_move_subscription
+#: code:addons/account_move_subscription/account_subscription.py:60
+#, python-format
+msgid "Wrong Model!"
+msgstr "Modelo incorrecto!"
+
+#. module: account_move_subscription
+#: sql_constraint:account.model.line:0
+msgid "Wrong credit or debit value in model, they must be positive!"
+msgstr "Valor incorrecto en el Debe o el Haber. No puede tener valor mayor a cero en ambas columnas, ni usar valores negativos!"
+
+#. module: account_move_subscription
+#: code:addons/account_move_subscription/account_subscription.py:29
+#, python-format
+msgid ""
+"You can specify year, month and date in the name of the model using the following labels:\n"
+"\n"
+"%(year)s: To Specify Year \n"
+"%(month)s: To Specify Month \n"
+"%(date)s: Current Date\n"
+"\n"
+"e.g. My model on %(date)s"
+msgstr ""
+"Puede utilizar año, mes y fecha en el concepto del Modelo usando las siguientes etiquetas:\n"
+"\n"
+"%(year)s: Para indicar el Año \n"
+"%(month)s: Para Indicar el Mes \n"
+"%(date)s: Para indicar Fecha actual \n"
+"\n"
+"P.Ej. Amortización de Gastos de Construcción de %(year)s - %(month)s"
+
+#. module: account_move_subscription
+#: code:addons/account_move_subscription/account_subscription.py:60
+#, python-format
+msgid "You have a wrong expression \"%(...)s\" in your model!"
+msgstr "Tiene una expresión incorrecta \"%(...)s\" el su modelo!"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_line_tree
+msgid "credit"
+msgstr "haber"
+
+#. module: account_move_subscription
+#: selection:account.subscription,period_type:0
+msgid "days"
+msgstr "días"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_model_line_tree
+msgid "debit"
+msgstr "debe"
+
+#. module: account_move_subscription
+#: selection:account.subscription,period_type:0
+msgid "month"
+msgstr "mes"
+
+#. module: account_move_subscription
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_subscription_wizard
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_use_model
+#: model:ir.ui.view,arch_db:account_move_subscription.view_account_use_model_create_entry
+msgid "or"
+msgstr "ó"
+
+#. module: account_move_subscription
+#: selection:account.subscription,period_type:0
+msgid "year"
+msgstr "año"

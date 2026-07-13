@@ -1,0 +1,354 @@
+<odoo>
+
+
+    
+    
+   
+    <menuitem id="menu_mx_reports" name="Reportes MX" parent="account.menu_finance_reports" sequence="12"/>
+
+<!-- 
+****************************
+wizard_account_account_lines
+****************************
+-->
+<!-- WIZARD que permite revisar auxiliares de una cuenta y periodos dentro de un Periodo Fiscal -->
+
+        <record id="view_account_account_lines_wizard" model="ir.ui.view">
+            <field name="name">account.account_account_lines_wizard.form</field>
+            <field name="model">account.account_lines_wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Auxiliar de Cuentas">
+                    <separator colspan="4" string="Por favor indique los parametros a utilizar." />
+                    <group colspan="4" col="4">
+                        <field name="company_id" required="1" readonly="1" colspan="4"/>
+                        <field name="fiscalyear_id" required="1" domain="[('company_id','=',company_id)]"/>
+                        <newline />
+                        <field name="period_id_start" required="1"  domain="[('fiscalyear_id','=', fiscalyear_id)]"/>
+                        <field name="period_id_stop" required="1" domain="[('fiscalyear_id','=', fiscalyear_id)]"/>
+                        <field name="account_id" required="1" colspan="4" domain="[('company_id','=',company_id)]"/>
+                        <field name="partner_id" colspan="4" />
+                        <field name="product_id" colspan="4" />
+                        <field name="output" />
+                    </group>
+                    <footer>
+                        <button name="button_get_info" string="_Aceptar" type="object"  class="oe_highlight"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+       </record>
+
+       <!-- Acción para el Wizard -->
+
+       <record id="action_open_account_account_lines_wizard" model="ir.actions.act_window">
+          <field name="name">Obtener Auxiliares</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">account.account_lines_wizard</field>
+          <!--<field name="view_type">form</field>-->
+          <field name="view_mode">form</field>
+          <field name="target">new</field>
+       </record>
+
+
+
+
+<!-- Definimos la opcion del menu para lanzar el Wizard para obtener los Auxiliares Contables-->
+
+    <menuitem 	name="Auxiliares Contables" 
+		        parent="menu_mx_reports" 
+		        id="menu_account_account_lines_wizard_form" 
+               	action="action_open_account_account_lines_wizard"
+                sequence="30"
+                />
+
+
+<!-- 
+****************************
+account_account_lines
+****************************
+-->
+    <record id="view_account_account_lines_search" model="ir.ui.view">
+        <field name="name">Auxiliar de Cuentas</field>
+        <field name="model">account.account_lines</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Search Auxiliares Contables">
+                <group>
+                    <field name="period_id"/>
+                    <field name="journal_id"/>
+                    <field name="account_id"/>
+                    <field name="move_date"/>
+                </group>
+                <newline />
+		<group expand="0" string="Group By...">
+                        <filter name="periodo" string="Periodo Mensual" domain="[]" context="{'group_by':'period_id'}"/>
+	                <filter name="diario" string="Diario" domain="[]" context="{'group_by':'journal_id'}"/>
+                        <filter name="usuario" string="Usuario" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter name="cuenta" string="Tipo de Cuenta" domain="[]" context="{'group_by':'account_type'}"/>
+               </group>
+            </search>
+        </field>
+        </record>
+
+<!-- Definimos el formulario para visualizar una partida en particular -->
+    <record id="view_account_account_lines_form" model="ir.ui.view">
+            <field name="name">Linea de Auxiliar de Cuentas</field>
+            <field name="model">account.account_lines</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Auxiliar Contable">
+                    <group colspan="4" col="4" >
+                        <field name="move_id" />
+                        <field name="move_date" />
+                        <field name="journal_id" />
+                        <field name="user_id" />
+                        <field name="fiscalyear_id" />
+                        <field name="period_id" />
+                        <field name="move_name" />
+                        <field name="move_ref" />
+                        <field name="account_id" />
+                        <field name="account_type_id" />
+                        <field name="name" />
+                        <field name="ref" />     
+                        
+                        <field name="initial_balance" />
+                        <newline />
+                        <field name="debit" />
+                        <newline />
+                        <field name="credit" />
+                        <newline />
+                        <field name="ending_balance" />
+                        <newline />
+                        <field name="amount_currency" />
+                        <field name="currency_id" />
+                        <field name="partner_id" colspan="4"/>
+                        <field name="product_id" />
+                        <field name="qty" />
+                        <field name="account_type" invisible="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+<!-- Definimos el Listado de las Partidas Contables -->
+	<record model="ir.ui.view" id="view_account_account_lines_tree">
+        <field name="name">account.account_lines.tree</field>
+        <field name="model">account.account_lines</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+		    <tree string="Auxiliares Contables" >
+                        <field name="journal_id" />                
+                        <field name="period_id" />
+                        <field name="move_date" />
+                        <field name="move_id" />
+                        <field name="move_ref" />
+                        <field name="account_id" />
+                        <field name="partner_id" />
+                        <field name="name" />
+                        <field name="ref" />
+                        <field name="account_type_id" invisible="1"/>
+                        <field name="account_type" invisible="1"/>
+                        <field name="account_level" invisible="1"/>
+                        <field name="account_sign" invisible="1"/>                        
+                        <field name="initial_balance" />
+                        <field name="debit"  sum="Cargos"/>
+                        <field name="credit" sum="Abonos"/>
+                        <field name="ending_balance" />
+                        <field name="amount_currency" />
+                        <field name="currency_id" />
+                        <field name="product_id" />
+                        <field name="qty" />
+                        <field name="user_id" />
+		    </tree>
+		</field>
+	</record>
+
+<!-- Definimos una accion para disparar las Partidas Contables -->
+    <record model="ir.actions.act_window" id="open_view_account_account_lines_tree">
+        <field name="name">Auxiliares Contables</field>
+        <field name="res_model">account.account_lines</field>
+        <!--<field name="view_type">form</field>-->
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+<!-- 
+****************************
+account_monthly_balance
+****************************
+-->
+    <!--<record id="view_account_monthly_balance_search" model="ir.ui.view">
+        <field name="name">account.monthly_balance.search</field>
+        <field name="model">account.monthly_balance</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Search Balanza">
+                <group>
+                    <field name="account_id"/>
+                    <field name="partner_id"/>
+                    <field name="account_level"/>
+                    <field name="account_type" />
+                    <field name="account_nature" />
+                    <field name="moves"/>
+                    <field name="company_name" />
+               </group>
+                <newline />
+		<group expand="0" string="Group By...">
+                    <filter string="Tipo de Cuenta" domain="[]" context="{'group_by':'account_type'}"/>
+                    <filter string="Empresa/Sucursal" domain="[]" context="{'group_by':'company_name'}"/>
+               </group>
+
+            </search>
+        </field>
+        </record>-->
+
+<!-- Definimos el formulario de registro de la Balanza de Comprobacion Mensual -->
+    <record id="view_account_monthly_balance_form" model="ir.ui.view">
+            <field name="name">account.monthly_balance.form</field>
+            <field name="model">account.monthly_balance</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Linea de Balanza Comprobacion">
+                    <header>
+                        <button name="%(action_open_account_account_lines_wizard)d" string="Auxiliar de la Cuenta..." 
+                                type="action" 
+                                context="{'search_default_period_id': period_id, 'default_period_id_start': period_id,'default_period_id_stop': period_id,'default_account_id':account_id,'default_partner_id':partner_id}" />
+                    </header>
+                    <sheet>
+                    <group>
+                        
+                        <field name="period_id" />
+                        <field name="period_name" />
+                        <field name="company_name" />
+                        <field name="account_id"/>
+                        <field name="partner_id"/>
+                        <field name="account_level" />
+                        <field name="account_type" />
+                        <field name="account_nature" />
+                        <field name="initial_balance" readonly="1"/>
+                        <field name="debit" readonly="1"/>
+                        <field name="credit"  readonly="1"/>
+                        <field name="balance" readonly="1"/>
+                        <field name="ending_balance" readonly="1"/>
+                        
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+<!-- Definimos el Listado de la Balanza de Comprobacion Mensual -->
+	<record model="ir.ui.view" id="view_account_monthly_balance_tree">
+        <field name="name">account.monthly_balance.tree</field>
+        <field name="model">account.monthly_balance</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+		    <tree string="Balanza Mensual" >
+
+			<button name="%(action_open_account_account_lines_wizard)d" string="Aux" 
+				type="action"
+				context="{'default_period_id_start': period_id,'default_period_id_stop': period_id,'default_account_id':account_id,'default_partner_id':partner_id}" />
+
+		        
+		        <field name="period_id" invisible="1"/>                
+		        <field name="account_id" invisible="1"/>
+		        <field name="account_code" />
+		        <field name="account_name" />
+                <field name="partner_id" invisible="1"/>
+                <field name="partner_name" />
+		        <field name="account_level" />
+		        
+		        <field name="account_nature" />
+		        <field name="account_sign" invisible="1"/>
+		        <field name="initial_balance" />
+		        <field name="debit"/>
+		        <field name="credit"/>
+                <field name="balance"/>
+		        <field name="ending_balance"/>
+                <field name="period_name" />
+                <field name="company_name" groups="base.group_multi_company"/>
+                <field name="order_code" invisible="1"/>
+                                
+		    </tree>
+		</field>
+	</record>
+
+<!--
+****************************
+account_monthly_balance_wizard
+****************************
+-->
+<!-- WIZARD que permite generar la Balanza de comprobacion  -->
+
+       <record id="view_account_monthly_balance_wizard" model="ir.ui.view">
+          <field name="name">account.monthly_balance_wizard.form</field>
+          <field name="model">account.monthly_balance_wizard</field>
+          <field name="type">form</field>
+          <field name="arch" type="xml">
+            <form string="Balanza de Comprobacion Mensual">
+                <separator string="Indique los parametros" colspan="4" />
+                <group colspan="4" col="4">
+                    <field name="company_id" required="1" colspan="4" />
+                    <field name="chart_account_id" required="1" colspan="4" 
+                           domain="[('company_id','=',company_id), ('parent_id','=', False)]"/>
+                    <field name="period_id" required="1"  domain="[('company_id','=',company_id),('special','=',0)]"/>                    
+                    <field name="partner_breakdown" />
+                    <field name="output" />
+                </group>
+                <footer>
+                    <button name="get_info" string="Obtener Balanza" type="object" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancelar" class="oe_link" />
+                </footer>
+            </form>
+          </field>
+       </record>
+
+
+       <!-- Acción para el Wizard -->
+
+       <record id="action_open_account_monthly_balance_wizard" model="ir.actions.act_window">
+          <field name="name">Balanza de Comprobacion Mensual</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">account.monthly_balance_wizard</field>
+         <!-- <field name="view_type">form</field>-->
+          <field name="view_mode">form</field>
+          <field name="target">new</field>
+       </record>
+
+
+<!-- Definimos la opcion del menu para lanzar el Wizard para obtener los Reportes Contables-->
+
+    <menuitem   name="Balanza Mensual" 
+		        parent="menu_mx_reports" 
+		        id="menu_account_monthly_balance_wizard" 
+        	    action="action_open_account_monthly_balance_wizard" 
+                sequence="20"/>
+
+
+    <report 
+        id="action_report_balanza_mensual"
+        model="account.monthly_balance_header"
+        string="Balanza Mensual"
+        report_type="qweb-pdf"
+        name="accounting_reports_consol.report_balanza_mensual"
+        file="accounting_reports_consol.report_balanza_mensual"
+        />
+        
+    <report 
+        id="action_report_auxiliar_cuentas"
+        model="account.account_lines_header"
+        string="Auxiliar de Cuentas"
+        report_type="qweb-pdf"
+        name="accounting_reports_consol.report_auxiliar_cuentas"
+        file="accounting_reports_consol.report_auxiliar_cuentas"
+        />
+
+
+
+</odoo>
+
+

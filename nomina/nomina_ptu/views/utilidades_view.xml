@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="view_employee_form_inherit_utilidades" model="ir.ui.view">
+        <field name="name">hr.employee.nomina.utilidades</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="nomina_cfdi_ee.view_employee_form_inherit"/>
+        <field name="arch" type="xml">
+          
+                
+                   
+                      <field name="fecha_utilidad_inicio" position="replace">
+                      <field name="fecha_utilidad_inicio" invisible="1"/>
+                  </field>
+                      <field name="fecha_utilidad_fin" position="replace">
+                      <field name="fecha_utilidad_fin" invisible="1"/>
+                  </field>
+
+                      <field name="dias_utilidad" position="replace">
+                        <field name="dias_utilidad" invisible="1"/>
+                      </field>
+                      <field name="sueldo_utilidad" position="replace">
+                         <field name="sueldo_utilidad" invisible="1"/>
+                   </field>
+
+                 <field name="fecha_utilidad_inicio" position="after">
+                    <group>
+                        <field name="utilidades_ids">
+                            <tree editable="bottom">
+                                <field name="fecha_utilidad_inicio"/>
+                                <field name="fecha_utilidad_fin"/>
+                                <field name="dias_utilidad"/>
+                                <field name="sueldo_utilidad"/>
+                            </tree>
+                        </field>
+                    </group>
+                </field>
+        </field>
+    </record>
+
+     <record id="form_tablas_cfdi_inherit_view_ptu" model="ir.ui.view">
+        <field name="name">tablas.cfdi.form.custom.ptu</field>
+        <field name="model">tablas.cfdi</field>
+        <field name="inherit_id" ref="nomina_cfdi_ee.form_tablas_cfdi_view"/>
+        <field name="arch" type="xml">
+           
+           
+            <field name="importe_utilidades" position="before">
+                <field name="ptu_cal"/>
+            </field>
+             
+       </field>
+   </record>
+
+
+   <record id="hr_payslip_run_form_nomina_cfdi_ptu" model="ir.ui.view">
+            <field name="name">hr.payslip.run.form.nomina.ptu</field>
+            <field name="model">hr.payslip.run</field>
+            <field name="priority">50</field>
+            <field name="inherit_id" ref="nomina_cfdi_ee.hr_payslip_run_form_nomina_cfdi"/>
+            <field name="arch" type="xml">
+               <field name="isr_anual" position="after">
+                <field name="calcular_ptu"/>
+                <field name="fecha_utilidad_inicio" attrs="{'invisible':[('calcular_ptu','=', False)], 'required':[('calcular_ptu','=', True)]}"/>
+                <field name="fecha_utilidad_fin" attrs="{'invisible':[('calcular_ptu','=', False)], 'required':[('calcular_ptu','=', True)]}"/>
+               </field>
+            </field>
+       </record> 
+</odoo>

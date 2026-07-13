@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="paperformat_a4_landscape" model="report.paperformat">
+            <field name="name">A4 Landscape Payslip Batch 1.1</field>
+            <field name="default" eval="True" />
+            <field name="format">Letter</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+        <template id="report_inability">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.internal_layout">
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2>
+                                        REPORTE DE INCIDENCIAS DE INCAPACIDADES
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="text-right">Periodo de nómina : <span t-field="o.date_start"/> - <span t-field="o.date_end"/></h5>
+                                    <br/>
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Empleado</th>
+                                                <th>Fecha</th>
+                                                <th>Folio</th>
+                                                <th>Días</th>
+                                                <th>Rama de seguro</th>
+                                                <th>Tipo de riesgo</th>
+                                                <th>Secuela</th>
+                                                <th>Control</th>
+                                                <th>Porcentaje</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.slip_ids" t-as="table_line">
+                                                <tr t-foreach="table_line.employee_id.inability_ids" t-as="line_ina">
+                                                    <t t-if="line_ina.state == 'done' and line_ina.fecha >= o.date_start and (line_ina.fecha &lt; o.date_end  or line_ina.fecha == o.date_end)">
+                                                        <td><span t-field="table_line.employee_id.name"/></td>
+                                                        <td><span t-field="line_ina.fecha"/></td>
+                                                        <td><span t-field="line_ina.folio_incapacidad"/></td>
+                                                        <td><span t-field="line_ina.dias"/></td>
+                                                        <td><span t-field="line_ina.ramo_de_seguro"/></td>
+                                                        <td><span t-field="line_ina.tipo_de_riesgo"/></td>
+                                                        <td><span t-field="line_ina.secuela"/></td>
+                                                        <td><span t-field="line_ina.control"/></td>
+                                                        <t t-if="line_ina.porcentaje != ''">
+                                                            <td><span t-field="line_ina.porcentaje"/></td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td><span>N/A</span></td>
+                                                        </t>
+                                                    </t>
+                                                    <t t-else=""></t>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <report string="Reporte Incidencias (Incapacidades)"
+                id="report_print_incident_inability"
+                model="hr.payslip.run"
+                report_type="qweb-pdf"
+                name="complementos_nomina.report_inability"
+                paperformat="complementos_nomina.paperformat_a4_landscape"
+        />
+    </data>
+</odoo>

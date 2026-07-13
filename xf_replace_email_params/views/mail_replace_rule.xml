@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data> <!--  noupdate="1" -->
+        <record id="mail_replace_rule_tree" model="ir.ui.view">
+            <field name="name">mail_replace_rule_tree</field>
+            <field name="model">mail.replace.rule</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="model_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="email_from_author"/>
+                    <field name="email_from"/>
+                    <field name="email_from_user_id"/>
+                    <field name="reply_to_author"/>
+                    <field name="reply_to"/>
+                    <field name="reply_to_user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mail_replace_rule_form" model="ir.ui.view">
+            <field name="name">mail_replace_rule_form</field>
+            <field name="model">mail.replace.rule</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="model_id"/>
+                            </group>
+                            <group>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="only_for_internal_users"/>
+                            </group>
+                            <group>
+                                <div class="alert alert-warning" role="alert" attrs="{'invisible':[('only_for_internal_users', '=', True)]}">
+                                    Please note that disabling this checkbox may lead to unexpected security consequences,
+                                    because emails from non-internal users will be sent using trusted outgoing mail server.
+                                </div>
+                            </group>
+                        </group>
+                        <group>
+                            <group name="email_from" string="Email From">
+                                <field name="email_from_author"/>
+                                <field name="email_from"
+                                       attrs="{'invisible':[('email_from_author', '!=', False)]}"/>
+                                <field name="email_from_user_id"
+                                       attrs="{'invisible':[('email_from_author', '!=', False)]}"/>
+                            </group>
+                            <group name="reply_to" string="Reply To">
+                                <field name="reply_to_author"/>
+                                <field name="reply_to"
+                                       attrs="{'invisible':[('reply_to_author', '!=', False)]}"/>
+                                <field name="reply_to_user_id"
+                                       attrs="{'invisible':[('reply_to_author', '!=', False)]}"/>
+                            </group>
+                        </group>
+                        <group name="help" string="Help" col="1">
+                            <p>
+                                Please note that
+                                "Email From" and "Reply To"
+                                have higher priority than
+                                "Email From User" and "Reply To User".
+                            </p>
+                            <p>
+                                Please ensure that outgoing
+                                mail server has access to send emails
+                                using sender address you set in the "Email From"
+                            </p>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mail_replace_rule_act_window" model="ir.actions.act_window">
+            <field name="name">Mail Replace Rules</field>
+            <field name="res_model">mail.replace.rule</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="mail_replace_rule_menuitem"
+                  name="Mail Replace Rules"
+                  action="mail_replace_rule_act_window"
+                  parent="base.menu_email"
+                  sequence="100"/>
+    </data>
+</odoo>

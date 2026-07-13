@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!-- Mail template are declared in a NOUPDATE block
+         so users can freely customize/delete them -->
+    
+        <!--Email template -->
+        <record id="email_template_account_payment" model="mail.template">
+            <field name="name">Correo para el Envío de CFDI Recepción de Pagos</field>
+            <field name="email_from">{{ (object.invoice_user_id.email_formatted or user.email_formatted) }}</field>
+            <field name="subject">{{object.company_id.name}} CFDI Recepción de Pagos (Ref {{object.name or 'n/a'}})</field>
+            <field name="partner_to">{{object.partner_id.id}}</field>
+            <field name="model_id" ref="account.model_account_payment"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_template" ref="l10n_mx_einvoice_payment_report"/>
+            <field name="report_name">CFDI_{{(object.fname_payment or '').replace('/','_')}}</field>
+            <field name="lang">{{object.partner_id.lang}}</field>
+            <field name="body_html"><![CDATA[
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+<p>Estimado(a)  
+    
+            <t t-out="object.partner_id.name or ''" contenteditable="false" data-oe-t-inline="true">Brandon Freeman</t>
+        
+
+
+
+ <t t-if="object.partner_id.parent_id" data-oe-t-group="0" data-oe-t-group-active="true" data-oe-t-inline="true">
+            <br>
+(<t t-out="object.partner_id.parent_id.name" contenteditable="false" data-oe-t-inline="true">Cliente</t>)
+</t>
+,</p>
+<p>Adjunto encontrará el CFDI de Recepción de Pagos <strong t-out="(object.name or '').replace('/','-') or ''" contenteditable="false">BNK1-2021-05-0002</strong>
+  <t t-if="object.ref" data-oe-t-group="0" data-oe-t-group-active="true" data-oe-t-inline="true">
+            <br>
+(con referencia: <t t-out="object.ref or ''" contenteditable="false" data-oe-t-inline="true">123458</t> , )
+</t>
+por el monto de <strong><t t-out="object.amount or ''" contenteditable="false" data-oe-t-inline="true">$100.00</t> <t t-out="object.currency_id.name or ''" contenteditable="false" data-oe-t-inline="true">MXN</t></strong>
+recibido a nombre de 
+<t t-out="object.company_id.name or ''" contenteditable="false" data-oe-t-inline="true">My Company</t>.
+</p>
+
+
+   
+ 
+    <br/><br/>
+
+<p>Gracias por su pago,</p>
+<t t-if="user.signature" data-oe-t-group="0" data-oe-t-group-active="true" data-oe-t-inline="true">
+            <br>
+            <t t-out="user.signature or ''" contenteditable="false" data-oe-t-inline="true">--<br>Mitchell Admin</t>
+</t>
+]]></field>
+        </record>
+
+       
+    
+</odoo>
+
+            
+           

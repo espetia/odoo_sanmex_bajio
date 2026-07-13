@@ -1,0 +1,14 @@
+<odoo>
+    
+    <data>
+        
+        <record model="res.groups" id="eaccounting_managerpay_group">
+            <field name="name">Complementos de pagos</field>
+        </record>
+        
+        
+        
+       
+    </data>
+    
+</odoo>

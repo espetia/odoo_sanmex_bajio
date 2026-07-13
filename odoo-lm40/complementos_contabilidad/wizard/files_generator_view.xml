@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    
+        
+		<record id="files_generator_form" model="ir.ui.view">
+		    <field name="name">files.generator.form</field>
+            <field name="model">files.generator.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Generación de XML">
+                    <group attrs="{'invisible' : [('state', '!=', 'init')]}" colspan="4" col="4">
+                        <label for="xml_target" string="Utilice este asistente para generar los archivos XML solicitados por el SAT para comprobar la contabilidad de su empresa." colspan="4"/>
+                        <group col="4" colspan="4">                            
+	                        <field name="xml_target" />
+	                        <field name="format" />
+	                        <field name="month" />
+	                        <field name="year" />
+                            
+                        </group>
+                        <group attrs="{'invisible' : [('xml_target', 'not in', ('trial_balance','accounts_catalog', 'helpers_account'))]}" colspan="2">
+                        	<field name="accounts_chart" attrs="{'required' : [('xml_target', 'in', ('trial_balance','accounts_catalog','helpers_account'))], 'readonly' : [('xml_target', 'not in', ('trial_balance','accounts_catalog','helpers_account'))]}"/>
+                        </group>
+                        <group attrs="{'invisible' : [('xml_target', '!=', 'trial_balance')]}" colspan="2">
+                            <field name="trial_delivery" />
+   	                        <field name="trial_lastchange_date" attrs="{'invisible' : [('trial_delivery', '=', 'N')], 'required' : [('trial_delivery', '=', 'C')]}"/>
+                        </group>
+                        <group attrs="{'invisible' : [('xml_target', 'not in', ['vouchers','helpers','helpers_account'])]}" colspan="2">
+                            <field name="request_type" attrs="{'required' : [('xml_target', 'in', ['vouchers','helpers', 'helpers_account'])]}"/>
+                        </group>
+                        <group attrs="{'invisible' : [('xml_target', 'not in', ['vouchers','helpers','helpers_account'])]}" colspan="2">
+                            <field name="order_number" attrs="{'invisible' : [('request_type', 'not in', ['AF', 'FC'])], 'required' : [('request_type', 'in', ['AF', 'FC']), ('xml_target', 'in', ['vouchers','helpers','helpers_account'])]}"/>
+                            <field name="procedure_number" attrs="{'invisible' : [('request_type', 'not in', ['DE', 'CO'])], 'required' : [('request_type', 'in', ['DE', 'CO']), ('xml_target', 'in', ['vouchers','helpers', 'helpers_account'])]}"/>
+                        </group>
+                       <group colspan="2">
+                        <field name="is_tamp"/>
+                       </group> 
+                    </group>
+                    
+                        
+                    <group colspan="4">
+                        
+                        <field name="primary_file" readonly="1" filename="filename" string="Archivo XML generado" colspan="4" nolabel="1"/>
+                        <separator colspan="4"/> 
+                    </group>
+                    
+                    
+                    
+                    <footer>
+                        <!-- very first button available -->
+                        <button type="object" name="process_file" states="init" string="Procesar archivo" class="oe_highlight" colspan="2" />
+                        <!-- after processing we got these two -->
+                        <button type="object" name="do_zip" string="Empacar archivo" colspan="2" />                        
+                        <button type="object" name="process_file" states="val_xcpt" string="Regenerar archivo" colspan="2"/>
+                        
+                        <button type="object" name="do_zip" states="stamp_xcpt,stamp_done" class="oe_highlight" string="Empacar archivo" colspan="2" />
+                        
+                    </footer>
+                    <field name="filename" invisible="1"/>
+                    <field name="state" invisible="1"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="files_generator_action" model="ir.actions.act_window">
+            <field name="name">Contabilidad electrónica</field>
+            <field name="res_model">files.generator.wizard</field>
+            <field name="view_mode">form</field>
+            <!--<field name="view_type">form</field>-->            
+            <field name="target">new</field>
+        </record>
+        
+    <menuitem id="files_generator_menu" action="files_generator_action" parent="menu_mexican_eaccount_options" sequence="10"/>
+    
+</odoo>

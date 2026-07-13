@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="hr_salary_rule_form_inherit" model="ir.ui.view">
+            <field name="name">hr.accounting.form.nomina</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="inherit_id" ref="om_hr_payroll_account.hr_salary_rule_form_inherit"/>
+            <field name="arch" type="xml">
+              <xpath expr="//page/group[@colspan='4']" position="after">
+                          <group string="Cuentas deudoras" colspan="4">
+                                <field name="cta_deudora_ids" nolabel="1" colspan="4">
+                                    <tree name ="cuentas_deudoras" string="Cuentas deudoras" editable="bottom">
+                                       <field name="department_id"/>
+                                       <field name="account_credit" />
+                                       <field name="account_analytic" />
+                                    </tree>
+                                </field>
+                          </group>
+                          <group string="Cuentas acreedoras" colspan="4">
+                                <field name="cta_acreedora_ids" nolabel="1" colspan="4">
+                                    <tree name ="cuentas_acreedoras" string="Cuentas acreedoras" editable="bottom">
+                                       <field name="department_id"/>
+                                       <field name="account_credit" />
+                                       <field name="account_analytic" />
+                                    </tree>
+                                </field>
+                          </group>
+              </xpath>
+            </field>
+        </record>
+
+        <record id="hr_payslip_run_form_nomina_cfdi_conta_ee" model="ir.ui.view">
+            <field name="name">hr.payslip.run.form.nomina.cfdi.conta.ee</field>
+            <field name="model">hr.payslip.run</field>
+            <field name="inherit_id" ref="om_hr_payroll.hr_payslip_run_form"/>
+            <field name="arch" type="xml">
+              <field name='state' position="before">
+                    <field name="is_all_payslip_done" invisible="1"/>
+                    <field name="move_id" invisible="1"/>
+                    <button name="action_crear_poliza"
+                            type="object"
+                            string="Crear Polizas"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|',('is_all_payslip_done','!=',True), ('move_id','!=',False)]}"/>
+                    </field>
+            </field>
+        </record>
+        
+</odoo>

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+  <data>
+<!--
+    Account Move Extension
+  -->
+
+    <record id="view_account_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <button name="open_reconcile_view" position="before">
+                <button name="show_stock_moves" class="oe_stat_button" icon="fa-bars"
+                        type="object" string="Related Stock Moves"/>
+            </button>
+        </field>
+    </record>
+
+<!--
+    Account Move Extension
+  -->
+
+    <record id="view_stock_move_form_inherit" model="ir.ui.view">
+        <field name="name">stock.move.form.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form"/>
+        <field name="arch" type="xml">
+            <group name="linked_group" position="after">
+                   <group name="account_move_lines_grp" string="Account Move Entries" colspan="4"
+                          attrs="{'invisible':[('state','!=','done')]}" >
+                        <field name="account_move_line_ids" nolabel="1"/>
+                    </group>
+            </group>
+        </field>
+    </record>
+
+    <record id="view_stock_move_entries_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.entries</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button string="Show Journal Entries" name="show_journal_entries" type="object" class="oe_stat_button"
+                        attrs="{'invisible':[('state','!=','done')]}" icon="fa-bars"/>
+                <button string="Show Entry Lines" name="show_entry_lines" type="object" class="oe_stat_button"
+                        attrs="{'invisible':[('state','!=','done')]}" icon="fa-bars"/>                
+            </xpath>            
+        </field>
+    </record>
+
+<!--
+    Stock Quant Extension
+  
+    <record id="view_stock_quant_tree_valuation_sum" model="ir.ui.view">
+        <field name="name">stock.quant.tree.valuation_sum</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree"/>
+        <field name="arch" type="xml">
+            <field name="inventory_value" position="replace">
+                <field name="inventory_value" sum="Valuation"/>
+            </field>
+        </field>
+    </record>    
+-->
+<!--
+    Stock Move Extension
+  -->
+    <record id="view_move_tree_price_unit" model="ir.ui.view">
+        <field name="name">stock.move.tree.price_unit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="location_id" position="before">
+                <field name="price_unit" />
+                <field name="amount_stock_move" sum="Amount Stock Move"/>
+            </field>
+        </field>
+    </record>          
+      
+  </data>
+</odoo>

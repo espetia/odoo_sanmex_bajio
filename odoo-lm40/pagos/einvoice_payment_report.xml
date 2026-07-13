@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        
+
+    <data>
+        <report 
+            id="l10n_mx_einvoice_payment_report"
+            string="CFDI Recepción Pagos"
+            model="account.payment"
+            report_type="qweb-pdf"
+            file="pagos.report_account_payment" 
+            name="pagos.report_account_payment"
+        />
+        
+       
+    </data>
+</odoo>

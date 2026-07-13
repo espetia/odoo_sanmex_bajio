@@ -1,0 +1,38 @@
+librerias:
+	pip3 install qrcode
+	pip3 install pyopenssl
+	pip3 install request
+	pip3 install requests
+	pip3 install xmltodict
+	apt-get install libxml2-utils
+	sudo apt-get install xsltproc
+
+una vez realizada esta acción ubicamos el modulo localizacion_mexico el cual contiene todos los modulos base de localización.
+
+modulos independientes y que se deberan instalar:
+	* account_tax_category (categoria de impuestos necesario configurar la categoria para el reporte de la DIOT y complementos de pagos)
+	* descargamasivacfdi (Descarga masiva de xml)
+	* account_closing (Generación de póliza de cierre (Ejercicio Fiscal))
+
+
+modulos opcionales:
+
+	* Cuentas_atributos (Este modulo permite filtrar solo cuentas afectables)
+	* atributos_vistas (en diferentes vista no permite que el usuario pueda crear o abrir un registro ejemplo: productos, clientes, etc)
+	* stock_move_entries (este modulo se utiliza para visualizar desde el picking la póliza y apuntes creados por dicho movimiento, esto a excepcion de transferencias internas)
+	* account_per_warehouse (este modulo se utiliza para empresas que manejan multi almacenes y que desean segmentar sus costos y valoraciones de inventario por ubicación)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

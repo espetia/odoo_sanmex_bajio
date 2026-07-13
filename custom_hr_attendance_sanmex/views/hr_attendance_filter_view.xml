@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_attendance_view_filter_inherit_custom_hr_sanmex" model="ir.ui.view">
+        <field name="name">hr.attendance.view.filter.inherit.custom.sanmex</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='groupby_check_out']" position="after">
+                <filter string="Departamento" name="department" context="{'group_by': 'department_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

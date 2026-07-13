@@ -1,0 +1,17 @@
+<odoo>
+    
+    <data>
+        
+        <record model="res.groups" id="eaccounting_user_group">
+            <field name="name">Contabilidad electrónica (Usuario)</field>
+        </record>
+        
+        <record model="res.groups" id="eaccounting_admin_group">
+            <field name="name">Contabilidad electrónica (Responsable)</field>
+        </record>
+        
+        
+        
+    </data>
+    
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>   
+	<act_window name="Comparar CFDI con Notas de Gasto"
+			res_model="cfdi.no.realted.expense"
+            binding_model="registro.descargas"
+            view_mode="form"
+            target="new"
+            
+            id="action_comparar_gastos_masivo"/>
+
+	
+	<record model='ir.ui.view' id='view_compara_gastos'>
+		<field name='name'>Comparar CFDI con Notas de gasto</field>
+		<field name='model'>cfdi.no.realted.expense</field>
+		<field name='arch' type='xml'>
+			<form name='Comparar CFDI con Notas de gasto'>
+				<footer>
+					<button name='buscar_gastos_multiple' type='object' string='Comparar' class='oe_highlight'/> 
+					<button special="cancel" string="Cancelar"/> 
+				</footer>
+			</form>
+		</field>
+	</record>
+
+
+	<record id="action_comparar_gastos" model='ir.actions.act_window'>
+		<field name='name'>Comparar CFDI con Notas de Gastos</field>
+		<field name="type">ir.actions.act_window</field>		
+		<field name='res_model'>cfdi.no.realted.expense</field>		
+		<field name='view_mode'>form</field>
+		<field name='target'>new</field>
+ 	</record>
+
+
+</odoo>

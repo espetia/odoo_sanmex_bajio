@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+
+        <record id="view_account_diot_report" model="ir.ui.view">
+            <field name="name">Account DIOT Report for Mexico</field>
+            <field name="model">account.diot.report</field>
+            <field name="arch" type="xml">
+            <form string="DIOT Report">
+                
+                <field name="name" invisible="1"/>
+                <group string="Declaracion de operaciones con terceros [DIOT]" colspan="4">
+                    <field name="company_id" />
+                    <field name="period_id" />
+                    
+                </group>
+                <div>                    
+                    <p>Archivo txt DIOT: <field name="file" readonly="1" filename="filename"/> </p>
+                </div>               
+
+                <footer>
+                    <button name="create_diot" string="Generar Archivo" colspan="1" type="object" class="oe_highlight"/>
+                    o
+                    <button string="Cancelar" class="oe_link" special="cancel"/>
+                </footer>
+                <footer>
+                    <button special="cancel" string="Cerrar" type="object"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_account_diot_report" model="ir.actions.act_window">
+            <field name="name">Reporte DIOT</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.diot.report</field>
+            <!--<field name="view_type">form</field>-->
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help"></field>
+        </record>
+
+        <menuitem   name="DIOT" 
+                    parent="menu_registro_diot" sequence="20"
+                    action="action_account_diot_report"
+                    id="menu_account_diot_declaration"
+            />
+
+
+    
+</odoo>

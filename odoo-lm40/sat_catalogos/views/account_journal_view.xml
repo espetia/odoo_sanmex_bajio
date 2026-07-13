@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<odoo>    
+
+    <record model="ir.ui.view" id="view_account_journal_view_form_inh_multisuc">
+        <field name="name">view.account.journal.view.form.inh.multisuc</field>
+         <field name="model">account.journal</field>
+         <field name="inherit_id" ref="account.view_account_journal_form"/>
+         <field name="arch" type="xml">
+
+            <notebook position="inside">
+                    <page string="Config CFDI" attrs="{'invisible': [('use_for_cfdi','=',False)]}">
+                        <group>
+                            <group>                                
+                                
+                                <field name="report_id_fact" attrs="{'required': [('type','=','sale')], 'invisible' : [('type', '!=', 'sale')]}"
+                                       domain="[('model','=','account.move')]"/>
+                                 <field name="report_id_pay" attrs="{'required': [('type','=','bank')], 'invisible' : [('type', '!=', 'bank')]}"
+                                       domain="[('model','=','account.payment')]"/>
+                            </group>
+                            <group>
+                                <field name="company2_id" attrs="{'required': [('use_for_cfdi','=',True)]}"/> 
+                                <field name="address_invoice_company_id" attrs="{'required': [('use_for_cfdi','=',True)]}"/> 
+                            </group>
+                        </group>
+            </page>
+        </notebook>
+            <field name="default_account_id" position="after">
+                    <field name="account_debit_id" attrs="{'required' : [('cmlp_type_id', 'in', ['check', 'transfer'])]}"/>                    
+                    <field name="account_credit_id" attrs="{'required' : [('cmlp_type_id', 'in', ['check', 'transfer'])]}"/>
+                </field>    
+         
+                <field name="type" position="after">
+                  <field name="use_for_cfdi" attrs="{'invisible' : [('type','not in',('sale','bank','cash'))]}"/>
+                </field>
+                <field name="restrict_mode_hash_table" position="after">
+                    <field name="poliza_cierre"  attrs="{'invisible':[('type','!=','general')]  }"/>
+                </field>
+               <field name="restrict_mode_hash_table" position="after">
+                        <field name="anticipo"/>
+                    </field>
+                
+
+                <field name="company_id" position="before">
+                    <field name="sat_tipo_poliza_id" options="{'no_create_edit': True,'no_create': True}"/>
+                    <field name="cmlp_type_id"/>
+                    <field name="payment_method_id" attrs="{'invisible' : [('cmlp_type_id', '!=', 'other')], 'required' : [('cmlp_type_id', '=', 'other')]}" />
+                </field>
+             
+         
+         </field>
+    </record> 
+
+         <record id="view_account_move_poliza_cierre_form" model="ir.ui.view">
+            <field name="name">account.move.poliza.cierre.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account_period_and_fiscalyear.view_account_move_special_period_form"/>
+            <field name="arch" type="xml">
+                <field name="closing_period" position="after">
+                    <field name="poliza_cierre" attrs="{'invisible':[('poliza_cierre','!=',True)]}"/>
+                </field>
+            </field>
+        </record>          
+</odoo>

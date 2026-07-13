@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+            <template id="report_account_payment">
+            <t t-call="web.html_container">
+            <t t-set="data_report_margin_top" t-value="15"/>
+            <t t-set="data_report_header_spacing" t-value="10"/>
+                            
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+                    <!--<t t-call="report.internal_layout">-->
+                    <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" >
+                    <table class="table table-condensed" style="font-size:11px;border: 1px solid #ddd;border-collapse: collapse;padding: 5px;">
+                            <tr>
+                                <td width="30%" align="center" valign="middle" style="border: 1px solid white;">
+                                    <img t-if="o.company_emitter_id.logo"
+                                         t-att-src="'data:image/png;base64,%s' % to_text(o.company_emitter_id.logo)" 
+                                         style="max-height: 90px;height: auto;"/>
+                                    
+                                </td>
+                                <td colspan="2" width="40%" align="center" valign="top" style="border: 1px solid white;">
+                                    <strong>
+                                        <span t-field="o.company_emitter_id.partner_id.name"  style="font-size:10px;"/><BR/>                                
+                                    </strong>
+                                    <span t-if="o.company_emitter_id.partner_id.rfc"><span t-field="o.company_emitter_id.partner_id.rfc"/></span><BR />
+                                    <span t-field="o.company_emitter_id.partner_id.regimen_fiscal_id.name" />
+                                    <BR />
+                                    <span t-field="o.company_emitter_id.partner_id.street"/>
+                                        <span t-if="o.company_emitter_id.partner_id.num_external"> No. <span t-field="o.company_emitter_id.partner_id.num_external"/></span>
+                                        <span t-if="o.company_emitter_id.partner_id.num_internal"> Int. <span t-field="o.company_emitter_id.partner_id.num_internal"/></span>
+                                        <BR/>
+                                        <span t-if="o.company_emitter_id.partner_id.colonia_sat_id">
+                                            <span t-field="o.company_emitter_id.partner_id.colonia_sat_id.name"/>,
+                                        </span>
+                                        <span t-if="o.company_emitter_id.partner_id.sat_municipio_id">
+                                            <span t-field="o.company_emitter_id.partner_id.sat_municipio_id.name"/>
+                                        </span>
+                                        <BR/>
+                                        <span t-field="o.company_emitter_id.partner_id.state_id.name"/>, 
+                                        <span t-field="o.company_emitter_id.partner_id.country_id.name"/>
+                                        <span t-if="o.company_emitter_id.partner_id.sat_codigopostal_id">
+                                            CP: <span t-field="o.company_emitter_id.partner_id.sat_codigopostal_id.code"/>
+                                        </span>
+
+                                </td>
+                                <td width="30%" valign="top" style="border: 1px solid white;text-align: center;">
+                                    <strong>Recibo Electrónico de Pagos</strong>
+                                    <BR/>
+                                    <span t-field="o.name" style="font-size:10px;"/>
+                                    <BR />
+                                    <strong>Folio Fiscal: </strong><br/><span t-field="o.UUID"/><BR/>
+                                    <strong>Fecha Emisión: </strong><span t-field="o.date"/><BR/>
+                                    <strong>Fecha Certificación: </strong><span t-field="o.fecha_timbrado"/><BR/> 
+                                    <strong>Expedido en: </strong>
+                                        <span t-field="o.address_issued_id.sat_codigopostal_id.code"/>
+
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-condensed" style="font-size:9px;border: 1px solid #ddd;border-collapse: collapse;padding: 5px;">
+
+                            <tr>
+                                <td style="border: 1px solid;">
+                                    <p style="margin-left: 10px;"><strong>CLIENTE: </strong></p>
+                                    <p style="margin-left: 10px;">
+                                        <span t-field="o.partner_id.name"/>
+                                        <BR/>
+                                        <span t-field="o.partner_id.street"/>
+                                        <span t-if="o.partner_id.num_external"> No. <span t-field="o.partner_id.num_external"/></span>
+                                        <span t-if="o.partner_id.num_internal"> Int. <span t-field="o.partner_id.num_internal"/></span>
+                                        <BR/>
+                                        <span t-field="o.partner_id.sat_municipio_id.name"/>, 
+                                        <span t-field="o.partner_id.state_id.name"/>, 
+                                        <span t-field="o.partner_id.country_id.name"/>, CP: 
+                                        <span t-field="o.partner_id.sat_codigopostal_id.code"/><BR/>
+                                        <strong>RFC: </strong> <span t-field="o.partner_id.rfc"/> 
+                                    </p>
+                                </td>
+                                <td style="border: 1px solid;">
+                                    <strong>Uso CFDI: </strong><span t-field="o.uso_cfdi_id"/><BR/>
+                                    <strong>Tipo de Comprobante:</strong>
+                                    <span t-field="o.ticomprobante"/>
+                                    <BR/>
+                                    <strong>Versión Comprobante: </strong>3.3<BR/>
+                                    <strong>No. CSD del Emisor: </strong><span t-field="o.company_emitter_id.serial_number"/><br/>
+                                    <strong>No. CSD del SAT: </strong><span t-field="o.cfdi_no_certificado"/><BR/>
+                                    <strong>Forma de Pago: </strong><span t-raw="'[%s] %s' % (o.pay_method_id.code,o.pay_method_id.name)"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-condensed" style="font-size:9px">
+                            <thead>
+                                <tr>
+                                    <th style="width:30%;">Folio Fiscal</th>
+                                    <th style="width:5%;text-align:center;">Folio</th>
+                                    <th style="width:5%;text-align:center;">Método de Pago</th>
+                                    <th style="width:5%;text-align:center;">Moneda Factura</th>                        
+                                    <th style="width:5%;" class="text-center">T.C.</th>                        
+                                    <th style="width:5%;text-align:center;">Parcialidad</th>
+                                    <th style="width:15%;" class="text-center">Saldo Anterior</th>
+                                    <th style="width:15%;" class="text-center">Monto Aplicado</th>
+                                    <th style="width:15%;" class="text-center">Saldo Insoluto</th>
+                                </tr>
+                            </thead>                
+                            <tbody class="invoice_tbody">
+                                <tr t-foreach="o.payment_invoice_line_ids" t-as="l">
+                                    <td ><span t-field="l.invoice_uuid"/></td>
+                                    <td style="text-align:center;"><span t-field="l.invoice_folio"/></td>
+                                    <td style="text-align:center;"><span t-field="l.payment_method.code"/></td>
+                                    <td style="text-align:center;"><span t-field="l.invoice_currency_id.name"/></td>
+                                    <td style="text-align:right;"><span t-field="l.invoice_currency_rate"/></td>
+                                    <td style="text-align:center;"><span t-field="l.parcialidad"/></td>
+                                    <td style="text-align:right;"><span t-field="l.saldo_anterior"/></td>
+                                    <td style="text-align:right;"><span t-field="l.monto_pago"/></td>
+                                    <td style="text-align:right;"><span t-field="l.saldo_final"/></td>
+                                </tr>
+                                <tr></tr>
+                            </tbody>
+                            <tfooter>
+                                <tr>
+                                    <td><B>Monto Pago: </B></td>                        
+                                    <td colspan="3" class="text-right">
+                                        <span t-field="o.amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                    <td colspan="6">·</td>
+                                </tr>
+                                <tr>
+                                    <td ><B>Moneda: </B></td>                        
+                                    <td colspan="3" class="text-right">
+                                        <span t-field="o.currency_id.name"/>
+                                    </td>
+                                    <td colspan="3">·</td>            
+                                </tr>
+                                    <tr>
+                                    <td ><B>Fecha Pago: </B></td>                        
+                                    <td colspan="3" class="text-right">
+                                        <span t-field="o.payment_datetime_reception"/>
+                                    </td>
+                                    <td colspan="3">·</td>
+                                </tr>
+                            </tfooter>
+
+                        </table>
+
+                        <div class="row" style="font-size:9px">
+                            <span t-if="o.ref">
+                                <div class="col-xs-4">
+                                    Comentarios:<br/>
+                                    <span t-field="o.ref"/>
+                                </div>
+                            </span>
+                            
+                        </div>
+
+
+                        <table class="table table-condensed"  style="font-size:9px">
+                            <tr>
+                                <td style="width:15%;text-align:center;">
+                                    <strong>Origen:</strong><BR/><p t-field="o.name"/>
+                                </td>
+                                <td style="width:15%;text-align:center;">
+                                    <strong>Número Operación:</strong><BR/>
+                                    <div name="num_operacion" t-if="o.num_operacion">
+                                        <p t-field="o.num_operacion"/>
+                                    </div>
+                                </td>    
+                                <td style="text-align:right;width:55%;"><strong>Importe con letra: </strong><span t-field="o.amount_to_text"/></td>
+                            </tr>
+                        </table>
+
+
+
+                        <table class="table table-condensed" style="font-size:9px">
+                            <tr>
+                                <td rowspan="3">
+                                    <img t-if="o.cfdi_cbb"
+                                         t-att-src="'data:image/png;base64,%s' % to_text(o.cfdi_cbb)" 
+                                         style="width:5.5cm;height:5.5cm;"/>                                    
+                                </td>
+                                <td><strong>Cadena Original:</strong><BR/><span t-field="o.cfdi_cadena_original" style="display:block;width:500px;word-wrap:break-word;"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sello Digital Emisor:</strong><BR/><span t-field="o.sello" style="display:block;width:500px;word-wrap:break-word;"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sello Digital SAT:</strong><BR/><span t-field="o.cfdi_sello" style="display:block;width:500px;word-wrap:break-word;"/></td>
+                            </tr>
+                        </table>
+                        <div align="center">
+                            <p style="font-size:8px;"><strong>ESTE DOCUMENTO ES UNA REPRESENTACION IMPRESA DE UN CFDI</strong></p>
+                        </div>
+
+                    </div>
+                    </t>
+                </t>
+
+        </template>
+        
+    </data>
+</odoo>

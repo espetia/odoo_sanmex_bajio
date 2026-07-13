@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+
+    <data>
+        <report 
+            id="account.account_invoices"
+            model="account.move"
+            string="Invoices"
+            report_type="qweb-pdf"
+            name="account.report_invoice"
+            file="account.report_invoice"       
+            attachment_use="True"
+            attachment="((object.state in ('paid','posted','draft') and (object.compañia_emisora_id.partner_id.rfc + '_' + (object.name or '')) or '').replace('/','').replace(' ','')  +'.pdf')"
+        />
+        
+        
+    </data>
+</odoo>

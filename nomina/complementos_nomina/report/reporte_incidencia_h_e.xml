@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="report_aditional_hours">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.internal_layout">
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2>
+                                        REPORTE DE INCIDENCIAS DE HORAS EXTRA
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="text-right">Periodo de nómina : <span t-field="o.date_start"/> - <span t-field="o.date_end"/></h5>
+                                    <br/>
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Empleado</th>
+                                                <th>Fecha</th>
+                                                <th>Horas</th>
+                                                <th>Tipo de horas extra</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.slip_ids" t-as="table_line">
+                                                <tr t-foreach="table_line.employee_id.aditional_hour_ids" t-as="line_ah">
+                                                    <t t-if="line_ah.state == 'done' and line_ah.fecha >= o.date_start and (line_ah.fecha &lt; o.date_end  or line_ah.fecha == o.date_end)">
+                                                        <td><span t-field="table_line.employee_id.name"/></td>
+                                                        <td><span t-field="line_ah.fecha"/></td>
+                                                        <td><span t-field="line_ah.horas"/></td>
+                                                        <t t-if="line_ah.tipo_de_hora == 2">
+                                                            <td><span>Doble</span></td>
+                                                        </t>
+                                                        <t t-elif="line_ah.tipo_de_hora == 3">
+                                                            <td><span>Triple</span></td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td><span>Simple</span></td>
+                                                        </t>
+                                                    </t>
+                                                    <t t-else=""></t>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <report string="Reporte Incidencias (Horas Extra)"
+                id="report_print_incidents_ah"
+                model="hr.payslip.run"
+                report_type="qweb-pdf"
+                name="complementos_nomina.report_aditional_hours"/>
+    </data>
+</odoo>

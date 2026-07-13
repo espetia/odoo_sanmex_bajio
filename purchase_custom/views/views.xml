@@ -1,0 +1,77 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="purchase_order_form">
+        <field name="name">purchase_custom.purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+                <field name="vehicle_id" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+      <record id="purchase_order_view_search_inherit_purchase_analytic" model="ir.ui.view">
+        <field name="name">purchase.order.search (purchase_analytic)</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="project_id" groups="analytic.group_analytic_accounting" />
+            </field>
+        </field>
+    </record>
+
+    <record id="purchase_order_view_tree_inherit_purchase_analytic" model="ir.ui.view">
+        <field name="name">purchase.order.tree (purchase_analytic)</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree" />
+        <field name="arch" type="xml">
+            <field name="origin" position="before">
+                <field name="project_id" groups="analytic.group_analytic_accounting" />
+            </field>
+        </field>
+    </record>
+
+    <record id="purchase_order_view_form_inherit_purchase_analytic" model="ir.ui.view">
+        <field name="name">purchase.order.form (purchase_analytic)</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <field name="partner_ref" position="after">
+                <field name="project_id" required="1" options="{'no_create': True}"/>
+            </field>
+            <field name="order_line" position="attributes">
+                <attribute name="context">{'default_account_analytic_id': project_id}</attribute>
+            </field>
+            <field name="invoice_status" position="after">
+                <field name="available_budget"/>
+            </field>
+        </field>
+    </record>
+
+      <record model="ir.ui.view" id="budget_lines_form">
+        <field name="name">purchase_custom.budget.lines.form</field>
+        <field name="model">budget.budget</field>
+        <field name="inherit_id" ref="base_account_budget.crossovered_budget_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='budget_line']/tree/field[@name='theoretical_amount']" position="after">
+                <field name="purchase_amount" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+      <record model="ir.ui.view" id="budget_lines_tree">
+        <field name="name">purchase_custom.budget.lines.tree</field>
+        <field name="model">budget.lines</field>
+        <field name="inherit_id" ref="base_account_budget.view_budget_line_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='theoretical_amount']" position="after">
+                <field name="purchase_amount" optional="show" widget="monetary"/>
+                <field name="available_budget" optional="show" widget="monetary"/>
+            </xpath>
+        </field>
+    </record>
+
+  </data>
+</odoo>

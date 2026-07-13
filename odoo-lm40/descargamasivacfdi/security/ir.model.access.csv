@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_peticiones,peticiones,model_peticiones_cfdi,res_group_descargas_cfdi,1,1,1,0
+access_peticiones_cfdi_line,peticiones_cfdi_line,model_peticiones_cfdi_line,res_group_descargas_cfdi,1,1,1,0
+access_registro_descargas,registro_descargas,model_registro_descargas,res_group_descargas_cfdi,1,1,1,0
+access_verificar_solicitud,verificar_solicitud,model_verificar_solicitud,res_group_descargas_cfdi,1,1,1,0
+access_descarga_cfdi,descarga_cfdi,model_descarga_cfdi,res_group_descargas_cfdi,1,1,1,0
+access_cfdi_no_realted,cfdi_no_realted,model_cfdi_no_realted,res_group_descargas_cfdi,1,1,1,0
+access_wizard_compara_compras,wizard_compara_compras,model_wizard_compara_compras,res_group_descargas_cfdi,1,1,1,0
+access_solictud_descarga,solictud_descarga,model_solictud_descarga,res_group_descargas_cfdi,1,1,1,0

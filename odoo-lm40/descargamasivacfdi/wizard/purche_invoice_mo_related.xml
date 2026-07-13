@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>   
+	<act_window name="CFDI Descargados sin relación"         
+            res_model="cfdi.no.realted"  
+            binding_model="account.move"          
+            view_mode="form"
+            target="new"
+                
+            id="action_comparar_facturas_norelated"/>
+
+	
+	<record model='ir.ui.view' id='view_compara_norelated'>
+		<field name='name'>CFDI No relacionados</field>
+		<field name='model'>cfdi.no.realted</field>
+		<field name='arch' type='xml'>
+			<form name='Buscar CFDI no Relacionados'>
+				    
+                   <notebook>
+
+    				<page string="Product">
+                    <field name="cfdi_registro_id">
+                    <tree open="false" editable="bottom">
+                    	<field name="select"/>
+                    	<field name="uuid_xml"/>
+                    	<field name="rfc_emisor"/>
+                    	<field name="rfc_receptor"/>
+                    	<field name="folio_factura"/>
+                        <field name="serie_factura"/>
+                    	<field name="tipo_docto"/>
+                    	<field name="amount_total"/>
+                    </tree>
+                </field>
+                </page>
+                
+            </notebook>
+            	   
+				<footer>
+					<button name='cfdi_no_related' type='object' string='Asignar' class='oe_highlight'/> 
+					<button special="cancel" string="Cancelar"/>  
+				</footer>
+			</form>
+		</field>
+	</record>
+
+
+	<record id="action_comparar_facturas_norelated" model='ir.actions.act_window'>
+		<field name='name'>Buscar CFDI no Relacionados</field>		
+		<field name='res_model'>cfdi.no.realted</field>        
+		<field name='view_mode'>form</field>
+		<field name='target'>new</field>
+ 	</record>
+
+
+</odoo>

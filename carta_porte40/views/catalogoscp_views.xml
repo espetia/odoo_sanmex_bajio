@@ -1,0 +1,1368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="catalogos_cartaporte_menu" name="Catálogos Carta Porte" 
+           parent="account.menu_finance_configuration" sequence="100"/>
+    <menuitem id="catalogos_seguros_menu" name="Control de Pólizas de seguros" 
+           parent="account.menu_finance_configuration" sequence="100"/>
+<!-- c_ConfigMaritima -->
+
+        <record id="view_c_ConfigMaritima_list" model="ir.ui.view">
+            <field name="name">c_ConfigMaritima.tree</field>
+            <field name="model">configura.maritima</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de configuración marítima." create="0" delete="0">
+                    <field name="Clave" />
+                    <field name="Descripcion" />
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_ConfigMaritima_form" model="ir.ui.view">
+            <field name="name">c_ConfigMaritima.form</field>
+            <field name="model">configura.maritima</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de configuración marítima." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                            <field name="Descripcion"/>
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_ConfigMaritima" model="ir.actions.act_window">
+            <field name="name">Catálogo de configuración marítima</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">configura.maritima</field>
+            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_ConfigMaritima_list"/>
+        </record>
+
+<menuitem action="action_c_ConfigMaritima"
+                  id="action_c_ConfigMaritima_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+
+
+ <!-- c_CveTransporte -->
+
+        <record id="view_c_CveTransporte_list" model="ir.ui.view">
+            <field name="name">c_CveTransporte.tree</field>
+            <field name="model">c_cvetransporte</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de la clave del transporte." create="0" delete="0">
+                    <field name="ClaveTransporte" />
+                    <field name="Descripcion" />
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_CveTransporte_form" model="ir.ui.view">
+            <field name="name">c_CveTransporte.form</field>
+            <field name="model">c_cvetransporte</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de la clave del transporte." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="ClaveTransporte"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                            <field name="Descripcion"/>
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_CveTransporte" model="ir.actions.act_window">
+            <field name="name">Catálogo de la clave del transporte</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_cvetransporte</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_CveTransporte_list"/>
+        </record>
+
+<menuitem action="action_c_CveTransporte"
+                  id="action_c_CveTransporte_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+
+ <!-- c_TipoEstacion -->
+
+        <record id="view_c_TipoEstacion_list" model="ir.ui.view">
+            <field name="name">c_TipoEstacion.tree</field>
+            <field name="model">c_tipoestacion</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de tipo de estación." create="0" delete="0">
+                    <field name="Clave" />
+                    <field name="Descripcion" />
+                     <field name="ClaveTransporte"/>
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_TipoEstacion_form" model="ir.ui.view">
+            <field name="name">c_TipoEstacion.form</field>
+            <field name="model">c_tipoestacion</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de tipo de estación." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                            <field name="Descripcion"/>
+                             <field name="ClaveTransporte"/>
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_TipoEstacion" model="ir.actions.act_window">
+            <field name="name">Catálogo de tipo de estación</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_tipoestacion</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_TipoEstacion_list"/>
+        </record>
+
+<menuitem action="action_c_TipoEstacion"
+                  id="action_c_TipoEstacion_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+
+ <!-- c_Estaciones -->
+
+        <record id="view_c_Estaciones_list" model="ir.ui.view">
+            <field name="name">c_Estaciones.tree</field>
+            <field name="model">c_estaciones</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de puertos marítimos, estaciones aeroportuarias y estaciones férreas." create="0" delete="0">
+                    <field name="Clave" />
+                    <field name="Descripcion" />
+                     <field name="ClaveTransporte"/>
+                     <field name="Nacionalidad"/>
+                     <field name="DesignadorIATA"/>
+                     <field name="LineaFerrea"/>                     
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_Estaciones_form" model="ir.ui.view">
+            <field name="name">c_Estaciones.form</field>
+            <field name="model">c_estaciones</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de puertos marítimos, estaciones aeroportuarias y estaciones férreas." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                            <field name="Descripcion"/>
+                             <field name="ClaveTransporte"/>
+                             <field name="Nacionalidad"/>
+                             <field name="DesignadorIATA"/>
+                            <field name="LineaFerrea"/>   
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_Estaciones" model="ir.actions.act_window">
+            <field name="name">Catálogo de puertos marítimos, estaciones aeroportuarias y estaciones férreas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_estaciones</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_Estaciones_list"/>
+        </record>
+
+<menuitem action="action_c_Estaciones"
+                  id="action_c_Estaciones_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+
+<!-- c_ClaveUnidadPeso -->
+
+        <record id="view_c_ClaveUnidadPeso_list" model="ir.ui.view">
+            <field name="name">c_ClaveUnidadPeso.tree</field>
+            <field name="model">c_claveunidadpeso</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de unidades de medida y embalaje." create="0" delete="0">
+                    <field name="Clave" />
+                    <field name="Nombre" />
+                     <field name="Descripcion"/>
+                     <field name="Nota"/>
+                     <field name="Simbolo"/>
+                     <field name="Bandera"/>                     
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_ClaveUnidadPeso_form" model="ir.ui.view">
+            <field name="name">c_ClaveUnidadPeso.form</field>
+            <field name="model">c_claveunidadpeso</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de unidades de medida y embalaje." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                             <field name="Nombre" />
+                             <field name="Descripcion"/>
+                             <field name="Nota"/>
+                             <field name="Simbolo"/>
+                             <field name="Bandera"/>          
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_ClaveUnidadPeso" model="ir.actions.act_window">
+            <field name="name">Catálogo de unidades de medida y embalaje</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_claveunidadpeso</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_ClaveUnidadPeso_list"/>
+        </record>
+
+<menuitem action="action_c_ClaveUnidadPeso"
+                  id="action_c_ClaveUnidadPeso_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+
+<!-- c_MaterialPeligroso -->
+
+        <record id="view_c_MaterialPeligroso_list" model="ir.ui.view">
+            <field name="name">c_MaterialPeligroso.tree</field>
+            <field name="model">c_materialpeligroso</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de materiales peligrosos." create="0" delete="0">
+                    <field name="Clave" />
+                    <field name="Descripcion" />
+                     <field name="ClaseODiv"/>
+                     <field name="PeligroSecundario"/>
+                     <field name="NombreTecnico"/>                                         
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_MaterialPeligroso_form" model="ir.ui.view">
+            <field name="name">c_MaterialPeligroso.form</field>
+            <field name="model">c_materialpeligroso</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de materiales peligrosos." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                            <field name="Descripcion"/>
+                            <field name="ClaseODiv"/>
+                             <field name="PeligroSecundario"/>
+                            <field name="NombreTecnico"/> 
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_MaterialPeligroso" model="ir.actions.act_window">
+            <field name="name">Catálogo de materiales peligrosos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_materialpeligroso</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_MaterialPeligroso_list"/>
+        </record>
+
+<menuitem action="action_c_MaterialPeligroso"
+                  id="action_c_MaterialPeligroso_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+<!-- c_TipoEmbalaje -->
+
+        <record id="view_c_TipoEmbalaje_list" model="ir.ui.view">
+            <field name="name">c_TipoEmbalaje.tree</field>
+            <field name="model">c_tipoembalaje</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de tipo de embalaje." create="0" delete="0">
+                    <field name="CalveDesignacion" />
+                    <field name="Descripcion" />                                                           
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_TipoEmbalaje_form" model="ir.ui.view">
+            <field name="name">c_TipoEmbalaje.form</field>
+            <field name="model">c_tipoembalaje</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de tipo de embalaje." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="CalveDesignacion"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                            <field name="Descripcion"/>                         
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_TipoEmbalaje" model="ir.actions.act_window">
+            <field name="name">Catálogo de tipo de embalaje</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_tipoembalaje</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_TipoEmbalaje_list"/>
+        </record>
+
+<menuitem action="action_c_TipoEmbalaje"
+                  id="action_c_TipoEmbalaje_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+<!-- c_TipoPermiso -->
+
+        <record id="view_c_TipoPermiso_list" model="ir.ui.view">
+            <field name="name">c_TipoPermiso.tree</field>
+            <field name="model">c_tipopermiso</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo tipo permiso." create="0" delete="0">
+                    <field name="Clave" />
+                    <field name="Descripcion" />                                                           
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_TipoPermiso_form" model="ir.ui.view">
+            <field name="name">c_TipoPermiso.form</field>
+            <field name="model">c_tipopermiso</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo tipo permiso." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                            <field name="Descripcion"/>                         
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_TipoPermiso" model="ir.actions.act_window">
+            <field name="name">Catálogo tipo permiso</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_tipopermiso</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_TipoPermiso_list"/>
+        </record>
+
+<menuitem action="action_c_TipoPermiso"
+                  id="action_c_TipoPermiso_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+<!-- c_ParteTransporte -->
+
+        <record id="view_c_ParteTransporte_list" model="ir.ui.view">
+            <field name="name">c_ParteTransporte.tree</field>
+            <field name="model">c_partetransporte</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de partes del transporte rentadas o prestadas." create="0" delete="0">
+                    <field name="Clave" />
+                    <field name="Descripcion" />                                                           
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_ParteTransporte_form" model="ir.ui.view">
+            <field name="name">c_ParteTransporte.form</field>
+            <field name="model">c_partetransporte</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de partes del transporte rentadas o prestadas." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                            <field name="Descripcion"/>                         
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_ParteTransporte" model="ir.actions.act_window">
+            <field name="name">Catálogo de partes del transporte rentadas o prestadas.</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_partetransporte</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_ParteTransporte_list"/>
+        </record>
+
+<menuitem action="action_c_ParteTransporte"
+                  id="action_c_ParteTransporte_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+<!-- c_FiguraTransporte -->
+
+        <record id="view_c_FiguraTransporte_list" model="ir.ui.view">
+            <field name="name">c_FiguraTransporte.tree</field>
+            <field name="model">c_figuratransporte</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de figura transporte." create="0" delete="0">
+                    <field name="Clave" />
+                    <field name="Descripcion" />                                                           
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_FiguraTransporte_form" model="ir.ui.view">
+            <field name="name">c_FiguraTransporte.form</field>
+            <field name="model">c_figuratransporte</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de figura transporte." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                            <field name="Descripcion"/>                         
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_FiguraTransporte" model="ir.actions.act_window">
+            <field name="name">Catálogo de figura transporte</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_figuratransporte</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_FiguraTransporte_list"/>
+        </record>
+
+<menuitem action="action_c_FiguraTransporte"
+                  id="action_c_FiguraTransporte_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+<!-- c_ConfigAutoTransporte -->
+
+        <record id="view_c_ConfigAutoTransporte_list" model="ir.ui.view">
+            <field name="name">c_ConfigAutoTransporte.tree</field>
+            <field name="model">c_configautotransporte</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de configuración autotransporte federal." create="0" delete="0">
+                    <field name="Clave" />
+                    <field name="Descripcion" />  
+                    <field name="NumeroEjes"/>
+                    <field name="NumeroLlantas"/>
+                    <field name="Remolque"/>                                                            
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_ConfigAutoTransporte_form" model="ir.ui.view">
+            <field name="name">c_ConfigAutoTransporte.form</field>
+            <field name="model">c_configautotransporte</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de configuración autotransporte federal." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                            <field name="Descripcion"/>    
+                            <field name="NumeroEjes"/>
+                            <field name="NumeroLlantas"/>
+                            <field name="Remolque"/>                     
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_ConfigAutoTransporte" model="ir.actions.act_window">
+            <field name="name">Catálogo de configuración autotransporte federal</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_configautotransporte</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_ConfigAutoTransporte_list"/>
+        </record>
+
+<menuitem action="action_c_ConfigAutoTransporte"
+                  id="action_c_ConfigAutoTransporte_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+
+
+
+<!-- c_SubTipoRem -->
+
+        <record id="view_c_SubTipoRem_list" model="ir.ui.view">
+            <field name="name">c_SubTipoRem.tree</field>
+            <field name="model">c_subtiporem</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de tipo de remolque." create="0" delete="0">
+                    <field name="Clave" />                      
+                    <field name="RemolqueSemiremolque"/>                                              
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_SubTipoRem_form" model="ir.ui.view">
+            <field name="name">c_SubTipoRem.form</field>
+            <field name="model">c_subtiporem</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de tipo de remolque." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>
+                             
+                            <field name="RemolqueSemiremolque"/>                                            
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_SubTipoRem" model="ir.actions.act_window">
+            <field name="name">Catálogo de tipo de remolque</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_subtiporem</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_SubTipoRem_list"/>
+        </record>
+
+<menuitem action="action_c_SubTipoRem"
+                  id="action_c_SubTipoRem_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+<!-- c_ClaveTipoCarga -->
+
+        <record id="view_c_ClaveTipoCarga_list" model="ir.ui.view">
+            <field name="name">c_ClaveTipoCarga.tree</field>
+            <field name="model">c_clavetipocarga</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo del tipo de carga." create="0" delete="0">
+                    <field name="Clave" />                    
+                    <field name="Descripcion"/>                                              
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_ClaveTipoCarga_form" model="ir.ui.view">
+            <field name="name">c_ClaveTipoCarga.form</field>
+            <field name="model">c_clavetipocarga</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo del tipo de carga." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>                               
+                            <field name="Descripcion"/>                                            
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_ClaveTipoCarga" model="ir.actions.act_window">
+            <field name="name">Catálogo del tipo de carga</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_clavetipocarga</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_ClaveTipoCarga_list"/>
+        </record>
+
+<menuitem action="action_c_ClaveTipoCarga"
+                  id="action_c_ClaveTipoCarga_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+
+
+<!-- c_ContenedorMaritimo -->
+
+        <record id="view_c_ContenedorMaritimo_list" model="ir.ui.view">
+            <field name="name">c_ContenedorMaritimo.tree</field>
+            <field name="model">c_contenedormaritimo</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de contenedores marítimos." create="0" delete="0">
+                    <field name="Clave" />                    
+                    <field name="Descripcion"/>                                              
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_ContenedorMaritimo_form" model="ir.ui.view">
+            <field name="name">c_ContenedorMaritimo.form</field>
+            <field name="model">c_contenedormaritimo</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de contenedores marítimos." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>                               
+                            <field name="Descripcion"/>                                            
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_ContenedorMaritimo" model="ir.actions.act_window">
+            <field name="name">Catálogo de contenedores marítimos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_contenedormaritimo</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_ContenedorMaritimo_list"/>
+        </record>
+
+<menuitem action="action_c_ContenedorMaritimo"
+                  id="action_c_ContenedorMaritimo_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+<!-- c_NumAutorizacionNaviero -->
+
+        <record id="view_c_NumAutorizacionNaviero_list" model="ir.ui.view">
+            <field name="name">c_NumAutorizacionNaviero.tree</field>
+            <field name="model">c_numautorizacionnaviero</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de número autorización agente naviero consignatario." create="0" delete="0">
+                                       
+                    <field name="NumeroAutorizacion"/>                                              
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_NumAutorizacionNaviero_form" model="ir.ui.view">
+            <field name="name">c_NumAutorizacionNaviero.form</field>
+            <field name="model">c_numautorizacionnaviero</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de número autorización agente naviero consignatario." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="NumeroAutorizacion"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                       
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_NumAutorizacionNaviero" model="ir.actions.act_window">
+            <field name="name">Catálogo de número autorización agente naviero consignatario</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_numautorizacionnaviero</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_NumAutorizacionNaviero_list"/>
+        </record>
+
+<menuitem action="action_c_NumAutorizacionNaviero"
+                  id="action_c_NumAutorizacionNaviero_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+<!-- c_CodigoTransporteAereo -->
+
+        <record id="view_c_CodigoTransporteAereo_list" model="ir.ui.view">
+            <field name="name">c_CodigoTransporteAereo.tree</field>
+            <field name="model">c_codigotransporteaereo</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo código transporte aéreo." create="0" delete="0">
+                    <field name="Clave" />                    
+                    <field name="Nacionalidad"/> 
+                    <field name="NombreAerolinea"/> 
+                    <field name="DesignadorOACI"/>                                                            
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_CodigoTransporteAereo_form" model="ir.ui.view">
+            <field name="name">c_CodigoTransporteAereo.form</field>
+            <field name="model">c_codigotransporteaereo</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo código transporte aéreo." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>                               
+                             <field name="Nacionalidad"/> 
+                            <field name="NombreAerolinea"/> 
+                             <field name="DesignadorOACI"/>                                            
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_CodigoTransporteAereo" model="ir.actions.act_window">
+            <field name="name">Catálogo código transporte aéreo</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_codigotransporteaereo</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_CodigoTransporteAereo_list"/>
+        </record>
+
+<menuitem action="action_c_CodigoTransporteAereo"
+                  id="action_c_CodigoTransporteAereo_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+<!-- c_TipoDeServicio -->
+
+        <record id="view_c_TipoDeServicio_list" model="ir.ui.view">
+            <field name="name">c_TipoDeServicio.tree</field>
+            <field name="model">c_tipodeservicio</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de tipo servicio." create="0" delete="0">
+                    <field name="Clave" />                    
+                    <field name="Descripcion"/> 
+                    <field name="Contenedor"/>                                                               
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_TipoDeServicio_form" model="ir.ui.view">
+            <field name="name">c_TipoDeServicio.form</field>
+            <field name="model">c_tipodeservicio</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de tipo servicio." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>                               
+                              <field name="Descripcion"/> 
+                              <field name="Contenedor"/>                                        
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_TipoDeServicio" model="ir.actions.act_window">
+            <field name="name">Catálogo de tipo servicio</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_tipodeservicio</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_TipoDeServicio_list"/>
+        </record>
+
+<menuitem action="action_c_TipoDeServicio"
+                  id="action_c_TipoDeServicio_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+
+<!-- c_DerechosDePaso -->
+
+        <record id="view_c_DerechosDePaso_list" model="ir.ui.view">
+            <field name="name">c_DerechosDePaso.tree</field>
+            <field name="model">c_derechosdepaso</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo derechos de paso." create="0" delete="0">
+                    <field name="Clave" />                    
+                    <field name="DerechoDePaso"/> 
+                    <field name="Entre"/>   
+                    <field name="Hasta"/> 
+                    <field name="OtorgaRecibe"/>                                                            
+                    <field name="Concesionario"/> 
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_DerechosDePaso_form" model="ir.ui.view">
+            <field name="name">c_DerechosDePaso.form</field>
+            <field name="model">c_derechosdepaso</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo derechos de paso." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>                               
+                              <field name="DerechoDePaso"/> 
+                            <field name="Entre"/>   
+                            <field name="Hasta"/> 
+                            <field name="OtorgaRecibe"/>                                   
+                            <field name="Concesionario"/>                                    
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_DerechosDePaso" model="ir.actions.act_window">
+            <field name="name">Catálogo derechos de paso</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_derechosdepaso</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_DerechosDePaso_list"/>
+        </record>
+
+<menuitem action="action_c_DerechosDePaso"
+                  id="action_c_DerechosDePaso_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+<!-- c_TipoCarro -->
+
+        <record id="view_c_TipoCarro_list" model="ir.ui.view">
+            <field name="name">c_TipoCarro.tree</field>
+            <field name="model">c_tipocarro</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de tipo de carro." create="0" delete="0">
+                    <field name="Clave" />                    
+                    <field name="TipoCarro"/> 
+                    <field name="Contenedor"/>             
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_TipoCarro_form" model="ir.ui.view">
+            <field name="name">c_TipoCarro.form</field>
+            <field name="model">c_tipocarro</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de tipo de carro." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>                               
+                            
+                            <field name="TipoCarro"/> 
+                            <field name="Contenedor"/>                                   
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_TipoCarro" model="ir.actions.act_window">
+            <field name="name">Catálogo de tipo de carro</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_tipocarro</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_TipoCarro_list"/>
+        </record>
+
+<menuitem action="action_c_TipoCarro"
+                  id="action_c_TipoCarro_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+
+<!-- c_Contenedor -->
+
+        <record id="view_c_Contenedor_list" model="ir.ui.view">
+            <field name="name">c_Contenedor.tree</field>
+            <field name="model">c_contenedor</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de tipo de contenedor." create="0" delete="0">
+                    <field name="Clave" />                    
+                    <field name="Descripcion"/> 
+                    <field name="TipoContenedor"/>             
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_Contenedor_form" model="ir.ui.view">
+            <field name="name">c_Contenedor.form</field>
+            <field name="model">c_contenedor</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de tipo de contenedor." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>                               
+                            
+                           <field name="Descripcion"/> 
+                            <field name="TipoContenedor"/>                                    
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_Contenedor" model="ir.actions.act_window">
+            <field name="name">Catálogo de tipo de contenedor</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_contenedor</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_Contenedor_list"/>
+        </record>
+
+<menuitem action="action_c_Contenedor"
+                  id="action_c_Contenedor_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+
+<!-- c_TipoDeTrafico -->
+
+        <record id="view_c_TipoDeTrafico_list" model="ir.ui.view">
+            <field name="name">c_TipoDeTrafico.tree</field>
+            <field name="model">c_tipodetrafico</field>
+            <field name="arch" type="xml">
+                 <tree string="Catálogo de tipo de tráfico ferroviario." create="0" delete="0">
+                    <field name="Clave" />                    
+                    <field name="Descripcion"/> 
+                                
+                    <field name="FechaInicioVigencia" />
+                    <field name="FechaFinVigencia" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="c_TipoDeTrafico_form" model="ir.ui.view">
+            <field name="name">c_TipoDeTrafico.form</field>
+            <field name="model">c_tipodetrafico</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo de tipo de tráfico ferroviario." create="0" delete="0">
+                    <sheet>
+                                   
+                        <group >
+                            <field name="Clave"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field  name="FechaInicioVigencia"/>
+                            </group>
+                            <group>
+                                <field  name="FechaFinVigencia"/>
+                            </group>
+                        </group>
+                       
+                        <group>                               
+                            
+                           <field name="Descripcion"/> 
+                                                            
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_c_TipoDeTrafico" model="ir.actions.act_window">
+            <field name="name">Catálogo de tipo de tráfico ferroviario</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">c_tipodetrafico</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_c_TipoDeTrafico_list"/>
+        </record>
+
+<menuitem action="action_c_TipoDeTrafico"
+                  id="action_c_TipoDeTrafico_menu" sequence="0"
+                  parent="catalogos_cartaporte_menu"/>
+
+    <record id="sat_producto_inherit_form" model="ir.ui.view">
+            <field name="name">sat.producto_inherit.form</field>
+            <field name="model">sat.producto</field>
+            <field name="inherit_id" ref="sat_catalogos.sat_producto_form"/>
+            <field name="arch" type="xml">
+                                   
+                       
+                            <field name="complemento_que_debe_incluir" position="after">                     
+                            <field name="MaterialPeligroso"/>
+                        </field>
+                        
+            </field>
+        </record>
+        <!-- seguros-->
+        <record id="view_cat_seguros_list" model="ir.ui.view">
+            <field name="name">catseguros.tree</field>
+            <field name="model">cat.seguros</field>
+            <field name="arch" type="xml">
+                 <tree string="Aseguradoras">
+                    <field name="codigo" />
+                    <field name="name" />
+                    <field name="tipo_seguro" />
+                     <field name="state" />
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="cat_seguros_form" model="ir.ui.view">
+            <field name="name">catseguros.form</field>
+            <field name="model">cat.seguros</field>
+            <field name="arch" type="xml">
+                <form string="Aseguradoras">
+
+                    <header>                      
+"/>
+                        <field name="state" widget="statusbar" statusbar_visible="vigente,vencido"/>
+                      </header>
+                    <sheet>
+                                   
+                        <group >
+                             <field name="codigo" />
+                              <field name="name" />
+                              <field name="tipo_seguro" />
+                              <field name="polizarespcivil" attrs="{'required':[('tipo_seguro','=','AseguraRespCivil')], 'invisible':[('tipo_seguro','!=','AseguraRespCivil')]}"/>
+                              <field name="polizamedioambiente" attrs="{'required':[('tipo_seguro','=','AseguraMedAmbiente')], 'invisible':[('tipo_seguro','!=','AseguraMedAmbiente')]}"/>
+                              <field name="polizacarga" attrs="{'required':[('tipo_seguro','=','AseguraCarga')], 'invisible':[('tipo_seguro','!=','AseguraCarga')]}"/>
+                              <field name="fecha_caducidad" />
+                        </group>
+                        
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+
+      
+
+    <record id="action_cat_seguros" model="ir.actions.act_window">
+            <field name="name">Tipo de Pólizas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cat.seguros</field>            
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_cat_seguros_list"/>
+        </record>
+
+<menuitem action="action_cat_seguros"
+                  id="action_cat_seguros_menu" sequence="0"
+                  parent="catalogos_seguros_menu"/>
+
+
+
+
+
+</odoo>

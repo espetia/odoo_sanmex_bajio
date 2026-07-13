@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="form_archivo_txt" model="ir.ui.view">
+            <field name="name">form_archivo_txt_nomina</field>
+            <field name="model">hr.payslip.run</field>
+            <field name="inherit_id" ref="nomina_cfdi_ee.hr_payslip_run_form_nomina_cfdi"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Genera Archivo TXT">
+                        <group>
+                            <button name="generate_file" type="object" string="Descarga Archivo TXT"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

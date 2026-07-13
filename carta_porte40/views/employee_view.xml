@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.nomina</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="after">
+                 <field name="tipofigura_is"/>
+              </field>  
+           <xpath expr="//notebook" position="inside">
+                <page name="info_cartaporte" string="Configuración para Carta Porte" attrs="{'invisible':[('tipofigura_is','=',False)]}">
+                        <group cols="4">
+                            <group >
+                                <field name="numlicencia" attrs="{'required':[('tipofigura_is','=',True)]}"/>  
+                                <field name="rfcfigura" attrs="{'required':[('tipofigura_is','=',True)]}"/>
+                                <field name="tipofigura" attrs="{'required':[('tipofigura_is','=',True)]}"/>
+                            </group>
+                           
+                        </group>
+                </page>               
+                
+           </xpath>
+        </field>
+    </record>
+</odoo>

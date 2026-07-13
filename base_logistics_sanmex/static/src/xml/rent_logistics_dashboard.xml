@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="base_logistics_sanmex.RentLogisticsDashboard">
+        <div class="o_rent_logistics_dashboard container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <table class="table table-sm">
+                        <thread>
+                            <tr>
+                                <td class="o_text">
+                                    <div>Estados de Renta</div>
+                                </td>
+                                <td class="o_main o_dashboard_action" title="Para entregar" context='{"search_default_to_delivery_smx": true}'>
+                                    <a href="#"><t t-esc="values['to_delivery']"/><br/>Por planificar</a>
+                                </td>
+                                <td class="o_main o_dashboard_action" title="Para retiro" context='{"search_default_to_return_smx": true}'>
+                                    <a href="#"><t t-esc="values['to_return']"/><br/>Para retiro</a>
+                                </td>
+                            </tr>
+                        </thread>
+                    </table>
+                </div>
+                <div class="col-sm-6">
+                    <table class="table table-sm">
+                        <thead>
+                          <tr>
+                            <td class="o_text">
+                              <i class="fa fa-tachometer fa-lg"></i>
+                              <div>Inventario baños</div>
+                            </td>
+                            <td class="o_main blank" title="Obra">
+                              <a href="#" class="href"><t t-esc="values['sanitary_qty_dis']"/> <br/> Disponibles</a>
+                              
+                            </td>
+                            <!--<td class="o_main o_dashboard_action" title="Obra">
+                              <a href="#" class="href"><t t-esc="values['total_in_progress']"/> <br/> Próxima Entrega</a>
+                            </td>
+                            <td class="o_main o_dashboard_action" title="Obra">
+                              <a href="#" class="href"><t t-esc="values['total_delivery']"/> <br/> <div class="text-smx-label">Rentados</div></a>
+                            </td>-->
+                          </tr>
+                        </thead>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </t>
+    
+
+</templates>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pre_diot,account_invoice_diot,model_account_invoice_diot,account.group_account_manager,1,1,1,0
+access_pred_diot_user,account_invoice_diot,model_account_invoice_diot,account.group_account_invoice,1,0,1,0
+acces_account_lines,account_lines,model_account_lines,account.group_account_manager,1,1,1,0
+access_diot,account_diot,model_account_diot_report,account.group_account_manager,1,1,1,1

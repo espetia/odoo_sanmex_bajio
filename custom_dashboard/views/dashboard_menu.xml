@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem name="Custom Dashboard" id="menu_owl_tutorial" sequence="10" web_icon="custom_dashboard,static/description/icon.png">
+            <menuitem name="Sales Dashboard" id="menu_owl_sales_dashboard" sequence="10" action="action_owl_sales_dashboard"/>
+        </menuitem>
+
+    </data>
+</odoo>

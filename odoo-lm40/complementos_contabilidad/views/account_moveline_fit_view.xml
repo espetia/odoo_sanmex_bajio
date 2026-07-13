@@ -1,0 +1,40 @@
+
+<odoo>   
+    
+        
+        <record id="moveline_currency_fit" model="ir.ui.view">
+            <field name="name">moveline.currency.fit</field>
+            <field name="model">account.move</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <button name="button_cancel" position="after">
+                    <button type="object" name="edit_complements" string="Auxiliar de folios"/>
+                </button>
+            </field>
+        </record>
+        
+        
+        <!--<record id="moveline_currency_fit2" model="ir.ui.view">
+            <field name="name">moveline.currency.fit</field>
+            <field name="model">account.move</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='account_id']" position="before">
+                    <button type="object" name="edit_eaccount_info" string="···"
+                                class="oe_highlight" help="Agregar Complementos de Contabilidad Electrónica"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='credit']" position="after">
+                    <field name="not_move_diot"/>
+                    <field name="tax_id_secondary" domain="[('tax_cash_basis_account', '=', account_id)]"/>
+                    <field name="amount_base"/>                    
+                </xpath>
+                <notebook position="before">
+                    <field name="item_concept" placeholder="Concepto para la póliza..."/>
+                </notebook>
+            </field>
+        </record> -->     
+    
+    
+</odoo>

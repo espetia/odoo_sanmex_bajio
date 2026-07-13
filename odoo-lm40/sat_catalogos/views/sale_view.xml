@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  
+    <record model="ir.ui.view" id="sale_view_order_new_pay_method_id">
+      <field name="name">sale_view_order_new_payment_term</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <field name="payment_term_id" position="after">
+            <field name="pay_method_id" widget="selection" />
+            <field name="acc_payment" domain="[('partner_id','=',partner_id)]"/>
+            <field name="uso_cfdi_id" widget="selection" />
+        </field>
+      </field>
+    </record>
+
+    <record id="view_invoice_global" model="ir.ui.view">
+            <field name="name">Facturación Global</field>
+            <field name="model">global.invoice.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Generar Pre-reporte">
+                  <group col="4" colspan="4">
+                    <field name="periodicidad"/>
+                    <field name="meses_id"/>
+                    <field name="exportacion_id"/>
+                    <field name="pay_method_id"/>
+                    <field name="year_report"/>
+
+            
+            <separator string="Relación de Ordenes de Venta" colspan="4" />
+            <field name="ticket_ids" colspan="4" nolabel="1">
+                            <tree editable="top" create="false">
+                                <field name="date_order" />
+                                <field name="ticket_id" />
+                                <field name="sale_reference" />
+                                <field name="user_id" />
+                                <field name="amount_total" sum="total"/>
+                                <field name="partner_id" />
+                              
+                            </tree>
+                        </field>
+          </group>
+                   
+                    
+                    <footer>
+                        
+                        <button name="create_invoices" string="Crear Factura" type="object"/>
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+      <record id="action_view_invoice_global_create" model="ir.actions.act_window">
+            <field name="name">Generar Factura Global</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">global.invoice.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>            
+            <field name="binding_model_id" ref="sale.model_sale_order" />
+            <field name="binding_view_types">list</field>
+        </record>
+
+
+        <record id="view_sales_order_tree_custom" model="ir.ui.view">
+            <field name="name">sale.order.list.tree.custom</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">               
+                   
+                       
+            <field name="amount_total" position="after">
+                <field name="currency_id"/>
+            </field>
+                    
+            
+            </field>
+        </record>
+    <!--<record model="ir.ui.view" id="view_sale_advance_payment_inv_inherit">
+      <field name="name">Invoice Orders</field>
+      <field name="model">sale.advance.payment.inv</field>
+      <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
+      <field name="arch" type="xml">
+        <field name="advance_payment_method" position="replace">
+            <field name="advance_payment_method" class="oe_inline" widget="radio"
+                            attrs="{'invisible': [('count','&gt;',1)]}"/>            
+        </field>
+      </field>
+    </record>-->
+
+  
+</odoo>

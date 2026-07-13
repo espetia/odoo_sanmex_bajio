@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_inherit_custom" inherit_id="nomina_cfdi_extras_ee.report_payslip_batches">
+        <xpath expr="//t[@t-call='nomina_cfdi_ee.report_payslip']" position="replace">
+            <t t-call="complementos_nomina.report_payslip_2"/>
+        </xpath>
+    </template>
+</odoo>

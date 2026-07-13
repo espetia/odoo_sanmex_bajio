@@ -1,0 +1,204 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* argil_account_closing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-29 03:44+0000\n"
+"PO-Revision-Date: 2016-12-28 21:45-0600\n"
+"Last-Translator: Israel Cruz Argil <israel.cruz@argil.mx>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_MX\n"
+"X-Generator: Poedit 1.8.11\n"
+
+#. module: argil_account_closing
+#: code:addons/argil_account_closing/metodos.py:17
+#, python-format
+msgid ""
+"Advertencia !\n"
+"Solo puede marcar el Diario \"Para Póliza de Resultados\" si es de tipo \"Misceláneo\". Si tiene mas de uno marcado entonces se tomará el primero que haya sido registrado"
+msgstr ""
+"Advertencia !\n"
+"Solo puede marcar el Diario \"Para Póliza de Resultados\" si es de tipo \"Misceláneo\". Si tiene mas de uno marcado entonces se tomará el primero que haya sido registrado"
+
+#. module: argil_account_closing
+#: code:addons/argil_account_closing/metodos.py:55
+#, python-format
+msgid ""
+"Advertencia !!!\n"
+"No se pudo obtener los Saldos Finales del Periodo indicado.\n"
+"La consulta no devolvió ningún registro"
+msgstr ""
+"Advertencia !!!\n"
+"No se pudo obtener los Saldos Finales del Periodo indicado.\n"
+"La consulta no devolvió ningún registro"
+
+#. module: argil_account_closing
+#: model:ir.model,name:argil_account_closing.model_account_move
+msgid "Al instalar este modulo se tiene acceso a formatos de la operacion Trabis"
+msgstr "Al instalar este modulo se tiene acceso a formatos de la operacion Trabis"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_fiscalyear_id
+msgid "Año Fiscal a Cerrar"
+msgstr "Año Fiscal a Cerrar"
+
+#. module: argil_account_closing
+#: model:ir.ui.menu,name:argil_account_closing.menu_account_cy_earnings_wizard
+msgid "Calcular Póliza de Resultados"
+msgstr "Calcular Póliza de Resultados"
+
+#. module: argil_account_closing
+#: model:ir.actions.act_window,name:argil_account_closing.action_open_account_cy_earnings_wizard
+msgid "Calcular Póliza del Resultado del Ejercicio"
+msgstr "Calcular Póliza del Resultado del Ejercicio"
+
+#. module: argil_account_closing
+#: model:ir.ui.view,arch_db:argil_account_closing.view_account_cy_earnings_wizard
+msgid "Cancelar"
+msgstr "Cancelar"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_company_id
+msgid "Compañía"
+msgstr "Compañía"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_entry_concept
+msgid "Concepto Póliza"
+msgstr "Concepto Póliza"
+
+#. module: argil_account_closing
+#: model:ir.ui.view,arch_db:argil_account_closing.view_account_cy_earnings_wizard
+msgid "Crear Póliza de Resultados"
+msgstr "Crear Póliza de Resultados"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_cy_earnings_account_id
+msgid "Cuenta de Resultados"
+msgstr "Cuenta de Resultados"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_journal_id
+msgid "Diario Contable"
+msgstr "Diario Contable"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: argil_account_closing
+#: code:addons/argil_account_closing/metodos.py:44
+#, python-format
+msgid ""
+"Error !\n"
+"La cuenta contable seleccionada no está configurada correctamente, debe ser cuenta de Tipo \"Resultado del Ejercicio\""
+msgstr ""
+"Error !\n"
+"La cuenta contable seleccionada no está configurada correctamente, debe ser cuenta de Tipo \"Resultado del Ejercicio\""
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_id
+msgid "ID"
+msgstr "ID"
+
+#. module: argil_account_closing
+#: model:ir.model,name:argil_account_closing.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings___last_update
+msgid "Last Modified on"
+msgstr "Última Modifiación en"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_notes
+msgid "Notas"
+msgstr "Notas"
+
+#. module: argil_account_closing
+#: model:ir.ui.view,arch_db:argil_account_closing.view_account_cy_earnings_wizard
+msgid "Notes..."
+msgstr "Notas..."
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_journal_closing_fy
+msgid "Para Póliza de Resultados"
+msgstr "Para Póliza de Resultados"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_period_id
+msgid "Periodo Destino"
+msgstr "Periodo Destino"
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_cy_earnings_chart_account_id
+msgid "Plan Contable"
+msgstr "Plan Contable"
+
+#. module: argil_account_closing
+#: model:ir.ui.view,arch_db:argil_account_closing.view_account_cy_earnings_wizard
+msgid "Por favor indique los parametros a utilizar."
+msgstr "Por favor indique los parametros a utilizar."
+
+#. module: argil_account_closing
+#: code:addons/argil_account_closing/metodos.py:126
+#: model:ir.ui.view,arch_db:argil_account_closing.view_account_cy_earnings_wizard
+#, python-format
+msgid "Póliza de Resultado del Ejercicio"
+msgstr "Póliza de Resultado del Ejercicio"
+
+#. module: argil_account_closing
+#: code:addons/argil_account_closing/account.py:35
+#, python-format
+msgid "Póliza de Resultado del Ejercicio "
+msgstr "Póliza de Resultado del Ejercicio "
+
+#. module: argil_account_closing
+#: model:ir.model.fields,field_description:argil_account_closing.field_account_move_current_year_earnings
+msgid "Póliza de Resultados"
+msgstr "Póliza de Resultados"
+
+#. module: argil_account_closing
+#: code:addons/argil_account_closing/metodos.py:110
+#, python-format
+msgid "Resultado del Ejercicio"
+msgstr "Resultado del Ejercicio"
+
+#. module: argil_account_closing
+#: model:ir.model,name:argil_account_closing.model_account_cy_earnings
+msgid "Wizard to Create Journal Entry for Opening Balance"
+msgstr "Asistente para Crear la Póliza de Resultados"
+
+#. module: argil_account_closing
+#: model:ir.ui.view,arch_db:argil_account_closing.view_account_cy_earnings_wizard
+msgid "or"
+msgstr "ó"

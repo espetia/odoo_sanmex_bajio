@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_hr_payslip_by_employees_inherit_om_hr_payroll_kuh7" model="ir.ui.view">
+            <field name="name">view.hr.payslip.by.employees.inherit.om.hr.payroll.kuh7</field>
+            <field name="model">hr.payslip.employees</field>
+            <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_by_employees"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group" position="inside">
+                    <field name="fch_inicio" invisible="1"/>
+                    <field name="fch_fin" invisible="1"/>
+                </xpath>
+
+            </field>
+        </record>
+
+</odoo>

@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <data>
+        <template id="web.minimal_layout">
+            <t t-raw="'&lt;base href=%s&gt;' % base_url"/>
+            &lt;!DOCTYPE html&gt;
+            <html style="height: 0;">
+                <head>
+                    <t t-call-assets="web.report_assets_pdf" t-js="false"/>
+                    <t t-call-assets="web.report_assets_common" t-js="false"/>
+                    <t t-call-assets="web.report_assets_pdf" t-css="false"/>
+                    <t t-call-assets="web.report_assets_common" t-css="false"/>
+                    <meta charset="utf-8"/>
+                    <t t-if="subst is True">
+                        <script>
+                            function subst() {
+                                var vars = {};
+                                var x = document.location.search.substring(1).split('&amp;');
+                                for (var i in x) {
+                                    var z = x[i].split('=', 2);
+                                    vars[z[0]] = unescape(z[1]);
+                                }
+                                var fromPage = document.getElementsByClassName('page');
+                                for(var j = 0; j&lt;fromPage.length; j++)
+                                    fromPage[j].textContent = vars['sitepage'];
+                                var toPage = document.getElementsByClassName('topage');
+                                for(var j = 0; j&lt;toPage.length; j++)
+                                    toPage[j].textContent = vars['sitepages'];
+
+                                var index = vars['webpage'].split('.', 4)[3]
+                                var header = document.getElementById('minimal_layout_report_headers');
+                                if(header !== null){
+                                    var companyHeader = header.children[index];
+                                    header.textContent = '';
+                                    header.appendChild(companyHeader);
+                                }
+                                var footer = document.getElementById('minimal_layout_report_footers');
+                                if(footer !== null){
+                                    var companyFooter = footer.children[index];
+                                    footer.textContent = '';
+                                    footer.appendChild(companyFooter);
+                                }
+                            }
+                        </script>
+                    </t>
+                </head>
+                <body class="container" onload="subst()"  style="background:rgba(255, 255, 255, 0) !important; ">
+                    <t t-raw="body"  />
+                </body>
+            </html>
+        </template>
+
+
+
+        <report
+            id="report_invoice_traslado"
+            model="stock.picking"
+            string="Factura Traslado"
+            report_type="qweb-pdf"
+            name="carta_porte40.report_invoice_traslados_custom"
+            file="carta_porte40.report_invoice_traslados_custom"
+          
+            
+        />
+
+      
+
+        <template id="carta_porte40.report_invoice_traslados_custom">
+               <t t-call="web.html_container">
+                 <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+                    <t t-call="web.internal_layout">
+                 <table class="table table-condensed" style="font-size:11px;border: 1px solid #ddd;border-collapse: collapse;padding: 5px;">
+                        <tr>
+                            <td width="30%" align="center" valign="middle" style="border: 1px solid white;">
+                                <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 90px;height: auto;"/>
+                            </td>
+                            <td colspan="2" width="40%" align="center" valign="top" style="border: 1px solid white;">
+                                <strong>
+                                    <span t-field="o.company_id.partner_id.name" style="font-size:14px;"/><BR/>
+                                </strong>
+                                <span t-if="o.company_id.partner_id.rfc">RFC: <span t-field="o.company_id.partner_id.rfc"/></span><BR/>
+                                
+                                <BR/>
+                                <span t-field="o.company_id.partner_id.street"/>
+                                    <span t-if="o.company_id.partner_id.num_external"> No. <span t-field="o.company_id.partner_id.num_external"/></span>
+                                    <span t-if="o.company_id.partner_id.num_internal"> Int. <span t-field="o.company_id.partner_id.num_internal"/></span>
+                                    <BR/>
+                                    <span t-if="o.company_id.partner_id.colonia_sat_id">
+                                        <span t-field="o.company_id.partner_id.colonia_sat_id.name"/>,
+                                    </span>
+                                    <span t-if="o.company_id.partner_id.sat_municipio_id">
+                                        <span t-field="o.company_id.partner_id.sat_municipio_id.name"/>
+                                    </span>
+                                    <BR/>
+                                    <span t-field="o.company_id.partner_id.state_id.name"/>, 
+                                    <span t-field="o.company_id.partner_id.country_id.name"/>
+                                    <span t-if="o.company_id.partner_id.sat_codigopostal_id">
+                                        CP: <span t-field="o.company_id.partner_id.sat_codigopostal_id.code"/>
+                                    </span>
+
+                            </td>
+                            <td width="30%" valign="top" style="border: 1px solid white;text-align: center;">
+                               
+                                    <strong>
+                                        <span style="font-size:12px;">FACTURA TRASLADO</span>
+                                    </strong>
+                                
+                                <BR/>
+                                
+                                <strong>Expedido en: </strong>
+                                    <span t-field="o.company_id.partner_id.sat_codigopostal_id.code"/>
+
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-condensed" style="font-size:11px;border: 1px solid #ddd;border-collapse: collapse;padding: 5px;">
+
+                        <tr>
+                            <td width="50%" style="border: 1px solid;">
+                                <p style="margin-left: 10px;"><strong>Receptor: </strong></p>
+                                <p style="margin-left: 10px;">
+                                    <span t-field="o.partner_id.name"/>
+                                    <BR/>
+                                    <span t-field="o.partner_id.street"/>
+                                    <span t-if="o.partner_id.num_external"> No. <span t-field="o.partner_id.num_external"/></span>
+                                    <span t-if="o.partner_id.num_internal"> Int. <span t-field="o.partner_id.num_internal"/></span>
+                                    <BR/>
+                                    <span t-field="o.partner_id.sat_municipio_id.name"/>, 
+                                    <span t-field="o.partner_id.state_id.name"/>, 
+                                    <span t-field="o.partner_id.country_id.name"/>, CP: 
+                                    <span t-field="o.partner_id.sat_codigopostal_id.code"/> 
+                                    <BR/>
+                                    RFC: <span t-field="o.partner_id.rfc"/>
+                                </p>
+                            </td>
+                          
+                            <td style="border: 1px solid;">
+                               <p style="margin-left: 10px;"><strong>Carta Porte (Traslado): </strong></p>
+                                <strong>Transporte Int: </strong><span t-field="o.TranspInternac"/><BR/>
+                                <strong>Lugar y Fecha de Emisión:</strong>
+                                <span t-field="o.date_done"/>
+                                <BR/>
+                                <strong>Folio fiscal: </strong><span t-field="o.UUID"/><BR/>
+                                <strong>No. CSD del Emisor: </strong><span t-field="o.company_id.serial_number"/><br/>
+                                <strong>No. CSD del SAT: </strong><span t-field="o.no_certificado"/><BR/>
+                                <strong>Fecha y hora de certificación: </strong><span t-field="o.FechaTimbrado"/><BR/>
+
+                            </td>
+                           
+                        </tr>
+                    </table>
+                    
+                    
+                   
+                    <BR/>
+                    <BR/>
+                    <t t-set="nummercancia" t-value="0"/>   
+                    <table class="table table-condensed" name="invoice_line_table" style="font-size:12px;">
+                        
+                              
+                        
+                        <tbody class="invoice_tbody">
+                          <tr>
+                                <th style="text-align:left;" colspan="8">Mercancías</th>
+                                </tr>
+                            <tr>
+                                <th style="text-align:center;">Cantidad</th>
+                                <th style="text-align:center;">Clave Unidad</th>
+                                
+                                <th style="text-align:center;">Bienes Trans</th>
+                                <th style="text-align:center;">Dimensiones</th>
+                                <th style="text-align:center;">Cve M Peligrosos</th>
+                                <th class="text-right">Embalaje</th>
+                                <th class="text-right">Peso en K.G</th>
+                                <th class="text-right">Valor de las mercancias</th>
+                            </tr>
+                            <tr t-foreach="o.mercancias_ids" t-as="l">
+                               <tr t-if="l.para_cartaporte==True">
+                                <td style="text-align:center;">
+                                  <span t-field="l.product_qty"/>
+                                </td>
+                                <td style="text-align:center;">
+                                  <span t-field="l.product_uom.sat_uom_id.code"/>
+                                  </td>
+                                
+                                <td style="text-align:center;">
+                                      <span t-raw="'%s &lt;br&gt;' % l.product_id and l.product_id.sat_product_id.code or ''"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.dimensiones"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.CveMaterialPeligroso.Clave"/>
+                                </td>
+                                
+
+                                <td class="text-right">
+                                    <span t-field="l.embalaje"/>
+                                </td>
+                                 <td class="text-right">
+                                    <span t-field="l.peso"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.valorproducto"/>
+                                </td>
+                               <t t-set="nummercancia" t-value="nummercancia + 1"/> 
+                               </tr>
+                            </tr>
+                            
+                        </tbody>
+                        
+                    </table>
+                    <BR/>
+                    <BR/>
+                    
+                    <table class="table table-condensed" name="invoice_line_table" style="font-size:12px;">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center;color:#000000;">Num. Total Mercancias: <t t-esc="nummercancia"/></th>
+                                <th style="text-align:center;color:#000000;">Peso Bruto Total: <span t-field="o.PesoBrutoTota"/></th>
+                                <th style="text-align:center;color:#000000;">Unidad Peso: <span t-field="o.UnidadPeso.Clave"/></th>
+                                <th style="text-align:center;color:#000000;">Cargo por Tasación: <span t-field="o.CargoPorTasacion"/></th>
+                                
+                            </tr>
+                        </thead>
+                          </table>
+                         <BR/>
+                    <BR/>  
+                          
+                      <table class="table table-condensed" name="invoice_line_table" style="font-size:12px;">
+                        <tbody class="invoice_tbody">
+                          <tr>
+                                <th style="text-align:left;" colspan="8">AutoTransporte</th>
+                                </tr>
+                            <tr>
+                                <th style="text-align:center;">Configuración Vehicular</th>
+                                <th style="text-align:center;">Placa VM</th>
+                                <th style="text-align:center;">Año/Modelo VM</th>
+                                <th style="text-align:center;">Permiso SCT</th>
+                                <th style="text-align:center;">Num. Permiso SCT</th>
+                                <th class="text-right">Asegura Resp Civil</th>
+                                <th class="text-right">Póliza Resp Civil</th>
+                                <th class="text-right">Asegura Med Ambiente</th>
+                                <th class="text-right">Póliza Med Ambiente</th>
+                                <th class="text-right">Asegura Carga</th>
+                                <th class="text-right">Póliza Carga</th>
+                                <th class="text-right">Prima Seguro</th>
+                                
+                            </tr>
+                            
+                                <td style="text-align:center;">
+                                  <span t-field="o.trasporte_vehiculo.ConfigVehicular.Clave"/>
+                                </td>
+                                <td style="text-align:center;">
+                                  <span t-field="o.trasporte_vehiculo.license_plate"/>
+                                  </td>
+                                
+                                <td style="text-align:center;">
+                                     <span t-field="o.trasporte_vehiculo.model_year"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.trasporte_vehiculo.PermSCT.Clave"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.trasporte_vehiculo.NumPermisoSCT"/>
+                                </td>
+                                
+
+                                <td class="text-right">
+                                    <span t-field="o.asegurado_civil.name"/>
+                                </td>
+                                 <td class="text-right">
+                                    <span t-field="o.asegurado_civil.polizarespcivil"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.asegurado_amb.name"/>
+                                </td>
+                              <td class="text-right">
+                                    <span t-field="o.asegurado_amb.polizamedioambiente"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.asegurado_carga.name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.asegurado_carga.polizacarga"/>
+                                </td>
+                           <td class="text-right">
+                                    <span t-field="o.asegurado_vmercancia"/>
+                                </td>
+                            
+                        </tbody>
+                        
+                    </table>
+                     <BR/>
+                    <BR/> 
+                    
+                    <table class="table table-condensed" name="invoice_line_table" style="font-size:12px;">
+                        
+                        <tbody class="invoice_tbody">
+                          <tr>
+                                <th style="text-align:left;" colspan="8">Tipos Figura</th>
+                                </tr>
+                            <tr>
+                                <th style="text-align:center;">RFC Figura</th>
+                                <th style="text-align:center;">Tipo Figura</th>
+                                
+                                <th style="text-align:center;">Num Licencia</th>
+                                <th style="text-align:center;">Nombre Figura</th>
+                                <th style="text-align:center;">Domicilio</th>
+                            </tr>
+                            <span t-if="o.partner_owner">
+                                <td style="text-align:center;">
+                                  <span t-field="o.partner_owner.rfc"/>
+                                </td>
+                                <td style="text-align:center;">
+                                  <span t-field="o.partner_owner.tipofigura.Clave"/>
+                                  </td>
+                                  <td style="text-align:center;">
+                                     
+                                </td>
+                                 <td class="text-right">
+                                    <span t-field="o.partner_owner.name"/>
+                                </td>
+                            </span>    
+                            <tr t-foreach="o.figuratrasnporte_ids" t-as="l">
+                                <td style="text-align:center;">
+                                  <span t-field="l.rfcfigura"/>
+                                </td>
+                                <td style="text-align:center;">
+                                  <span t-field="l.tipofigura.Clave"/>
+                                  </td>
+                                
+                                <td style="text-align:center;">
+                                     <span t-field="l.numlicencia"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.figuratrasnporte.name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.figuratrasnporte.address_id.street"/> <span t-field="l.figuratrasnporte.address_id.num_external"/>, <span t-field="l.figuratrasnporte.address_id.sat_codigopostal_id.code"/>, 
+                                    <span t-field="l.figuratrasnporte.address_id.state_id.name"/>, <span t-field="l.figuratrasnporte.address_id.country_id.code"/>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                        
+                    </table>
+                    
+                      <BR/> <BR/> 
+                    
+                    <table class="table table-condensed" name="invoice_line_table" style="font-size:12px;">
+                        
+                        <tbody class="invoice_tbody">
+                          <tr>
+                                <th style="text-align:left;" colspan="8">Ubicaciones</th>
+                                </tr>
+                            <tr>
+                                <th style="text-align:center;">Tipo Ubicación</th>
+                                <th style="text-align:center;">ID Ubicación</th>
+                                
+                                <th style="text-align:center;">Fecha y Hora</th>
+                                <th style="text-align:center;">RFC</th>
+                                <th style="text-align:center;">Nombre</th>
+                                 <th style="text-align:center;">Distancia Recorrida</th>
+                                <th style="text-align:center;">Domicilio</th>
+                            </tr>
+                            <tr t-foreach="o.ubicaciones_ids" t-as="l">
+                                <td style="text-align:center;">
+                                  <span t-field="l.TipoUbicacion"/>
+                                </td>
+                                <td style="text-align:center;">
+                                  <span t-field="l.IDUbicacion"/>
+                                  </td>
+                                 <span t-if="o.picking_type_code == 'outgoing'">
+                                        <td style="text-align:center;">
+                                             <span t-if="l.TipoUbicacion=='origen'"> <span t-field="o.fechaHorasalidallegada_origen"/></span>
+                                             <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.fechaHorasalidallegada_destino"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="l.TipoUbicacion=='origen'"><span t-field="o.company_id.rfc"/></span>
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.partner_id.rfc"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="l.TipoUbicacion=='origen'"><span t-field="o.company_id.name"/></span>
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.partner_id.name"/></span>
+                                        </td>
+                                          <td class="text-right">
+                                            
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.distanciarecorrida"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="l.TipoUbicacion=='origen'"><span t-field="o.company_id.partner_id.street"/>
+                                            <span t-if="o.company_id.partner_id.num_external"> No. <span t-field="o.company_id.partner_id.num_external"/></span>
+                                            <span t-if="o.company_id.partner_id.num_internal"> Int. <span t-field="o.company_id.partner_id.num_internal"/></span>
+                                            <BR/>
+                                            <span t-if="o.company_id.partner_id.colonia_sat_id">
+                                                <span t-field="o.company_id.partner_id.colonia_sat_id.name"/>,
+                                            </span>
+                                            <span t-if="o.company_id.partner_id.sat_municipio_id">
+                                                <span t-field="o.company_id.partner_id.sat_municipio_id.name"/>
+                                            </span>
+                                            <BR/>
+                                            <span t-field="o.company_id.partner_id.state_id.name"/>, 
+                                            <span t-field="o.company_id.partner_id.country_id.name"/>
+                                            <span t-if="o.company_id.partner_id.sat_codigopostal_id">
+                                                CP: <span t-field="o.company_id.partner_id.sat_codigopostal_id.code"/>
+                                            </span></span>
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.partner_id.street"/>
+                                            <span t-if="o.partner_id.num_external"> No. <span t-field="o.partner_id.num_external"/></span>
+                                            <span t-if="o.partner_id.num_internal"> Int. <span t-field="o.partner_id.num_internal"/></span>
+                                            <BR/>
+                                            <span t-field="o.partner_id.sat_municipio_id.name"/>, 
+                                            <span t-field="o.partner_id.state_id.name"/>, 
+                                            <span t-field="o.partner_id.country_id.name"/>, CP: 
+                                            <span t-field="o.partner_id.sat_codigopostal_id.code"/></span>
+                                        </td>
+                                 </span>
+                                 <span t-if="o.picking_type_code == 'internal'">
+                                        <td style="text-align:center;">
+                                             <span t-if="l.TipoUbicacion=='origen'"> <span t-field="o.fechaHorasalidallegada_origen"/></span>
+                                             <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.fechaHorasalidallegada_destino"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="l.TipoUbicacion=='origen'"><span t-field="o.company_id.rfc"/></span>
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.partner_id.rfc"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="l.TipoUbicacion=='origen'"><span t-field="o.company_id.name"/></span>
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.partner_id.name"/></span>
+                                        </td>
+                                          <td class="text-right">
+                                            
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.distanciarecorrida"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="l.TipoUbicacion=='origen'"><span t-field="o.company_id.partner_id.street"/>
+                                            <span t-if="o.company_id.partner_id.num_external"> No. <span t-field="o.company_id.partner_id.num_external"/></span>
+                                            <span t-if="o.company_id.partner_id.num_internal"> Int. <span t-field="o.company_id.partner_id.num_internal"/></span>
+                                            <BR/>
+                                            <span t-if="o.company_id.partner_id.colonia_sat_id">
+                                                <span t-field="o.company_id.partner_id.colonia_sat_id.name"/>,
+                                            </span>
+                                            <span t-if="o.company_id.partner_id.sat_municipio_id">
+                                                <span t-field="o.company_id.partner_id.sat_municipio_id.name"/>
+                                            </span>
+                                            <BR/>
+                                            <span t-field="o.company_id.partner_id.state_id.name"/>, 
+                                            <span t-field="o.company_id.partner_id.country_id.name"/>
+                                            <span t-if="o.company_id.partner_id.sat_codigopostal_id">
+                                                CP: <span t-field="o.company_id.partner_id.sat_codigopostal_id.code"/>
+                                            </span></span>
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.partner_id.street"/>
+                                            <span t-if="o.partner_id.num_external"> No. <span t-field="o.partner_id.num_external"/></span>
+                                            <span t-if="o.partner_id.num_internal"> Int. <span t-field="o.partner_id.num_internal"/></span>
+                                            <BR/>
+                                            <span t-field="o.partner_id.sat_municipio_id.name"/>, 
+                                            <span t-field="o.partner_id.state_id.name"/>, 
+                                            <span t-field="o.partner_id.country_id.name"/>, CP: 
+                                            <span t-field="o.partner_id.sat_codigopostal_id.code"/></span>
+                                        </td>
+                                 </span>
+                                   <span t-if="o.picking_type_code == 'incoming'">
+                                        <td style="text-align:center;">
+                                             <span t-if="l.TipoUbicacion=='origen'"> <span t-field="o.fechaHorasalidallegada_origen"/></span>
+                                             <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.fechaHorasalidallegada_destino"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="l.TipoUbicacion=='origen'"><span t-field="o.partner_id.rfc"/></span>
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.company_id.rfc"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="l.TipoUbicacion=='origen'"><span t-field="o.partner_id.name"/></span>
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.company_id.name"/></span>
+                                        </td>
+                                          <td class="text-right">
+                                            
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.distanciarecorrida"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="l.TipoUbicacion=='origen'"><span t-field="o.partner_id.street"/>
+                                            <span t-if="o.partner_id.num_external"> No. <span t-field="o.partner_id.num_external"/></span>
+                                            <span t-if="o.partner_id.num_internal"> Int. <span t-field="o.partner_id.num_internal"/></span>
+                                            <BR/>
+                                            <span t-if="o.partner_id.colonia_sat_id">
+                                                <span t-field="o.partner_id.colonia_sat_id.name"/>,
+                                            </span>
+                                            <span t-if="o.partner_id.sat_municipio_id">
+                                                <span t-field="o.partner_id.sat_municipio_id.name"/>
+                                            </span>
+                                            <BR/>
+                                            <span t-field="o.partner_id.state_id.name"/>, 
+                                            <span t-field="o.partner_id.country_id.name"/>
+                                            <span t-if="o.partner_id.sat_codigopostal_id">
+                                                CP: <span t-field="o.partner_id.sat_codigopostal_id.code"/>
+                                            </span></span>
+                                            <span t-if="l.TipoUbicacion=='destino'"><span t-field="o.company_id.partner_id.street"/>
+                                            <span t-if="o.company_id.partner_id.num_external"> No. <span t-field="o.company_id.partner_id.num_external"/></span>
+                                            <span t-if="o.company_id.partner_id.num_internal"> Int. <span t-field="o.company_id.partner_id.num_internal"/></span>
+                                            <BR/>
+                                            <span t-field="o.company_id.partner_id.sat_municipio_id.name"/>, 
+                                            <span t-field="o.company_id.partner_id.state_id.name"/>, 
+                                            <span t-field="o.company_id.partner_id.country_id.name"/>, CP: 
+                                            <span t-field="o.company_id.partner_id.sat_codigopostal_id.code"/></span>
+                                        </td>
+                                 </span>
+                            </tr>
+                            
+                        </tbody>
+                        
+                    </table>
+                   
+                    
+                    
+                    <table class="table table-condensed" style="font-size:10px;">
+                        <tr>
+                            <td rowspan="3">
+                                <img t-if="o.cfdi_cbb" t-att-src="'data:image/png;base64,%s' % to_text(o.cfdi_cbb)" style="width:5.5cm;height:5.5cm;"/>
+                            </td>
+                            <td><strong>Cadena Original:</strong><BR/><span t-field="o.cfdi_cadena_original" style="display:block;width:670px;word-wrap:break-word;"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sello Digital Emisor:</strong><BR/><span t-field="o.sello" style="display:block;width:670px;word-wrap:break-word;"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sello Digital SAT:</strong><BR/><span t-field="o.Sello" style="display:block;width:670px;word-wrap:break-word;"/></td>
+                        </tr>
+                    </table>
+                    <div align="center">
+                        <p style="font-weight:bold;font-size:10px;">ESTE DOCUMENTO ES UNA REPRESENTACION IMPRESA DE UN CFDI</p>
+                    </div> 
+            </t>
+         </t>
+</t>
+
+       </template>
+
+       
+
+
+        
+
+   </data>
+</odoo>

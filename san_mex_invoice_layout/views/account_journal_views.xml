@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form_sanmex" model="ir.ui.view">
+        <field name="name">account.journal.form.sanmex</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Datos Bancarios" name="bank_data">
+                    <group>
+                        <group>
+                            <field name="bank"/>
+                            <field name="account_number"/>
+                            <field name="key_account"/>
+                            <field name="card_number"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

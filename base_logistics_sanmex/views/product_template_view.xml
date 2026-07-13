@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="inherit_product_template_form_view_logistics_sanmex" model="ir.ui.view">
+            <field name="name">product.template.view.form.inherit.logistics.sanmex</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Logistica Sanmex">
+                        <group>
+                            <field name="is_resource_rent" />
+                            <field name="type_product_rent" string="Tipo de recurso" widget="selection"/>
+                            <field name="is_resource_sanitary"/>
+                            <field name="stock_house_id" />
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+</odoo>

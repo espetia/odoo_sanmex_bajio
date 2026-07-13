@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem id="menu_webservice_config" 
+            name="Configuración para México" 
+            sequence="6"
+            groups="base.group_erp_manager"
+            web_icon="webservice,static/description/icon.png"/>
+
+</odoo>

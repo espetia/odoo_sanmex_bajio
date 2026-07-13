@@ -1,0 +1,4926 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<record id="AUX" model="hr.salary.rule.category">
+<field name="name">Auxiliar</field>
+<field name="code">AUX</field>
+</record>
+
+<record id="COMP" model="hr.salary.rule.category">
+<field name="name">Company Contribution</field>
+<field name="code">COMP</field>
+</record>
+
+<record id="ALW" model="hr.salary.rule.category">
+<field name="name">Percepcion</field>
+<field name="code">ALW</field>
+</record>
+
+<record id="ALW2" model="hr.salary.rule.category">
+<field name="name">Percepcion Exenta</field>
+<field name="code">ALW2</field>
+</record>
+
+<record id="ALW1" model="hr.salary.rule.category">
+<field name="name">Percepcion Gravada</field>
+<field name="code">ALW1</field>
+</record>
+
+<record id="ALW3" model="hr.salary.rule.category">
+<field name="name">Otros Pagos</field>
+<field name="code">ALW3</field>
+</record>
+
+<record id="ALW4" model="hr.salary.rule.category">
+<field name="name">Percepciones en especie</field>
+<field name="code">ALW4</field>
+</record>
+
+<record id="NET" model="hr.salary.rule.category">
+<field name="name">Neto</field>
+<field name="code">NET</field>
+</record>
+
+
+<record id="GROSS" model="hr.salary.rule">
+<field name="name">Sueldo bruto </field>
+<field name="category_id" ref="om_hr_payroll.GROSS"/>
+<field name="code">GROSS</field>
+<field name="sequence" eval="100"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">result = categories.BASIC + categories.ALW</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO01" model="hr.salary.rule">
+<field name="name">Sueldo Base</field>
+<field name="category_id" ref="om_hr_payroll.BASIC"/>
+<field name="code">PO01</field>
+<field name="sequence" eval="1"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+
+if worked_days.WORK100:
+    result = 1>0
+else:
+    result = 0>1
+
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_laborados = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+
+result = contract.sueldo_diario*dias_laborados
+result = int(round(result,1))
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="D077" model="hr.salary.rule">
+<field name="name">Descuento de Bonos</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">D077</field>
+<field name="sequence" eval="377"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.FI:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if worked_days.FI:
+    result = P001 *.10 + P001 *.10
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO35" model="hr.salary.rule">
+<field name="name">Aguinaldo</field>
+<field name="category_id" ref="om_hr_payroll.ALW"/>
+<field name="code">PO35</field>
+<field name="sequence" eval="135"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result =  P033 + P034
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+
+<record id="PO34" model="hr.salary.rule">
+<field name="name">Aguinaldo Exenta</field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO34</field>
+<field name="sequence" eval="134"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+aguinaldo = 0
+antiguedad_anos = contract.antiguedad_anos
+dias_aguinaldo = 0
+dias_proporcionales = 0
+
+if contract.antiguedad_anos &lt; 1:
+    antiguedad_anos = 1
+else:
+    antiguedad_anos = contract.antiguedad_anos
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt;=',antiguedad_anos)],order='antiguedad desc',limit=1)
+if line:
+    dias_aguinaldo = line.aguinaldo
+
+if worked_days.WORK100:
+    dias_proporcionales = (dias_aguinaldo*worked_days.WORK100.number_of_days)/365
+total = dias_proporcionales * contract.sueldo_diario
+
+monto_exento =  contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+
+if total > monto_exento:
+    result = monto_exento
+else:
+    result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO33" model="hr.salary.rule">
+<field name="name">Aguinaldo Gravada</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">PO33</field>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+aguinaldo = 0
+antiguedad_anos = contract.antiguedad_anos
+dias_aguinaldo = 0
+dias_proporcionales = 0
+
+if contract.antiguedad_anos &lt; 1:
+    antiguedad_anos = 1
+else:
+    antiguedad_anos = contract.antiguedad_anos
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt; =',antiguedad_anos)],order='antiguedad desc',limit=1)
+if line:
+    dias_aguinaldo = line.aguinaldo
+
+if worked_days.WORK100:
+    dias_proporcionales = (dias_aguinaldo*worked_days.WORK100.number_of_days)/365
+    total = dias_proporcionales * contract.sueldo_diario
+
+    monto_exento =  contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+
+
+if total > monto_exento:
+    result = total - monto_exento
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO35" model="hr.salary.rule">
+<field name="name">Aguinaldo Liquidacion</field>
+<field name="category_id" ref="om_hr_payroll.ALW"/>
+<field name="code">PO35</field>
+<field name="sequence" eval="135"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.AGUI:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result =  P033 + P034
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO34" model="hr.salary.rule">
+<field name="name">Aguinaldo Liquidacion Exenta</field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO34</field>
+<field name="sequence" eval="134"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.AGUI:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+aguinaldo = 0
+antiguedad_anos = contract.antiguedad_anos
+dias_aguinaldo = 0
+dias_proporcionales = 0
+
+if contract.antiguedad_anos &lt; 1:
+    antiguedad_anos = 1
+else:
+    antiguedad_anos = contract.antiguedad_anos
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt; =',antiguedad_anos)],order='antiguedad desc',limit=1)
+if line:
+    dias_aguinaldo = line.aguinaldo
+
+if worked_days.AGUI:
+    total = contract.sueldo_diario * worked_days.AGUI.number_of_days
+else:
+    total = 0
+
+monto_exento =  contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+
+if total > monto_exento:
+    result = monto_exento
+else:
+    result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO33" model="hr.salary.rule">
+<field name="name">Aguinaldo Liquidacion Gravada</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">PO33</field>
+<field name="sequence" eval="133"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.AGUI:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+aguinaldo = 0
+antiguedad_anos = contract.antiguedad_anos
+dias_aguinaldo = 0
+dias_proporcionales = 0
+
+if contract.antiguedad_anos &lt; 1:
+    antiguedad_anos = 1
+else:
+    antiguedad_anos = contract.antiguedad_anos
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt; =',antiguedad_anos)],order='antiguedad desc',limit=1)
+if line:
+    dias_aguinaldo = line.aguinaldo
+
+if worked_days.AGUI:
+    total = contract.sueldo_diario * worked_days.AGUI.number_of_days
+else:
+    total = 0
+
+monto_exento =  contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+
+if total > monto_exento:
+    result = monto_exento
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO03" model="hr.salary.rule">
+<field name="name">Ajuste en Viaticos Entregados al Trabajador</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO03</field>
+<field name="sequence" eval="340"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.DVIAT:
+    if inputs.DVIAT.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.DVIAT:
+    result = inputs.DVIAT.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="324" model="hr.salary.rule">
+<field name="name">Despensa Gravado</field>
+<field name="category_id" ref="om_hr_payroll.ALW"/>
+<field name="code">324</field>
+<field name="sequence" eval="134"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if rules.P032:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">fix</field>
+<field name="quantity">1</field>
+<field name="amount_fix">677.00</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="34" model="hr.salary.rule">
+<field name="name">Despensa Prueba</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">34</field>
+<field name="sequence" eval="523"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">fix</field>
+<field name="quantity">1</field>
+<field name="amount_fix">0.00</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="390" model="hr.salary.rule">
+<field name="name">Prestamo</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">390</field>
+<field name="sequence" eval="390"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+
+<field name="amount_python_compute">result = (payslip.installment_amount or 0)</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="390" model="hr.salary.rule">
+<field name="name">Préstamo Caja de Ahorro</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">390</field>
+<field name="sequence" eval="390"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+
+<field name="amount_python_compute">result = (payslip.installment_amount or 0)</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="391" model="hr.salary.rule">
+<field name="name">Interés del Prestamo</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">391</field>
+<field name="sequence" eval="391"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+
+<field name="amount_python_compute">result = (payslip.installment_int or 0)</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="391" model="hr.salary.rule">
+<field name="name">Interés Prestamo caja ahorro</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">391</field>
+<field name="sequence" eval="393"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+
+<field name="amount_python_compute">result = (payslip.installment_int or 0)</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="546" model="hr.salary.rule">
+<field name="name">Despensa Exento</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">546</field>
+<field name="sequence" eval="136"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if rules.P032:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">fix</field>
+<field name="quantity">1</field>
+<field name="amount_fix">890.00</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="Basic" model="hr.salary.rule">
+<field name="name">Salario Basico Total</field>
+<field name="category_id" ref="om_hr_payroll.BASIC"/>
+<field name="code">BASIC</field>
+<field name="sequence" eval="1"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">result = contract.wage</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO14" model="hr.salary.rule">
+<field name="name">Seguro de Vivienda Infonavit</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO14</field>
+<field name="sequence" eval="306"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if contract.infonavit_fijo > 0 or contract.infonavit_vsm > 0 or contract.infonavit_porc > 0:
+    result = 15
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO15" model="hr.salary.rule">
+<field name="name">Préstamo Infonavit (VSM)</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO15</field>
+<field name="sequence" eval="315"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.infonavit_vsm > 0:
+    result = 1>0
+else:
+    result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_periodo = 0
+dias_mes = 0
+line = contract.env['tablas.periodo.bimestral'].search([('form_id','=',contract.tablas_cfdi_id.id),('dia_fin','>=',payslip.date_to),('dia_inicio','&lt;=',payslip.date_to)],limit=1)
+if line:
+    dias_periodo = line.no_dias
+
+mes_actual = contract.env['tablas.periodo.mensual'].search([('mes', '=', payslip.mes)],limit=1)
+if mes_actual:
+    dias_mes = mes_actual.no_dias
+
+dias_laborados = 0
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+result = ((contract.infonavit_vsm * contract.tablas_cfdi_id.umi + 15) / 2 ) / 30.4 * dias_laborados
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO16" model="hr.salary.rule">
+<field name="name">Préstamo Infonavit (Cuota Fija)</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO16</field>
+<field name="sequence" eval="316"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.infonavit_fijo > 0 or inputs.INFONAVIT:
+    result = 1>0
+else:
+    result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_periodo = 0
+line = contract.env['tablas.periodo.bimestral'].search([('form_id','=',contract.tablas_cfdi_id.id),('dia_fin','>=',payslip.date_to),('dia_inicio','&lt;=',payslip.date_to)],limit=1)
+
+if line:
+    dias_periodo = line.no_dias
+
+dias_laborados = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+if inputs.INFONAVIT:
+    result =  inputs.INFONAVIT.amount
+else:
+    result = ((contract.infonavit_fijo + 15) / 2) / 30.4 * dias_laborados
+
+#  result = int(round((contract.infonavit_fijo * 2 + 15) / dias_periodo * payslip.dias_pagar))
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO17" model="hr.salary.rule">
+<field name="name">Préstamo Infonavit (SBC)</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO17</field>
+<field name="sequence" eval="317"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.infonavit_porc > 0:
+    result = 1>0
+else:
+    result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_periodo = 0
+line = contract.env['tablas.periodo.bimestral'].search([('form_id','=',contract.tablas_cfdi_id.id),('dia_fin','>=',payslip.date_to),('dia_inicio','&lt;=',payslip.date_to)],limit=1)
+if line:
+    dias_periodo = line.no_dias
+
+dias_laborados = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+#result = ((contract.sueldo_base_cotizacion * contract.infonavit_porc/100 * dias_periodo) + 15 ) / dias_periodo * dias_laborados
+
+result = ((contract.sueldo_base_cotizacion * contract.infonavit_porc/100  + 15 ) / 2 ) / 30.4 * dias_laborados
+</field>
+<field name="forma_pago">001</field>
+</record>
+<record id="DO18" model="hr.salary.rule">
+<field name="name">Préstamo Infonavit (SBC)</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO17</field>
+<field name="sequence" eval="318"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.infonavit_porc > 0:
+result = 1>0
+else:
+result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_periodo = 0
+line = contract.env['tablas.periodo.bimestral'].search([('form_id','=',contract.tablas_cfdi_id.id),('dia_fin','>=',payslip.date_to),('dia_inicio','&lt;=',payslip.date_to)],limit=1)
+if line:
+    dias_periodo = line.no_dias
+
+dias_laborados = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+result = ((contract.infonavit_vsm * contract.tablas_cfdi_id.salario_minimo +15) / 2) / 30.4 * dias_laborados
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO52" model="hr.salary.rule">
+<field name="name">IMSS</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO52</field>
+<field name="sequence" eval="352"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.sueldo_diario  &lt; contract.tablas_cfdi_id.salario_minimo:
+    result = 0
+else:
+    result = 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+ dias_laborados = 0
+ dias_completos = 0
+ dias_trabajo = 0
+
+ dias_completos = payslip.imss_dias
+ dias_laborados =  dias_completos
+
+if worked_days.WORK100:
+    dias_trabajo = dias_trabajo + worked_days.WORK100.number_of_days
+if worked_days.SEPT:
+    dias_trabajo = dias_trabajo + worked_days.SEPT.number_of_days
+if worked_days.FJC:
+    dias_trabajo = dias_trabajo + worked_days.FJC.number_of_days
+
+if dias_trabajo > 0.01:
+    if worked_days.FI:
+        dias_laborados = dias_laborados - worked_days.FI.number_of_days
+    if worked_days.FJS:
+        dias_laborados = dias_laborados - worked_days.FJS.number_of_days
+    if worked_days.FR:
+        dias_laborados = dias_laborados - worked_days.FR.number_of_days
+    if worked_days.INC_MAT:
+        dias_laborados = dias_laborados - worked_days.INC_MAT.number_of_days
+        dias_completos = dias_completos - worked_days.INC_MAT.number_of_days
+    if worked_days.INC_EG:
+        dias_laborados = dias_laborados - worked_days.INC_EG.number_of_days
+        dias_completos = dias_completos - worked_days.INC_EG.number_of_days
+    if worked_days.INC_RT:
+        dias_laborados = dias_laborados - worked_days.INC_RT.number_of_days
+        dias_completos = dias_completos - worked_days.INC_RT.number_of_days
+else:
+    dias_laborados = 0
+    dias_completos = 0
+
+    dias_periodo = 0
+    line = contract.env['tablas.periodo.bimestral'].search([('form_id','=',contract.tablas_cfdi_id.id),('dia_fin','>=',payslip.date_to),('dia_inicio','&lt;=',payslip.date_to)],limit=1)
+    if line:
+        dias_periodo = line.no_dias/8
+
+#cuota del IMSS parte del Empleado
+salario_cotizado = contract.sueldo_base_cotizacion
+uma3 =  contract.tablas_cfdi_id.uma * 3
+
+prestaciones = salario_cotizado * contract.tablas_cfdi_id.enf_mat_prestaciones_e/100 * dias_completos
+invalli_y_vida = salario_cotizado * contract.tablas_cfdi_id.inv_vida_e/100 * dias_laborados
+cesantia_y_vejez = salario_cotizado * contract.tablas_cfdi_id.cesantia_vejez_e/100 * dias_laborados
+pensio_y_benefi = salario_cotizado * contract.tablas_cfdi_id.enf_mat_gastos_med_e/100 *dias_completos
+
+#seguro_enfermedad_maternidad
+excedente = contract.sueldo_base_cotizacion - uma3
+base_cotizacion = excedente * contract.tablas_cfdi_id.enf_mat_excedente_e/100
+seg_enf_mat = base_cotizacion * dias_completos
+
+if contract.sueldo_diario_integrado  &lt; uma3:
+prestaciones = prestaciones + pensio_y_benefi
+else:
+prestaciones = prestaciones + pensio_y_benefi + abs(seg_enf_mat)
+
+result = invalli_y_vida + prestaciones + cesantia_y_vejez
+result = int(round(result,1))
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO53" model="hr.salary.rule">
+<field name="name">Cesantía y Vejéz</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO53</field>
+<field name="sequence" eval="353"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_laborados = 0
+dias_completos = 0
+
+dias_completos = payslip.imss_dias
+dias_laborados =  dias_completos
+
+
+if worked_days.FI:
+    dias_laborados = dias_laborados - worked_days.FI.number_of_days
+if worked_days.FJS:
+    dias_laborados = dias_laborados - worked_days.FJS.number_of_days
+if worked_days.FR:
+    dias_laborados = dias_laborados - worked_days.FR.number_of_days
+if worked_days.INC_MAT:
+    dias_laborados = dias_laborados - worked_days.INC_MAT.number_of_days
+    dias_completos = dias_completos - worked_days.INC_MAT.number_of_days
+if worked_days.INC_EG:
+    dias_laborados = dias_laborados - worked_days.INC_EG.number_of_days
+    dias_completos = dias_completos - worked_days.INC_EG.number_of_days
+if worked_days.INC_RT:
+    dias_laborados = dias_laborados - worked_days.INC_RT.number_of_days
+    dias_completos = dias_completos - worked_days.INC_RT.number_of_days
+
+#if contract.periodicidad_pago == '02':
+#   dias_laborados = dias_laborados + dias_laborados*1/6
+
+    dias_periodo = 0
+    line = contract.env['tablas.periodo.bimestral'].search([('form_id','=',contract.tablas_cfdi_id.id),('dia_fin','>=',payslip.date_to),('dia_inicio','&lt;=',payslip.date_to)],limit=1)
+
+if line:
+    dias_periodo = line.no_dias/4
+
+
+    #cuota del IMSS parte del Empleado
+    salario_cotizado = contract.sueldo_base_cotizacion
+    uma3 =  contract.tablas_cfdi_id.uma * 3
+
+    prestaciones = salario_cotizado * contract.tablas_cfdi_id.enf_mat_prestaciones_e/100 * dias_completos
+    invalli_y_vida = salario_cotizado * contract.tablas_cfdi_id.inv_vida_e/100 * dias_laborados
+    cesantia_y_vejez = salario_cotizado * contract.tablas_cfdi_id.cesantia_vejez_e/100 * dias_periodo
+    # dias_laborados
+    pensio_y_benefi = salario_cotizado * contract.tablas_cfdi_id.enf_mat_gastos_med_e/100 *dias_completos
+
+    #seguro_enfermedad_maternidad
+    excedente = contract.sueldo_base_cotizacion - uma3
+    base_cotizacion = excedente * contract.tablas_cfdi_id.enf_mat_excedente_e/100
+    seg_enf_mat = base_cotizacion * dias_completos
+
+if contract.sueldo_diario_integrado  &lt; uma3:
+    prestaciones = prestaciones + pensio_y_benefi
+else:
+    prestaciones = prestaciones + pensio_y_benefi + abs(seg_enf_mat)
+
+result = int(round(cesantia_y_vejez))
+# invalli_y_vida+ prestaciones + cesantia_y_vejez
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO61" model="hr.salary.rule">
+<field name="name">Prestamo FONACOT</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO61</field>
+<field name="sequence" eval="361"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">result = contract.prestamo_fonacot > 0</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">result = contract.prestamo_fonacot</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO64" model="hr.salary.rule">
+<field name="name">Prestamo Empresa</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO64</field>
+<field name="sequence" eval="364"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">result = 0</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">result = contract.prest_financ</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO65" model="hr.salary.rule">
+<field name="name">Interés Prestamo Empresa</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO65</field>
+<field name="sequence" eval="365"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.D013:
+    if inputs.D013.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">result = inputs.D013.amount</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO72" model="hr.salary.rule">
+<field name="name">Prestamo Fondo de Ahorro</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO72</field>
+<field name="sequence" eval="372"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.D009:
+    if inputs.D009.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">result = inputs.D009.amount</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO73" model="hr.salary.rule">
+<field name="name">Interés Prestamo Fondo de Ahorro</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO73</field>
+<field name="sequence" eval="373"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.D009:
+    if inputs.D009.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">result = inputs.D009.amount</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO66" model="hr.salary.rule">
+<field name="name">Anticipo Sueldo</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO72</field>
+<field name="sequence" eval="366"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">result = contract.anticipo_sueldo</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO67" model="hr.salary.rule">
+<field name="name">Fondo de Ahorro</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO67</field>
+<field name="sequence" eval="367"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.WORK100 and contract.fondo_ahorro:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P001 * .075
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO68" model="hr.salary.rule">
+<field name="name">Fondo de Ahorro Empresa</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO68</field>
+<field name="sequence" eval="368"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.WORK100 and contract.fondo_ahorro:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P001 * .075
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO70" model="hr.salary.rule">
+<field name="name">Deducción General</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO70</field>
+<field name="sequence" eval="370"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = contract.deduc_gral
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO75" model="hr.salary.rule">
+<field name="name">Pension Alimenticia</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO75</field>
+<field name="sequence" eval="375"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.pens_alim > 0:
+    result =1>0
+else:
+    result = 0>1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if rules.P030:
+    result =  (P001 + P030 - ISR2 - D052 - D053) * contract.pens_alim/100
+else:
+    result =  (P001 - ISR2 - D052 - D053) * contract.pens_alim/100
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO76" model="hr.salary.rule">
+<field name="name">Descuentos</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO76</field>
+<field name="sequence" eval="376"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.DESC:
+    if inputs.DESC.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 >
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.DESC:
+    result = inputs.DESC.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO77" model="hr.salary.rule">
+<field name="name">Descuento Despensa</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO77</field>
+<field name="sequence" eval="377"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">fix</field>
+<field name="quantity">1</field>
+<field name="amount_fix">1.00</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO77" model="hr.salary.rule">
+<field name="name">Descuento Bonos</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO77</field>
+<field name="sequence" eval="377"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.FI:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if worked_days.FI:
+    result = P001 *.10 + P001 *.10
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO78" model="hr.salary.rule">
+<field name="name">Fallecimiento</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO78</field>
+<field name="sequence" eval="378"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.FAL:
+    result =  1>0
+else:
+    result = 0>1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.FAL:
+    result = inputs.FAL.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO79" model="hr.salary.rule">
+<field name="name">Descuento vale de comida</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO79</field>
+<field name="sequence" eval="379"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.vale_despensa:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = int(round((contract.tablas_cfdi_id.uma * 0.20 * 365 /12 ) / 2))
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO80" model="hr.salary.rule">
+<field name="name">Devolucion de Viaticos</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO80</field>
+<field name="sequence" eval="380"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">fix</field>
+<field name="quantity">1</field>
+<field name="amount_fix">
+0.00
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO88" model="hr.salary.rule">
+<field name="name">Aportación Voluntaria SAR</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO88</field>
+<field name="sequence" eval="388"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">fix</field>
+<field name="quantity">1</field>
+<field name="amount_fix">
+0.00
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO89" model="hr.salary.rule">
+<field name="name">Anticipo de gastos no comprobados</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO89</field>
+<field name="sequence" eval="389"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.AGNC:
+    result =  1>0
+else:
+    result = 0>1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.AGNC:
+    result = inputs.AGNC.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO90" model="hr.salary.rule">
+<field name="name">Descto Faltante Material</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO90</field>
+<field name="sequence" eval="390"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.DFM:
+    result =  1>0
+else:
+    result = 0>1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.DFM:
+    result = inputs.DFM.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DO95" model="hr.salary.rule">
+<field name="name">ISR retenido de ejercicio anterior</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">DO95</field>
+<field name="sequence" eval="395"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.DISR:
+    if inputs.DISR.amount > 0:
+        result = 1
+    else:
+        result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.DISR:
+    result = inputs.DISR.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DA01" model="hr.salary.rule">
+<field name="name">Ret. Inv. y vida</field>
+<field name="category_id" ref="AUX"/>
+<field name="code">DA01</field>
+<field name="sequence" eval="310"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_laborados = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if contract.periodicidad_pago == '02':
+    dias_laborados = dias_laborados + dias_laborados*1/6
+
+#cuota del IMSS parte del Empleado
+salario_cotizado = contract.sueldo_base_cotizacion * dias_laborados
+uma3 =  contract.tablas_cfdi_id.uma * 3
+# falta especie excedente
+
+prestaciones = salario_cotizado * contract.tablas_cfdi_id.enf_mat_prestaciones_e/100
+invalli_y_vida = salario_cotizado * contract.tablas_cfdi_id.inv_vida_e/100
+cesantia_y_vejez = salario_cotizado * contract.tablas_cfdi_id.cesantia_vejez_e/100
+pensio_y_benefi = salario_cotizado * contract.tablas_cfdi_id.enf_mat_gastos_med_e/100
+
+#seguro_enfermedad_maternidad
+excedente = contract.sueldo_base_cotizacion - uma3
+base_cotizacion = excedente * contract.tablas_cfdi_id.enf_mat_excedente_e/100
+seg_enf_mat = base_cotizacion * dias_laborados
+
+mens = prestaciones + pensio_y_benefi + invalli_y_vida + cesantia_y_vejez + seg_enf_mat
+result = invalli_y_vida
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DA02" model="hr.salary.rule">
+<field name="name">Ret. Cesantia</field>
+<field name="category_id" ref="AUX"/>
+<field name="code">DA02</field>
+<field name="sequence" eval="311"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_laborados = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if contract.periodicidad_pago == '02':
+    dias_laborados = dias_laborados + dias_laborados*1/6
+
+#cuota del IMSS parte del Empleado
+salario_cotizado = contract.sueldo_base_cotizacion * dias_laborados
+uma3 =  contract.tablas_cfdi_id.uma * 3
+# falta especie excedente
+
+prestaciones = salario_cotizado * contract.tablas_cfdi_id.enf_mat_prestaciones_e/100
+invalli_y_vida = salario_cotizado * contract.tablas_cfdi_id.inv_vida_e/100
+cesantia_y_vejez = salario_cotizado * contract.tablas_cfdi_id.cesantia_vejez_e/100
+pensio_y_benefi = salario_cotizado * contract.tablas_cfdi_id.enf_mat_gastos_med_e/100
+
+#seguro_enfermedad_maternidad
+excedente = contract.sueldo_base_cotizacion - uma3
+base_cotizacion = excedente * payslip.imss_mes
+seg_enf_mat = base_cotizacion * contract.tablas_cfdi_id.enf_mat_excedente_e/100
+
+mens = prestaciones + pensio_y_benefi + invalli_y_vida + cesantia_y_vejez + seg_enf_mat
+result = cesantia_y_vejez
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="DA03" model="hr.salary.rule">
+<field name="name">Ret. Enf y Mat. obrero</field>
+<field name="category_id" ref="AUX"/>
+<field name="code">DA03</field>
+<field name="sequence" eval="312"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_laborados = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if contract.periodicidad_pago == '02':
+    dias_laborados = dias_laborados + dias_laborados*1/6
+
+#cuota del IMSS parte del Empleado
+salario_cotizado = contract.sueldo_base_cotizacion * dias_laborados
+uma3 =  contract.tablas_cfdi_id.uma * 3
+# falta especie excedente
+
+prestaciones = salario_cotizado * contract.tablas_cfdi_id.enf_mat_prestaciones_e/100
+invalli_y_vida = salario_cotizado * contract.tablas_cfdi_id.inv_vida_e/100
+cesantia_y_vejez = salario_cotizado * contract.tablas_cfdi_id.cesantia_vejez_e/100
+pensio_y_benefi = salario_cotizado * contract.tablas_cfdi_id.enf_mat_gastos_med_e/100
+
+#seguro_enfermedad_maternidad
+excedente = contract.sueldo_base_cotizacion - uma3
+base_cotizacion = excedente * payslip.imss_mes
+seg_enf_mat = base_cotizacion * contract.tablas_cfdi_id.enf_mat_excedente_e/100
+
+if contract.sueldo_diario_integrado  &lt; uma3:
+    result = prestaciones + pensio_y_benefi
+else:
+    result = prestaciones + pensio_y_benefi + abs(seg_enf_mat)
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="EFECT" model="hr.salary.rule">
+<field name="name">Sueldo neto en efectivo</field>
+<field name="category_id" ref="AUX"/>
+<field name="code">EFECT</field>
+<field name="sequence" eval="899"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+total = categories.BASIC + categories.ALW + categories.ALW3 - categories.DED
+
+if rules.P019:
+    total = total - P019
+
+if rules.P032:
+    total = total - P032
+
+result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="HEX1" model="hr.salary.rule">
+<field name="name">Horas Extras Simples</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">HEX1</field>
+<field name="sequence" eval="142"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.HEX1:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P140 + P141
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="HEX2" model="hr.salary.rule">
+<field name="name">Horas Extras Dobles</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">HEX2</field>
+<field name="sequence" eval="145"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.HEX2:
+    result = 1>0
+else:
+    result = 0>1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P143 + P144
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="HEX3" model="hr.salary.rule">
+<field name="name">Horas Extras Triples</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">HEX3</field>
+<field name="sequence" eval="148"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.HEX3:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P146 + P147
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR" model="hr.salary.rule">
+<field name="name">ISR antes de SUBEM quincenal</field>
+<field name="category_id" ref="AUX"/>
+<field name="code">ISR</field>
+<field name="sequence" eval="302"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    grabado_mensual = TPERG + payslip.acum_per_grav
+else:
+    grabado_mensual = TPERG  / payslip.dias_pagar * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+#articulo 113
+excedente_limite_superior = grabado_mensual - limite_inferior
+impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+total = (isr_tarifa_113 / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #dias_laborados
+total2 =  (subsidio_pagado / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #dias_laborados
+
+if subsidio_empleo  &lt;= 0:
+    result = 0>1
+else:
+    result =  1>0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+
+#dias laborados
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+#grabado_mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    grabado_mensual = TPERG + payslip.acum_per_grav
+else:
+    grabado_mensual = TPERG  / payslip.dias_pagar * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+#articulo 113
+excedente_limite_superior = grabado_mensual - limite_inferior
+impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+if subsidio_empleo > 0:
+    total = isr_tarifa_113 - abs(payslip.acum_isr_antes_subem)
+else:
+    total = isr_tarifa_113 - abs(payslip.acum_isr)
+    total2 =  subsidio_pagado
+else:
+    subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+    total = (isr_tarifa_113 / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar # * dias_laborados
+    total2 =  (subsidio_pagado / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar # * dias_laborados
+
+result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR" model="hr.salary.rule">
+<field name="name">ISR antes de SUBEM Semanal</field>
+<field name="category_id" ref="AUX"/>
+<field name="code">ISR</field>
+<field name="sequence" eval="302"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+dias_periodo_mes = 0
+dias_periodo = 0
+
+if contract.periodicidad_pago == '02' and payslip.isr_ajustar:
+    dias_periodo_mes = payslip.dias_periodo
+    dias_periodo = 7 * float(payslip.no_nomina)
+else:
+    dias_periodo_mes = contract.tablas_cfdi_id.imss_mes
+    dias_periodo = payslip.dias_pagar
+
+#grabado_mensual
+if float(payslip.no_nomina) > 1 and payslip.isr_ajustar:
+    grabado_mensual = (TPERG + payslip.acum_per_grav) / dias_periodo * dias_periodo_mes
+else:
+    grabado_mensual = TPERG  / dias_periodo * dias_periodo_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+if subsidio_empleo  &lt;= 0:
+    result = 0
+else:
+    result =  1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+dias_periodo_mes = 0
+dias_periodo = 0
+
+if contract.periodicidad_pago == '02' and payslip.isr_ajustar:
+    dias_periodo_mes = payslip.dias_periodo
+    dias_periodo = 7 * float(payslip.no_nomina)
+else:
+    dias_periodo_mes = contract.tablas_cfdi_id.imss_mes
+    dias_periodo = payslip.dias_pagar
+
+#grabado_mensual
+if float(payslip.no_nomina) > 1 and payslip.isr_ajustar:
+    grabado_mensual = (TPERG + payslip.acum_per_grav) / dias_periodo * dias_periodo_mes
+else:
+    grabado_mensual = TPERG  / dias_periodo * dias_periodo_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+    #articulo 113
+excedente_limite_superior = grabado_mensual - limite_inferior
+impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+if float(payslip.no_nomina) > 1 and payslip.isr_ajustar:
+    if subsidio_empleo > 0:
+        subsidio_pagado = isr_tarifa_113 - abs(payslip.acum_isr_antes_subem)  - subsidio_empleo + abs(payslip.acum_subsidio_aplicado)
+    else:
+        subsidio_pagado = isr_tarifa_113 - abs(payslip.acum_isr_antes_subem)  - subsidio_empleo - abs(payslip.acum_isr)
+        total = isr_tarifa_113 / dias_periodo_mes * dias_periodo - payslip.acum_isr_antes_subem
+        total2 =  subsidio_pagado / dias_periodo_mes * dias_periodo
+else:
+    subsidio_pagado = subsidio_empleo / dias_periodo_mes * dias_periodo
+    total = (isr_tarifa_113 / dias_periodo_mes) * dias_periodo
+    total2 =  (isr_tarifa_113 / dias_periodo_mes) * dias_periodo - subsidio_pagado
+
+result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR" model="hr.salary.rule">
+<field name="name">ISR antes de SUBEM PTU</field>
+<field name="category_id" ref="AUX"/>
+<field name="code">ISR</field>
+<field name="sequence" eval="302"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+
+grabado_mensual = TPERG
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+#articulo 113
+excedente_limite_superior = grabado_mensual - limite_inferior
+impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+total = (isr_tarifa_113 / contract.tablas_cfdi_id.imss_mes) * dias_laborados
+total2 =  (subsidio_pagado / contract.tablas_cfdi_id.imss_mes) * dias_laborados
+
+if subsidio_empleo  &lt;= 0:
+    result = 0>1
+else:
+    result =  1>0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+
+grabado_mensual = TPERG
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+    #articulo 113
+    excedente_limite_superior = grabado_mensual - limite_inferior
+    impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+    isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+    #subsidio mensual
+    subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+    total = (isr_tarifa_113 )
+    total2 =  (subsidio_pagado )
+
+result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR" model="hr.salary.rule">
+<field name="name">ISR repartición utilidades</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">ISR</field>
+<field name="sequence" eval="303"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+
+ingreso_normal_mensual = contract.sueldo_diario*15
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',ingreso_normal_mensual)],order='lim_inf desc',limit=1)
+if line:
+    inm_lim_inf = line.lim_inf
+    inm_c_fija= line.c_fija
+    inm_p_s_exedente = line.s_excedente
+
+    aguinaldo_normal_mensual = contract.sueldo_diario*30 + categories.ALW
+if contract.tablas_cfdi_id:
+    line2 = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',aguinaldo_normal_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    anm_lim_inf = line2.lim_inf
+    anm_c_fija= line2.c_fija
+    anm_p_s_exedente = line2.s_excedente
+
+    #articulo 113
+    excedente_limite_superior = ingreso_normal_mensual - inm_lim_inf
+    impuesto_marginal = excedente_limite_superior * inm_p_s_exedente/100
+    isr_tarifa_113 = impuesto_marginal + inm_c_fija
+
+    #articulo 113
+    ex_limite_superior = aguinaldo_normal_mensual - anm_lim_inf
+    imp_marginal = ex_limite_superior * anm_p_s_exedente/100
+    isr_tarifa_213 = imp_marginal + anm_c_fija
+
+result = int(round(isr_tarifa_213-isr_tarifa_113))
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR" model="hr.salary.rule">
+<field name="name">ISR Asimilados</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">ISR</field>
+<field name="sequence" eval="303"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+
+ingreso_normal_mensual =  contract.sueldo_diario*payslip.imss_mes + categories.ALW/worked_days.WORK100.number_of_days * payslip.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',ingreso_normal_mensual)],order='lim_inf desc',limit=1)
+    if line:
+        inm_lim_inf = line.lim_inf
+        inm_c_fija= line.c_fija
+        inm_p_s_exedente = line.s_excedente
+
+#articulo 113
+excedente_limite_superior = ingreso_normal_mensual - inm_lim_inf
+impuesto_marginal = excedente_limite_superior * inm_p_s_exedente/100
+isr_tarifa_113 = impuesto_marginal + inm_c_fija
+
+result = (isr_tarifa_113 / payslip.imss_mes) * worked_days.WORK100.number_of_days
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR3" model="hr.salary.rule">
+<field name="name">ISR Art. 96 LISR</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">ISR3</field>
+<field name="sequence" eval="304"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if payslip.nom_liquidacion:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+monto_percepciones = TPERG
+
+if rules.P021:
+    monto_percepciones = monto_percepciones - P021
+if rules.P033:
+    monto_percepciones = monto_percepciones - P033
+
+grabado_mensual = monto_percepciones + contract.sueldo_diario * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+#articulo 113
+excedente_limite_superior = grabado_mensual - limite_inferior
+impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+grabado_mensual2 = contract.sueldo_diario * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line3 = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line3:
+    limite_inferior2 = line3.lim_inf
+    cuota_fija2 = line3.c_fija
+    porcentaje_sobre_excedente2 = line3.s_excedente
+    line4 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line4:
+    subsidio_empleo2 = line4.s_mensual
+
+#articulo 113
+excedente_limite_superior2 = grabado_mensual2 - limite_inferior2
+impuesto_marginal2 = excedente_limite_superior2 * porcentaje_sobre_excedente2/100
+isr_tarifa_113_2 = impuesto_marginal2 + cuota_fija2
+
+
+isr_mensual = isr_tarifa_113 - isr_tarifa_113_2
+
+if contract.periodicidad_pago == '02':
+    isr_mensual = isr_mensual / 4
+if contract.periodicidad_pago == '04':
+    isr_mensual = isr_mensual / 2
+
+result = isr_mensual
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR2" model="hr.salary.rule">
+<field name="name">ISR Aguinaldo</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">ISR2</field>
+<field name="sequence" eval="304"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+monto_percepciones = 0
+
+if rules.P021:
+    monto_percepciones = monto_percepciones + P021
+if rules.P033:
+    monto_percepciones = monto_percepciones + P033
+
+fraccion1 = monto_percepciones / 365 * contract.tablas_cfdi_id.imss_mes
+
+grabado_mensual = fraccion1 + contract.sueldo_diario * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+subsidio_empleo = line2.s_mensual
+
+    #articulo 113
+    excedente_limite_superior = grabado_mensual - limite_inferior
+    impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+    fraccion2 = impuesto_marginal + cuota_fija
+
+    grabado_mensual2 = contract.sueldo_diario * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line3 = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line3:
+    limite_inferior2 = line3.lim_inf
+    cuota_fija2 = line3.c_fija
+    porcentaje_sobre_excedente2 = line3.s_excedente
+    line4 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line4:
+    subsidio_empleo2 = line4.s_mensual
+
+    #articulo 113
+excedente_limite_superior2 = grabado_mensual2 - limite_inferior2
+impuesto_marginal2 = excedente_limite_superior2 * porcentaje_sobre_excedente2/100
+isr_tarifa_113_2 = impuesto_marginal2 + cuota_fija2
+
+fraccion3 = fraccion2 - isr_tarifa_113_2
+
+if fraccion1 > 0:
+    fraccion5 = fraccion3 / fraccion1
+    result = fraccion5 * monto_percepciones
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR2" model="hr.salary.rule">
+<field name="name">ISR Art. 95 LISR</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">ISR2</field>
+<field name="sequence" eval="304"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+
+grabado_mensual = contract.sueldo_diario * 30
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+
+#articulo 113
+    excedente_limite_superior = grabado_mensual - limite_inferior
+    impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+    isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+    tasa_isr = isr_tarifa_113 / grabado_mensual
+
+result = TPERG * tasa_isr
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR2" model="hr.salary.rule">
+<field name="name">ISR quincenal (sp)</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">ISR2</field>
+<field name="sequence" eval="349"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if payslip.nom_liquidacion:
+    result = 0
+else:
+    result = 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+#grabado_mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    grabado_mensual = TPERG + payslip.acum_per_grav
+else:
+    grabado_mensual = TPERG  / payslip.dias_pagar * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+#articulo 113
+excedente_limite_superior = grabado_mensual - limite_inferior
+impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+if contract.periodicidad_pago == '04':
+    if payslip.no_nomina == '2' and payslip.isr_ajustar:
+        if subsidio_empleo > 0:
+            subsidio_pagado = isr_tarifa_113 - abs(payslip.acum_isr_antes_subem)  - subsidio_empleo + abs(payslip.acum_subsidio_aplicado) #payslip.acum_isr-
+        else:
+            subsidio_pagado = isr_tarifa_113 - abs(payslip.acum_isr_antes_subem)  - subsidio_empleo - abs(payslip.acum_isr)
+            total = payslip.acum_isr - isr_tarifa_113
+            total2 =  subsidio_pagado
+    else:
+        subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+        total = (isr_tarifa_113 / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #* dias_laborados
+        total2 =  (subsidio_pagado / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #* dias_laborados
+else:
+    subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+    total = (isr_tarifa_113 / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #* dias_laborados
+    total2 =  (subsidio_pagado / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #* dias_laborados
+
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    if subsidio_pagado &lt;  0:
+        result =  0
+    else:
+        if total > 0:
+            result = abs(total)
+        else:
+            result =abs(total2)
+else:
+    if subsidio_pagado &lt;  0:
+        result =  0
+    else:
+        if total2 &lt; 0:
+            result = abs(total)
+        else:
+            result = abs(total2)
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR2" model="hr.salary.rule">
+<field name="name">ISR Semanal(sp)</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">ISR2</field>
+<field name="sequence" eval="349"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+dias_periodo_mes = 0
+dias_periodo = 0
+
+if contract.periodicidad_pago == '02' and payslip.isr_ajustar:
+    dias_periodo_mes = payslip.dias_periodo
+    dias_periodo = 7 * float(payslip.no_nomina)
+else:
+    dias_periodo_mes = contract.tablas_cfdi_id.imss_mes
+    dias_periodo = payslip.dias_pagar
+
+#grabado_mensual
+if float(payslip.no_nomina) > 1 and payslip.isr_ajustar:
+    grabado_mensual = (TPERG + payslip.acum_per_grav) / dias_periodo * dias_periodo_mes
+else:
+    grabado_mensual = TPERG  / dias_periodo * dias_periodo_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+    #articulo 113
+    excedente_limite_superior = grabado_mensual - limite_inferior
+    impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+    isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+    #subsidio mensual
+if float(payslip.no_nomina) > 1 and payslip.isr_ajustar:
+    if subsidio_empleo > 0:
+        subsidio_pagado = (isr_tarifa_113 / dias_periodo_mes) * dias_periodo - abs(payslip.acum_isr_antes_subem)  - (subsidio_empleo / dias_periodo_mes) * dias_periodo + abs(payslip.acum_subsidio_aplicado)
+    else:
+        subsidio_pagado = (isr_tarifa_113 / dias_periodo_mes) * dias_periodo - abs(payslip.acum_isr_antes_subem)  - (subsidio_empleo / dias_periodo_mes) * dias_periodo - abs(payslip.acum_isr)
+        total = payslip.acum_isr - isr_tarifa_113 / dias_periodo_mes * dias_periodo
+        total2 =  subsidio_pagado
+else:
+    subsidio_pagado = subsidio_empleo / dias_periodo_mes * dias_periodo
+    total = (isr_tarifa_113 / dias_periodo_mes) * dias_periodo
+    total2 =  (isr_tarifa_113 / dias_periodo_mes) * dias_periodo - subsidio_pagado
+
+if float(payslip.no_nomina) > 1 and payslip.isr_ajustar:
+    if total2 &lt; 0:
+        result =  0
+    else:
+        if total > 0:
+            result = abs(total)
+        else:
+            result = abs(total2)
+else:
+    if total2 &lt; 0:
+        result =  0
+    else:
+        if total2 &lt; 0:
+            result =abs(total)
+            result = int(round(result,1))
+        else:
+            result = abs(total2)
+            result = int(round(result,1))
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR2" model="hr.salary.rule">
+<field name="name">ISR (sp) PTU</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">ISR2</field>
+<field name="sequence" eval="349"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+
+grabado_mensual = TPERG
+#PTU
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+    #articulo 113
+    excedente_limite_superior = grabado_mensual - limite_inferior
+    impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+    isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+total = isr_tarifa_113
+total2 = subsidio_pagado
+
+if subsidio_pagado &lt; 0:
+    result =  0
+else:
+    if total2 &lt; 0:
+        result =  abs(total)
+    else:
+        result = abs(total2)
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR3" model="hr.salary.rule">
+<field name="name">Subsidio Aplicado</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">ISR3</field>
+<field name="sequence" eval="305"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+
+grabado_mensual = contract.sueldo_diario*30.4 + categories.ALW/7 *30.4
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+    #articulo 113
+    excedente_limite_superior = grabado_mensual - limite_inferior
+    impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+    isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+    #subsidio mensual
+    #subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+    total = (isr_tarifa_113 / payslip.imss_mes) * payslip.imss_dias
+
+    result = int(round(total))
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="ISR4" model="hr.salary.rule">
+<field name="name">ISR Art. 174 RLISR</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">ISR4</field>
+<field name="sequence" eval="305"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if payslip.nom_liquidacion:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+monto_percepciones = 0
+
+if rules.P021:
+    monto_percepciones = monto_percepciones + P021
+if rules.P033:
+    monto_percepciones = monto_percepciones + P033
+
+    fraccion1 = monto_percepciones / 365 * contract.tablas_cfdi_id.imss_mes
+
+    grabado_mensual = fraccion1 + contract.sueldo_diario * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+    #articulo 113
+    excedente_limite_superior = grabado_mensual - limite_inferior
+    impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+    fraccion2 = impuesto_marginal + cuota_fija
+
+    grabado_mensual2 = contract.sueldo_diario * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line3 = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line3:
+    limite_inferior2 = line3.lim_inf
+    cuota_fija2 = line3.c_fija
+    porcentaje_sobre_excedente2 = line3.s_excedente
+    line4 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line4:
+    subsidio_empleo2 = line4.s_mensual
+
+    #articulo 113
+    excedente_limite_superior2 = grabado_mensual2 - limite_inferior2
+    impuesto_marginal2 = excedente_limite_superior2 * porcentaje_sobre_excedente2/100
+    isr_tarifa_113_2 = impuesto_marginal2 + cuota_fija2
+
+    fraccion3 = fraccion2 - isr_tarifa_113_2
+
+if fraccion1 > 0:
+    fraccion5 = fraccion3 / fraccion1
+    result = fraccion5 * monto_percepciones
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="NET_1" model="hr.salary.rule">
+<field name="name">Salario Neto</field>
+<field name="category_id" ref="NET"/>
+<field name="code">NET</field>
+<field name="sequence" eval="200"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = categories.BASIC + categories.ALW  + categories.ALW3 - categories.DED
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="O003" model="hr.salary.rule">
+<field name="name">Viáticos</field>
+<field name="category_id" ref="ALW3"/>
+<field name="code">O003</field>
+<field name="sequence" eval="240"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.VIAT:
+    if inputs.VIAT.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.VIAT:
+    result = inputs.VIAT.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="O004" model="hr.salary.rule">
+<field name="name">Reintegro de ISR retenido en exceso de ejercicio anterior</field>
+<field name="category_id" ref="ALW3"/>
+<field name="code">O004</field>
+<field name="sequence" eval="245"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.RISR:
+    if inputs.RISR.amount > 0:
+        result = 1
+    else:
+        result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.RISR:
+    result = inputs.RISR.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P001" model="hr.salary.rule">
+<field name="name">Sueldo Liquidacion</field>
+<field name="category_id" ref="om_hr_payroll.BASIC"/>
+<field name="code">P001</field>
+<field name="sequence" eval="1"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.WORK100:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+    result = int(round(contract.sueldo_diario*dias_laborados))
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P003" model="hr.salary.rule">
+<field name="name">Septimo Día</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P003</field>
+<field name="sequence" eval="103"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.SEPT:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_laborados = 0
+
+if worked_days.SEPT:
+    result = worked_days.SEPT.number_of_days * contract.sueldo_diario
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P003" model="hr.salary.rule">
+<field name="name">Septimo Día liquidación</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P003</field>
+<field name="sequence" eval="103"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.periodicidad_pago =="02":
+    result = 1> 0
+else:
+    result = 0> 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_laborados = 0
+if contract.dias_pendientes_pagar > 0 :
+    dias_laborados = contract.dias_pendientes_pagar
+    result = 1/6 *contract.sueldo_diario*dias_laborados
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P006" model="hr.salary.rule">
+<field name="name">Comisiones</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P006</field>
+<field name="sequence" eval="106"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.COM:
+    if inputs.COM.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.COM:
+    result = inputs.COM.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P007" model="hr.salary.rule">
+<field name="name">Incentivo de Productividad</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P007</field>
+<field name="sequence" eval="107"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.INPR:
+    result =  1>0
+else:
+    result = 0>1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.INPR:
+    result = inputs.INPR.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P008" model="hr.salary.rule">
+<field name="name">Prima Dominical Gravado</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">P008</field>
+<field name="sequence" eval="108"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.PDM:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+if worked_days.PDM:
+    total = contract.sueldo_diario*worked_days.PDM.number_of_days*0.25
+
+    monto_exento = 1.000 * contract.tablas_cfdi_id.uma
+if total > monto_exento:
+    result = total - monto_exento
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P009" model="hr.salary.rule">
+<field name="name">Prima Dominical Excento</field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">P009</field>
+<field name="sequence" eval="109"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.PDM:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+if worked_days.PDM:
+    total = contract.sueldo_diario*worked_days.PDM.number_of_days*0.25
+    monto_exento = 1.000 * contract.tablas_cfdi_id.uma
+if total > monto_exento:
+    result = monto_exento
+else:
+    result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P010" model="hr.salary.rule">
+<field name="name">Prima Dominical</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P010</field>
+<field name="sequence" eval="110"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.PDM:
+    result = 1 > 0
+else:
+    result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P009 + P008
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P012" model="hr.salary.rule">
+<field name="name">Gratificación</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P012</field>
+<field name="sequence" eval="112"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">fix</field>
+<field name="quantity">1.0</field>
+<field name="amount_fix">0.00</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P013" model="hr.salary.rule">
+<field name="name">Compensaciones</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P013</field>
+<field name="sequence" eval="113"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.COMP:
+    if inputs.COMP.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.COMP:
+    result = inputs.COMP.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P014" model="hr.salary.rule">
+<field name="name">Incapacidad riesgo de trabajo</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P014</field>
+<field name="sequence" eval="114"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.INC01:
+    result = 1 > 0
+else:
+    result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = contract.sueldo_diario * 0.40 * worked_days.INC01.number_of_days
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P014" model="hr.salary.rule">
+<field name="name">Incapacidad Enfermedad General</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P014</field>
+<field name="sequence" eval="114"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.INC02:
+    result = 1 > 0
+else:
+    result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = contract.sueldo_diario * 0.40 * worked_days.INC02.number_of_days
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P014" model="hr.salary.rule">
+<field name="name">Incapacidad Maternidad</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P014</field>
+<field name="sequence" eval="114"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.INC03:
+    result = 1 > 0
+else:
+    result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = contract.sueldo_diario * 0.40 * worked_days.INC03.number_of_days
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P015" model="hr.salary.rule">
+<field name="name">Premio de Puntualidad</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P015</field>
+<field name="sequence" eval="115"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.bono_puntualidad:
+    result = 1
+else:
+    result =  0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P001 * 0.10
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P016" model="hr.salary.rule">
+<field name="name">Premio por asistencia</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P016</field>
+<field name="sequence" eval="116"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.bono_asistencia:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P001 * 0.10
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P019" model="hr.salary.rule">
+<field name="name">Vacaciones</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P019</field>
+<field name="sequence" eval="119"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.VAC:
+    result = 1 > 0
+else:
+    result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if worked_days.VAC:
+    result = contract.sueldo_diario*worked_days.VAC.number_of_days
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P019" model="hr.salary.rule">
+<field name="name">Vacaciones Liquidacion</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P019</field>
+<field name="sequence" eval="119"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.VAC:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+dias_laborados = 0
+
+if worked_days.VAC:
+    dias_laborados = worked_days.VAC.number_of_days
+
+result = contract.sueldo_diario*dias_laborados
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P021" model="hr.salary.rule">
+<field name="name">Vacaciones Reportadas $</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P021</field>
+<field name="sequence" eval="121"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.VAC:
+    result = 1 > 0
+else:
+    result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if worked_days.VAC:
+    result = int(round(contract.sueldo_diario*worked_days.VAC.number_of_days))
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P019" model="hr.salary.rule">
+<field name="name">Alimentación</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P019</field>
+<field name="sequence" eval="119"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.alimentacion and payslip.no_nomina == '2':
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.ALM:
+    if inputs.ALM.amount > 0:
+    result = inputs.ALM.amount
+else:
+    if contract.resource_calendar_id.name == 'Semana Lunes-Sabado':
+        result = int(round(365/12 * contract.tablas_cfdi_id.uma * 0.59))
+    else:
+        result = int(round(365/12 * contract.tablas_cfdi_id.uma * 0.49))
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO20" model="hr.salary.rule">
+<field name="name">Prima Vacacional Exento</field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO20</field>
+<field name="sequence" eval="120"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.VAC  and contract.tipo_prima_vacacional == '02':
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+dias_vacaciones = 0
+
+if contract.antiguedad_anos &lt;1:
+    antiguedad = 1
+else:
+    antiguedad = contract.antiguedad_anos
+
+if worked_days.VAC:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt;=',antiguedad)],order='antiguedad desc',limit=1)
+if line:
+    prima_vac = line.prima_vac/100
+    total = contract.sueldo_diario*worked_days.VAC.number_of_days*prima_vac
+else:
+    total = 0
+
+    monto_exento = 15 * contract.tablas_cfdi_id.uma
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt;=',antiguedad)],order='antiguedad desc',limit=1)
+if line:
+    dias_vacaciones = line.vacaciones
+
+    monto_max = monto_exento / dias_vacaciones * worked_days.VAC.number_of_days
+if total > monto_max:
+    result = monto_max
+else:
+    result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO20" model="hr.salary.rule">
+<field name="name">Prima vacacional completo exento</field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO20</field>
+<field name="sequence" eval="120"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.PVC:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if contract.antiguedad_anos &lt;1:
+    antiguedad = 1
+else:
+    antiguedad = contract.antiguedad_anos
+
+if worked_days.PVC:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt;=',antiguedad)],order='antiguedad desc',limit=1)
+if line:
+    prima_vac = line.prima_vac/100
+    total = contract.sueldo_diario*worked_days.PVC.number_of_days
+else:
+    total = 0
+
+monto_exento =  contract.tablas_cfdi_id.uma * 15
+
+if total > monto_exento:
+    result =  monto_exento
+else:
+    result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO20" model="hr.salary.rule">
+<field name="name">Prima vacacional liquidación exento</field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO20</field>
+<field name="sequence" eval="120"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.VAC:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if contract.antiguedad_anos &lt;1:
+    antiguedad = 1
+else:
+    antiguedad = contract.antiguedad_anos
+
+if worked_days.VAC:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt;=',antiguedad)],order='antiguedad desc',limit=1)
+if line:
+    prima_vac = line.prima_vac/100
+    total = contract.sueldo_diario*worked_days.VAC.number_of_days*prima_vac
+else:
+    total = 0
+
+    monto_exento =  contract.tablas_cfdi_id.uma * 15
+
+if total > monto_exento:
+    result =  monto_exento
+else:
+    result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO21" model="hr.salary.rule">
+<field name="name">Prima vacacional Gravado</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">PO21</field>
+<field name="sequence" eval="121"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.VAC  and contract.tipo_prima_vacacional == '02':
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+ total = 0
+ dias_vacaciones = 0
+if contract.antiguedad_anos &lt;1:
+    antiguedad = 1
+else:
+    antiguedad = contract.antiguedad_anos
+
+if worked_days.VAC:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt;=',antiguedad)],order='antiguedad desc',limit=1)
+if line:
+    prima_vac = line.prima_vac/100
+    total = contract.sueldo_diario*worked_days.VAC.number_of_days*prima_vac
+else:
+    total = 0
+
+monto_exento = 15 * contract.tablas_cfdi_id.uma
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt;=',antiguedad)],order='antiguedad desc',limit=1)
+if line:
+    dias_vacaciones = line.vacaciones
+
+    monto_max = monto_exento / dias_vacaciones * worked_days.VAC.number_of_days
+if total > monto_max:
+    result = total - monto_max
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO21" model="hr.salary.rule">
+<field name="name">Prima vacacional Completo Gravado</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">PO21</field>
+<field name="sequence" eval="121"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.PVC:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if contract.antiguedad_anos &lt;1:
+    antiguedad = 1
+else:
+    antiguedad = contract.antiguedad_anos
+
+if worked_days.PVC:
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt;=',antiguedad)],order='antiguedad desc',limit=1)
+if line:
+    prima_vac = line.prima_vac/100
+    total = contract.sueldo_diario*worked_days.PVC.number_of_days
+else:
+    total = 0
+
+monto_exento =  contract.tablas_cfdi_id.uma * 15
+
+if total > monto_exento:
+    result =  total - monto_exento
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO21" model="hr.salary.rule">
+<field name="name">Prima vacacional Liquidacion Gravado</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">PO21</field>
+<field name="sequence" eval="121"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.VAC:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if contract.antiguedad_anos &lt;1:
+    antiguedad = 1
+else:
+    antiguedad = contract.antiguedad_anos
+
+if worked_days.VAC:
+ #  result = int(round(contract.sueldo_diario*worked_days.VAC.number_of_days*0.25))
+    line = contract.env['tablas.antiguedades.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('antiguedad','&lt;=',antiguedad)],order='antiguedad desc',limit=1)
+if line:
+    prima_vac = line.prima_vac/100
+    total = contract.sueldo_diario*worked_days.VAC.number_of_days*prima_vac
+else:
+    total = 0
+
+    monto_exento =  contract.tablas_cfdi_id.uma * 15
+
+if total > monto_exento:
+    result =  total - monto_exento
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO22" model="hr.salary.rule">
+<field name="name">Prima vacacional</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO21</field>
+<field name="sequence" eval="122"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.VAC  and contract.tipo_prima_vacacional == '02':
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P020 + P021
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO22" model="hr.salary.rule">
+<field name="name">Prima vacacional</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO22</field>
+<field name="sequence" eval="122"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.VAC  and contract.tipo_prima_vacacional == '02':
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P020 + P021
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO22" model="hr.salary.rule">
+<field name="name">Prima vacacional liquidación</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO22</field>
+<field name="sequence" eval="122"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.PVC:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P020 + P021
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO22" model="hr.salary.rule">
+<field name="name">Prima vacacional completo</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO22</field>
+<field name="sequence" eval="122"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.PVC:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P020 + P021
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="TPERE" model="hr.salary.rule">
+<field name="name">Total Percepcion Exento</field>
+<field name="category_id" ref="om_hr_payroll.GROSS"/>
+<field name="code">TPERE</field>
+<field name="sequence" eval="197"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = categories.ALW2
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="TPERG" model="hr.salary.rule">
+<field name="name">Total Percepciones Grabadas</field>
+<field name="category_id" ref="om_hr_payroll.GROSS"/>
+<field name="code">TPERG</field>
+<field name="sequence" eval="198"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = categories.ALW + categories.BASIC - categories.ALW2
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="TPER" model="hr.salary.rule">
+<field name="name">Total Percepciones</field>
+<field name="category_id" ref="om_hr_payroll.GROSS"/>
+<field name="code">TPER</field>
+<field name="sequence" eval="199"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = TPERG+ TPERE
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="TOP" model="hr.salary.rule">
+<field name="name">Total Otros Pagos</field>
+<field name="category_id" ref="om_hr_payroll.GROSS"/>
+<field name="code">TOP</field>
+<field name="sequence" eval="299"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">none</field>
+
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = categories.ALW3
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="SUB" model="hr.salary.rule">
+<field name="name">Subsidio al empleo Aplicado quincenal</field>
+<field name="category_id" ref="AUX"/>
+<field name="code">SUB</field>
+<field name="sequence" eval="399"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+#grabado_mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    grabado_mensual = TPERG + payslip.acum_per_grav
+else:
+    grabado_mensual = TPERG  / payslip.dias_pagar * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+if subsidio_empleo &lt;= 0:
+    result = 0
+else:
+    result =  1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+grabado_mensual = 0
+dias_laborados = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+#grabado_mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    grabado_mensual = TPERG + payslip.acum_per_grav
+else:
+    grabado_mensual = TPERG  / payslip.dias_pagar * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line:
+    limite_inferior = line.lim_inf
+    cuota_fija = line.c_fija
+    porcentaje_sobre_excedente = line.s_excedente
+    line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+if line2:
+    subsidio_empleo = line2.s_mensual
+
+#articulo 113
+    excedente_limite_superior = grabado_mensual - limite_inferior
+    impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+    isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    if subsidio_empleo > 0:
+        subsidio_pagado = isr_tarifa_113 - abs(payslip.acum_isr_antes_subem) - subsidio_empleo
+        total =  isr_tarifa_113 - abs(payslip.acum_isr_antes_subem)
+    else:
+        subsidio_pagado = isr_tarifa_113 - abs(payslip.acum_isr) - subsidio_empleo
+        total =  isr_tarifa_113 - abs(payslip.acum_isr)
+        total2 = subsidio_pagado  - payslip.acum_subsidio_aplicado
+else:
+    subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+    total =  (isr_tarifa_113 / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar # dias_laborados
+    total2 = (subsidio_pagado / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #dias_laborados
+
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    result =  int(round(subsidio_empleo - abs(payslip.acum_subsidio_aplicado)))
+else:
+    result =  int(round((subsidio_empleo / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar)) #*  dias_laborados ))
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="SUB" model="hr.salary.rule">
+<field name="name">Subsido al Empleo aplicado PTU</field>
+<field name="category_id" ref="AUX"/>
+<field name="code">SUB</field>
+<field name="sequence" eval="300"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+
+grabado_mensual = TPERG
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line:
+        limite_inferior = line.lim_inf
+        cuota_fija = line.c_fija
+        porcentaje_sobre_excedente = line.s_excedente
+        line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line2:
+        subsidio_empleo = line2.s_mensual
+
+if subsidio_empleo &lt;= 0:
+    result = 0>1
+else:
+    result =  1>0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+
+grabado_mensual = TPERG
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line:
+        limite_inferior = line.lim_inf
+        cuota_fija = line.c_fija
+        porcentaje_sobre_excedente = line.s_excedente
+        line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line2:
+        subsidio_empleo = line2.s_mensual
+
+#articulo 113
+excedente_limite_superior = grabado_mensual - limite_inferior
+impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+subsidio_pagado = isr_tarifa_113 - subsidio_empleo
+total = isr_tarifa_113
+total2 =  subsidio_pagado
+if subsidio_pagado &lt;0:
+    result = abs(total) + abs(total2)
+else:
+    result =  (subsidio_empleo / contract.tablas_cfdi_id.imss_mes)
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO25" model="hr.salary.rule">
+<field name="name">Reparto de utilidades</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO25</field>
+<field name="sequence" eval="125"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PTU:
+    if inputs.PTU.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.PTU:
+    result = int(round(inputs.PTU.amount))
+else:
+    result =0
+
+#result = contract.tablas_cfdi_id.factor_dias * employee.dias_utilidad + contract.tablas_cfdi_id.factor_sueldo * employee.sueldo_utilidad
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO26" model="hr.salary.rule">
+<field name="name">Indemnización exenta</field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO26</field>
+<field name="sequence" eval="126"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.IND:
+    result =  1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+if inputs.IND:
+    total = inputs.IND.amount
+if inputs.PPS:
+    total = total + inputs.PPS.amount
+if inputs.PDA:
+    total = total + inputs.PDA.amount
+
+if contract.antiguedad_anos &lt;1:
+    antiguedad_anos = 1
+else:
+    antiguedad_anos = contract.antiguedad_anos
+
+monto_exento = contract.tablas_cfdi_id.uma * antiguedad_anos * 90
+
+if total > monto_exento:
+    result = round(monto_exento * (inputs.IND.amount / total),2)
+else:
+    result = inputs.IND.amount
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO27" model="hr.salary.rule">
+<field name="name">Indemnización Gravada</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">PO27</field>
+<field name="sequence" eval="127"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.IND:
+    result =  1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+if inputs.IND:
+    total = inputs.IND.amount
+if inputs.PPS:
+    total = total + inputs.PPS.amount
+if inputs.PDA:
+    total = total + inputs.PDA.amount
+
+if contract.antiguedad_anos &lt;1:
+    antiguedad_anos = 1
+else:
+    antiguedad_anos = contract.antiguedad_anos
+
+monto_exento = contract.tablas_cfdi_id.uma * antiguedad_anos * 90
+
+if total > monto_exento:
+    result = round(inputs.IND.amount - monto_exento * (inputs.IND.amount / total),2)
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO28" model="hr.salary.rule">
+<field name="name">Indemnización </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO28</field>
+<field name="sequence" eval="128"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.IND:
+    result =  1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P026 + P027
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO30" model="hr.salary.rule">
+<field name="name">Pagos por Separacion Exenta </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO30</field>
+<field name="sequence" eval="130"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PPS:
+    result =  1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+if inputs.IND:
+    total = inputs.IND.amount
+if inputs.PPS:
+    total = total + inputs.PPS.amount
+if inputs.PDA:
+    total = total + inputs.PDA.amount
+
+monto_exento = contract.tablas_cfdi_id.uma * contract.antiguedad_anos * 90
+
+if total > monto_exento:
+    result = round(monto_exento * (inputs.PPS.amount / total),2)
+else:
+    result = inputs.PPS.amount
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO30" model="hr.salary.rule">
+<field name="name">Vales de despensa Gravado </field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">PO30</field>
+<field name="sequence" eval="130"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.vale_despensa:
+    result = 1
+else:
+    if inputs.DESP:
+        if inputs.DESP.amount > 0:
+            result = 1
+        else:
+            result = 0
+    else:
+        result = 0
+
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+dias_laborados = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+
+if inputs.DESP:
+    if inputs.DESP.amount > 0:
+        total = inputs.DESP.amount
+    else:
+        total = contract.tablas_cfdi_id.uma *.40 * dias_laborados
+
+monto_exento = 0.40 * contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+if total > monto_exento:
+    result = total - monto_exento
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO30" model="hr.salary.rule">
+<field name="name">Bono </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO30</field>
+<field name="sequence" eval="133"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.BONO:
+    if inputs.BONO.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.BONO:
+    result = inputs.BONO.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO31" model="hr.salary.rule">
+<field name="name">Vale de Despensa Exento </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO31</field>
+<field name="sequence" eval="131"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.vale_despensa:
+    result = 1
+else:
+    if inputs.DESP:
+        if inputs.DESP.amount > 0:
+            result = 1
+        else:
+            result = 0
+    else:
+        result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+dias_laborados = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+
+if inputs.DESP:
+    if inputs.DESP.amount > 0:
+        total = inputs.DESP.amount
+    else:
+        total = contract.tablas_cfdi_id.uma *.40 * dias_laborados
+
+monto_exento = 0.40 * contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+if total > monto_exento:
+    result = monto_exento
+else:
+    result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO31" model="hr.salary.rule">
+<field name="name">Pagos por Separación Gravado</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">PO31</field>
+<field name="sequence" eval="131"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PPS:
+    result =  1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+if inputs.IND:
+    total = inputs.IND.amount
+if inputs.PPS:
+    total = total + inputs.PPS.amount
+if inputs.PDA:
+    total = total + inputs.PDA.amount
+
+monto_exento = contract.tablas_cfdi_id.uma * contract.antiguedad_anos * 90
+
+if total > monto_exento:
+    result = round(inputs.PPS.amount - monto_exento * (inputs.PPS.amount / total),2)
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO31" model="hr.salary.rule">
+<field name="name">Pago Fondo ahorro (anual)</field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO31</field>
+<field name="sequence" eval="131"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PFA:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+monto_exento = 1.3 * contract.tablas_cfdi_id.uma * 365
+
+if inputs.PFA:
+    if inputs.PFA.amount &lt; monto_exento:
+        result = inputs.PFA.amount
+    else:
+        result = monto_exento
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO32" model="hr.salary.rule">
+<field name="name">Pago Fondo ahorro (anual)</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">PO32</field>
+<field name="sequence" eval="132"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PFA:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+monto_exento = 1.3 * contract.tablas_cfdi_id.uma * 365
+
+if inputs.PFA:
+    if inputs.PFA.amount &lt; monto_exento:
+        result = 0
+    else:
+        result = inputs.PFA.amount - monto_exento
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P133" model="hr.salary.rule">
+<field name="name">Pago Fondo ahorro (anual)</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P133</field>
+<field name="sequence" eval="133"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PFA:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P131 + P132
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO31" model="hr.salary.rule">
+<field name="name">Pago Fondo ahorro </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO31</field>
+<field name="sequence" eval="131"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PFA:
+    result = 1 > 0
+else:
+    result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.PFA:
+    result = inputs.PFA.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO32" model="hr.salary.rule">
+<field name="name">Pago Fondo ahorro </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO32</field>
+<field name="sequence" eval="132"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.vale_despensa:
+    result = 1
+else:
+    if inputs.DESP:
+        if inputs.DESP.amount > 0:
+            result = 1
+        else:
+            result = 0
+    else:
+        result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P031 + P030
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO32" model="hr.salary.rule">
+<field name="name">Pagos por Separación </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO32</field>
+<field name="sequence" eval="132"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PPS:
+    result =  1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P030 + P031
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO30" model="hr.salary.rule">
+<field name="name">Pagos por Separación exento </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO3o</field>
+<field name="sequence" eval="130"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PPS:
+    result =  1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+if inputs.IND:
+    total = inputs.IND.amount
+if inputs.PPS:
+    total = total + inputs.PPS.amount
+if inputs.PDA:
+    total = total + inputs.PDA.amount
+
+monto_exento = contract.tablas_cfdi_id.uma * contract.antiguedad_anos * 90
+
+if total > monto_exento:
+    result = round(monto_exento * (inputs.PPS.amount / total),2)
+else:
+    result = inputs.PPS.amount
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO35" model="hr.salary.rule">
+<field name="name">Prima de antiguedad exento </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">PO35</field>
+<field name="sequence" eval="135"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PDA:
+    result =  1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+if inputs.IND:
+    total = inputs.IND.amount
+if inputs.PPS:
+    total = total + inputs.PPS.amount
+if inputs.PDA:
+    total = total + inputs.PDA.amount
+
+if contract.antiguedad_anos &lt;1:
+    antiguedad_anos = 1
+else:
+    antiguedad_anos = contract.antiguedad_anos
+
+monto_exento = contract.tablas_cfdi_id.uma * antiguedad_anos * 90
+
+if total > monto_exento:
+    result = round(monto_exento * (inputs.PDA.amount / total),2)
+else:
+    result = inputs.PDA.amount
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO36" model="hr.salary.rule">
+<field name="name">Prima de antiguedad Gravado </field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">PO36</field>
+<field name="sequence" eval="136"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PDA:
+    result =  1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+if inputs.IND:
+    total = inputs.IND.amount
+if inputs.PPS:
+    total = total + inputs.PPS.amount
+if inputs.PDA:
+    total = total + inputs.PDA.amount
+
+if contract.antiguedad_anos &lt;1:
+    antiguedad_anos = 1
+else:
+    antiguedad_anos = contract.antiguedad_anos
+
+monto_exento = contract.tablas_cfdi_id.uma * antiguedad_anos * 90
+
+if total > monto_exento:
+    result = round(inputs.PDA.amount - monto_exento * (inputs.PDA.amount / total),2)
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO37" model="hr.salary.rule">
+<field name="name">Prima de antiguedad Gravado </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO37</field>
+<field name="sequence" eval="137"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PDA:
+    result =  1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P035 + P036
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PO70" model="hr.salary.rule">
+<field name="name">Pagos Adicionales</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">PO70</field>
+<field name="sequence" eval="170"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PAD:
+    if inputs.PAD.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 >
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.PAD:
+    result = inputs.PAD.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P128" model="hr.salary.rule">
+<field name="name">Fondo ahorro empresa exento</field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">P128</field>
+<field name="sequence" eval="128"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.WORK100 and contract.fondo_ahorro:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = P001 * .3
+monto_exencion = 1.30 * contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+if total > monto_exencion:
+    result = monto_exencion
+else:
+    result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P129" model="hr.salary.rule">
+<field name="name">Fondo ahorro empresa gravado</field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">P129</field>
+<field name="sequence" eval="129"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.WORK100 and contract.fondo_ahorro:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = P001 * .3
+monto_exencion = 1.30 * contract.tablas_cfdi_id.uma * contract.tablas_cfdi_id.imss_mes
+if total > monto_exencion:
+    result = monto_exencion
+else:
+    result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P130" model="hr.salary.rule">
+<field name="name">Fondo ahorro empresa </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P130</field>
+<field name="sequence" eval="130"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.WORK100 and contract.fondo_ahorro:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P129 + P128
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P140" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">P140</field>
+<field name="sequence" eval="140"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.HEX1:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+    result =  contract.sueldo_diario/8 * worked_days.HEX1.number_of_hours * 0.5
+else:
+    result =  contract.sueldo_diario/8 * worked_days.HEX1.number_of_hours
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P141" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">P141</field>
+<field name="sequence" eval="141"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.HEX1:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+    result =  contract.sueldo_diario/8 * worked_days.HEX1.number_of_hours * 0.5
+else:
+    result =  0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P146" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">P146</field>
+<field name="sequence" eval="146"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.HEX3:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+    result =  contract.sueldo_diario/8 * worked_days.HEX3.number_of_hours * 0.5 *3
+else:
+    result =  contract.sueldo_diario/8 * worked_days.HEX3.number_of_hours *3
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P147" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">P147</field>
+<field name="sequence" eval="147"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.HEX3:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+    result =  contract.sueldo_diario/8 * worked_days.HEX3.number_of_hours * 0.5 * 3
+else:
+    result =  0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P147" model="hr.salary.rule">
+<field name="name">Fondo Ahorro Liquidacion </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P198</field>
+<field name="sequence" eval="198"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+result = employee.fondo_ahorro > 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = int(round(employee.fondo_ahorro))
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P156" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">P156</field>
+<field name="sequence" eval="156"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.percepcion_adicional and payslip.no_nomina == '2':
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = contract.percepcion_adicional_amount
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P156" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">P156</field>
+<field name="sequence" eval="156"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.percepcion_adicional and payslip.no_nomina == '2':
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+    result = contract.percepcion_adicional_amount
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P158" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">P158</field>
+<field name="sequence" eval="158"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.TEXT:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+monto_exento = 0
+horas_exentas = 0
+horas_extras = 0
+monto_total = 0
+monto_max_exento = 0
+
+if contract.periodicidad_pago == '02':
+    horas_exentas = 9
+if contract.periodicidad_pago == '04':
+    horas_exentas = 19.28
+
+monto_max_exento =  contract.sueldo_diario/8 * horas_exentas * 2
+
+#si supera el monto exento maximo
+if inputs.TEXT.amount > monto_max_exento:
+    monto_exento = monto_max_exento
+    monto_total = inputs.TEXT.amount - monto_max_exento
+else:
+    monto_exento = inputs.TEXT.amount
+    monto_total = inputs.TEXT.amount
+
+#revisar si el trabajador gana mas de un salario mínimo
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+    monto_exento =  monto_exento * 0.5
+
+#revisar que lo exento no supere 5 SM
+if monto_exento > (5 *contract.tablas_cfdi_id.salario_minimo):
+    monto_exento =  5 *contract.tablas_cfdi_id.salario_minimo
+
+result = monto_exento
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P158" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P158</field>
+<field name="sequence" eval="158"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if contract.percepcion_adicional and payslip.no_nomina == '2':
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result =  P156
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P159" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">P158</field>
+<field name="sequence" eval="159"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.TEXT:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+monto_exento = 0
+horas_exentas = 0
+horas_extras = 0
+monto_total = 0
+
+if contract.periodicidad_pago == '02':
+    horas_exentas = 9
+if contract.periodicidad_pago == '04':
+    horas_exentas = 19.28
+
+monto_max_exento =  contract.sueldo_diario/8 * horas_exentas * 2
+
+#si supera el monto exento maximo
+if inputs.TEXT.amount > monto_max_exento:
+    monto_exento = monto_max_exento
+    #monto_total = inputs.TEXT.amount - monto_max_exento
+else:
+    monto_exento = inputs.TEXT.amount
+    #monto_total = inputs.TEXT.amount
+
+#revisar si el trabajador gana mas de un salario mínimo
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+    monto_exento =  monto_exento * 0.5
+
+#revisar que lo exento no supere 5 SM
+if monto_exento > (5 *contract.tablas_cfdi_id.salario_minimo):
+    monto_exento =  5 *contract.tablas_cfdi_id.salario_minimo
+
+result = inputs.TEXT.amount - monto_exento
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P160" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P160</field>
+<field name="sequence" eval="160"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.TEXT:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = P158 + P159
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P160" model="hr.salary.rule">
+<field name="name">Pensión </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P160</field>
+<field name="sequence" eval="160"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.TEXT:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = inputs.TEXT.amount
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P143" model="hr.salary.rule">
+<field name="name">Hora extra doble exento </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">P143</field>
+<field name="sequence" eval="143"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.HEX2:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+monto_exento = 0
+horas_exentas = 0
+monto_total = 0
+
+if contract.periodicidad_pago == '02':
+    horas_exentas = 9
+if contract.periodicidad_pago == '04':
+    horas_exentas = 19.28
+
+#revisar si supera el número de horas laboradas
+if worked_days.HEX2.number_of_hours > horas_exentas:
+    monto_exento = horas_exentas *  contract.sueldo_diario/8 * 2
+    monto_total = horas_exentas *  contract.sueldo_diario/8 * 2 + (worked_days.HEX2.number_of_hours - horas_exentas) * contract.sueldo_diario/8 * 3
+else:
+    monto_exento = worked_days.HEX2.number_of_hours *  contract.sueldo_diario/8 * 2
+    monto_total = worked_days.HEX2.number_of_hours *  contract.sueldo_diario/8 * 2
+
+#revisar si el trabajador gana mas de un salario mínimo
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+    monto_exento =  monto_exento * 0.5
+
+#revisar que lo exento no supere 5 SM
+if monto_exento > (5 *contract.tablas_cfdi_id.salario_minimo):
+    monto_exento =  5 *contract.tablas_cfdi_id.salario_minimo
+
+result = monto_exento
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P144" model="hr.salary.rule">
+<field name="name">Hora extra doble gravado </field>
+<field name="category_id" ref="ALW1"/>
+<field name="code">P144</field>
+<field name="sequence" eval="144"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.HEX2:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+monto_exento = 0
+horas_exentas = 0
+monto_total = 0
+
+if contract.periodicidad_pago == '02':
+    horas_exentas = 9
+if contract.periodicidad_pago == '04':
+    horas_exentas = 19.28
+
+#revisar si supera el número de horas laboradas
+if worked_days.HEX2.number_of_hours > horas_exentas:
+    monto_exento = horas_exentas *  contract.sueldo_diario/8 * 2
+    monto_total = horas_exentas *  contract.sueldo_diario/8 * 2 + (worked_days.HEX2.number_of_hours - horas_exentas) * contract.sueldo_diario/8 * 3
+else:
+    monto_exento = worked_days.HEX2.number_of_hours *  contract.sueldo_diario/8 * 2
+    monto_total = worked_days.HEX2.number_of_hours *  contract.sueldo_diario/8 * 2
+
+#revisar si el trabajador gana mas de un salario mínimo
+if contract.sueldo_diario > contract.tablas_cfdi_id.salario_minimo:
+    monto_exento =  monto_exento * 0.5
+
+#revisar que lo exento no supere 5 SM
+if monto_exento > (5 *contract.tablas_cfdi_id.salario_minimo):
+    monto_exento =  5 *contract.tablas_cfdi_id.salario_minimo
+
+result = monto_total - monto_exento
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P148" model="hr.salary.rule">
+<field name="name">Viaticos </field>
+<field name="category_id" ref="ALW2"/>
+<field name="code">P148</field>
+<field name="sequence" eval="148"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PVIAT:
+    if inputs.PVIAT.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.PVIAT:
+    result = inputs.PVIAT.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P148" model="hr.salary.rule">
+<field name="name">Viaticos </field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P148</field>
+<field name="sequence" eval="148"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.PVIAT:
+    if inputs.PVIAT.amount > 0:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+if inputs.PVIAT:
+    result = inputs.PVIAT.amount
+else:
+    result =0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="P149" model="hr.salary.rule">
+<field name="name">Día Feriado</field>
+<field name="category_id" ref="ALW"/>
+<field name="code">P149</field>
+<field name="sequence" eval="149"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if worked_days.DFES or worked_days.DFES_3:
+    result = 1
+else:
+    result = 0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+total = 0
+if worked_days.DFES:
+   total = contract.sueldo_diario*worked_days.DFES.number_of_days * 2
+if worked_days.DFES_3:
+   total = total + contract.sueldo_diario*worked_days.DFES_3.number_of_days * 3
+
+result = total
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PQ039" model="hr.salary.rule">
+<field name="name">Subsidio para el empleo (sp)</field>
+<field name="category_id" ref="ALW3"/>
+<field name="code">PQ039</field>
+<field name="sequence" eval="239"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+#grabado_mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    grabado_mensual = TPERG + payslip.acum_per_grav
+else:
+    grabado_mensual = TPERG  / payslip.dias_pagar * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line:
+        limite_inferior = line.lim_inf
+        cuota_fija = line.c_fija
+        porcentaje_sobre_excedente = line.s_excedente
+     line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line2:
+        subsidio_empleo = line2.s_mensual
+
+if subsidio_empleo &lt;= 0:
+    result = 0
+else:
+    result =  1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+
+#dias laborados
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+#grabado_mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    grabado_mensual = TPERG + payslip.acum_per_grav
+else:
+    grabado_mensual = TPERG  / payslip.dias_pagar * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line:
+        limite_inferior = line.lim_inf
+        cuota_fija = line.c_fija
+        porcentaje_sobre_excedente = line.s_excedente
+        line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line2:
+        subsidio_empleo = line2.s_mensual
+
+#articulo 113
+excedente_limite_superior = grabado_mensual - limite_inferior
+impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    if subsidio_empleo > 0:
+        subsidio_entregado =  isr_tarifa_113 - abs(payslip.acum_isr_antes_subem)  - subsidio_empleo + abs(payslip.acum_subsidio_aplicado)
+    else:
+        subsidio_entregado =  isr_tarifa_113 - abs(payslip.acum_isr_antes_subem)  - subsidio_empleo + abs(payslip.acum_isr)
+        total =  isr_tarifa_113
+        total2 = subsidio_entregado
+else:
+    subsidio_entregado = isr_tarifa_113 - subsidio_empleo
+    total =  (isr_tarifa_113 / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #* dias_laborados
+    total2 = (subsidio_entregado / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #*dias_laborados
+
+if subsidio_empleo > 0:
+    if subsidio_entregado &lt;0:
+        result = abs(total2)
+    else:
+        result = 0
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PQ039" model="hr.salary.rule">
+<field name="name">Subsidio para el empleo (sp)</field>
+<field name="category_id" ref="ALW3"/>
+<field name="code">PQ039</field>
+<field name="sequence" eval="239"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+
+grabado_mensual = TPERG
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line:
+        limite_inferior = line.lim_inf
+        cuota_fija = line.c_fija
+        porcentaje_sobre_excedente = line.s_excedente
+        line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line2:
+        subsidio_empleo = line2.s_mensual
+
+if subsidio_empleo &lt;= 0:
+    result = 0>1
+else:
+    result =  1>0
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+
+grabado_mensual = TPERG
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line:
+        limite_inferior = line.lim_inf
+        cuota_fija = line.c_fija
+        porcentaje_sobre_excedente = line.s_excedente
+        line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line2:
+        subsidio_empleo = line2.s_mensual
+
+#articulo 113
+excedente_limite_superior = grabado_mensual - limite_inferior
+impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+subsidio_entregado = isr_tarifa_113 - subsidio_empleo
+total =  (isr_tarifa_113)
+total2 = (subsidio_entregado)
+
+if subsidio_empleo > 0:
+    if subsidio_entregado &lt;0:
+        result = abs(total2)
+    else:
+        result = 0.01
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="PS039" model="hr.salary.rule">
+<field name="name">Subsidio para el empleo (sp)</field>
+<field name="category_id" ref="ALW3"/>
+<field name="code">PQS39</field>
+<field name="sequence" eval="239"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+dias_periodo_mes = 0
+dias_periodo = 0
+
+if contract.periodicidad_pago == '02' and payslip.isr_ajustar:
+    dias_periodo_mes = payslip.dias_periodo
+    dias_periodo = 7 * float(payslip.no_nomina)
+else:
+    dias_periodo_mes = contract.tablas_cfdi_id.imss_mes
+    dias_periodo = payslip.dias_pagar
+
+#grabado_mensual
+if float(payslip.no_nomina) > 1 and payslip.isr_ajustar:
+    grabado_mensual = (TPERG + payslip.acum_per_grav) / dias_periodo * dias_periodo_mes
+else:
+    grabado_mensual = TPERG  / dias_periodo * dias_periodo_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line:
+        limite_inferior = line.lim_inf
+        cuota_fija = line.c_fija
+        porcentaje_sobre_excedente = line.s_excedente
+        line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line2:
+        subsidio_empleo = line2.s_mensual
+
+if subsidio_empleo &lt;= 0:
+    result = 0
+else:
+    result =  1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+#leer tablas
+limite_inferior = 0
+cuota_fija = 0
+porcentaje_sobre_excedente = 0
+subsidio_empleo = 0
+dias_laborados = 0
+grabado_mensual = 0
+
+#dias laborados
+if worked_days.WORK100:
+    dias_laborados = worked_days.WORK100.number_of_days
+if worked_days.FJC:
+    dias_laborados = dias_laborados + worked_days.FJC.number_of_days
+if worked_days.VAC:
+    dias_laborados = dias_laborados + worked_days.VAC.number_of_days
+if worked_days.SEPT:
+    dias_laborados = dias_laborados + worked_days.SEPT.number_of_days
+
+#grabado_mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    grabado_mensual = TPERG + payslip.acum_per_grav
+else:
+    grabado_mensual = TPERG  / payslip.dias_pagar * contract.tablas_cfdi_id.imss_mes
+
+if contract.tablas_cfdi_id:
+    line = contract.env['tablas.general.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line:
+        limite_inferior = line.lim_inf
+        cuota_fija = line.c_fija
+        porcentaje_sobre_excedente = line.s_excedente
+        line2 = contract.env['tablas.subsidio.line'].search([('form_id','=',contract.tablas_cfdi_id.id),('lim_inf','&lt;=',grabado_mensual)],order='lim_inf desc',limit=1)
+    if line2:
+        subsidio_empleo = line2.s_mensual
+
+#articulo 113
+excedente_limite_superior = grabado_mensual - limite_inferior
+impuesto_marginal = excedente_limite_superior * porcentaje_sobre_excedente/100
+isr_tarifa_113 = impuesto_marginal + cuota_fija
+
+#subsidio mensual
+if payslip.no_nomina == '2' and payslip.isr_ajustar:
+    if subsidio_empleo > 0:
+        subsidio_entregado =  isr_tarifa_113 - abs(payslip.acum_isr_antes_subem)  - subsidio_empleo + abs(payslip.acum_subsidio_aplicado)
+    else:
+        subsidio_entregado =  isr_tarifa_113 - abs(payslip.acum_isr_antes_subem)  - subsidio_empleo + abs(payslip.acum_isr)
+        total =  isr_tarifa_113
+        total2 = subsidio_entregado
+else:
+    subsidio_entregado = isr_tarifa_113 - subsidio_empleo
+    total =  (isr_tarifa_113 / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #* dias_laborados
+    total2 = (subsidio_entregado / contract.tablas_cfdi_id.imss_mes) * payslip.dias_pagar #*dias_laborados
+
+if subsidio_empleo > 0:
+    if subsidio_entregado &lt;0:
+        #result = abs(total2)
+        result = int(round(total2,1))
+        result = abs (result)
+    else:
+        result = 0
+else:
+    result = 0
+</field>
+<field name="forma_pago">001</field>
+</record>
+
+<record id="REISR" model="hr.salary.rule">
+<field name="name">Reintegro de ISR Ret</field>
+<field name="category_id" ref="om_hr_payroll.DED"/>
+<field name="code">REISR</field>
+<field name="sequence" eval="358"/>
+<field name="active" eval="True"/>
+<field name="appears_on_payslip" eval="True"/>
+<field name="condition_select">python</field>
+<field name="condition_python">
+if inputs.REISR:
+    if inputs.REISR.amount:
+        result = 1 > 0
+    else:
+        result = 0 > 1
+</field>
+<field name="amount_select">code</field>
+<field name="amount_python_compute">
+result = inputs.REISR.amount
+</field>
+<field name="forma_pago">001</field>
+</record>
+</odoo>
+

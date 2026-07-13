@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="hr_payslip_run_inherit_form">
+        <field name="name">hr.payslip.run.form.inherit</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="om_hr_payroll.hr_payslip_run_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='export_report_xlsx_button']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="export_report_xlsx_1" type="object" string="Listado de nómina (Excel)"/>
+            </xpath>
+               <xpath expr="//button[@name='close_payslip_run']" position="attributes">
+                <attribute name="states">draft,done</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="hr_payslip_run_inherit_form_kuh7">
+        <field name="name">hr.payslip.run.form.inherit.kuh7</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="nomina_cfdi_ee.hr_payslip_run_form_nomina_cfdi"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='concepto_periodico']" position="after">
+                <field name="first_payslip_month" />
+                <field name="pay_pantry_vouchers" invisible="1" />
+            </xpath>
+             <xpath expr="//button[@name='timbrar_nomina']" position="after">
+                <button string="Confirmar Todas" name="confirmar_todas" type="object" class="oe_highlight" states="draft"/>
+                <button string="Reversar Todas" name="reversar_todas" type="object" class="oe_highlight" states="done"/>
+            </xpath>
+            <xpath expr="//field[@name='no_periodo']" position="after">
+                    <field name="company_id" required="1"/>
+                </xpath>
+               
+        </field>
+    </record>
+
+    <record id="hr_payslip_run_tree_inherit_om_hr_payroll_kuh7" model="ir.ui.view">
+            <field name="name">hr.payslip.run.tree.inherit.om.hr.payroll.kuh7</field>
+            <field name="model">hr.payslip.run</field>
+            <field name="inherit_id" ref="om_hr_payroll.hr_payslip_run_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="company_id"/>
+                </xpath>
+            </field>
+    </record>
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="paperformat_a4_landscape" model="report.paperformat">
+            <field name="name">A4 Landscape Payslip Batch 1.1</field>
+            <field name="default" eval="True" />
+            <field name="format">Letter</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+        <template id="report_antiquity_gral">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-12 text-center mb-3">
+                                <h4><b>REPORTE DE ANTIGÜEDAD DEL PERSONAL</b></h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th># Empleado</th>
+                                            <th>Nombre</th>
+                                            <th>Departamento</th>
+                                            <th>Alta</th>
+                                            <th>Antigüedad</th>
+                                            <th>Saldos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="docs" t-as="o">
+                                            <tr t-foreach="o.employee_id" t-as="table_employee">
+                                                <td><span t-field="table_employee.no_empleado" /></td>
+                                                <td><span t-field="table_employee.name" /></td>
+                                                <td><span t-field="table_employee.department_id.name" /></td>
+                                                <td><span t-field="o.date_start"/></td>
+                                                <t t-set="date_init" t-value="o.date_start"></t>
+                                                <td><t t-esc="o._difference_date(date_init)"/></td>
+                                                <t t-set="total_vac" t-value="0" />
+                                                <t t-foreach="o.tabla_vacaciones" t-as="tb_vac">
+                                                    <t t-set="total_vac" t-value="total_vac + tb_vac.dias" />
+                                                </t>
+                                                <td><t t-esc="total_vac"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+        <report string="Reporte de antiguedad"
+                id="report_print_use_vacations"
+                model="hr.contract"
+                report_type="qweb-pdf"
+                name="complementos_nomina.report_antiquity_gral"
+                paperformat="complementos_nomina.paperformat_a4_landscape"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,338 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_mx_account_tree
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-02 17:40+0000\n"
+"PO-Revision-Date: 2017-01-02 11:42-0600\n"
+"Last-Translator: Israel Cruz Argil <israel.cruz@argil.mx>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_MX\n"
+"X-Generator: Poedit 1.8.11\n"
+
+#. module: l10n_mx_account_tree
+#: code:addons/l10n_mx_account_tree/model/metodos.py:231
+#, python-format
+msgid " - Fiscal Year: "
+msgstr " - Año Fiscal: "
+
+#. module: l10n_mx_account_tree
+#: code:addons/l10n_mx_account_tree/model/metodos.py:231
+#, python-format
+msgid " - From: "
+msgstr " - De: "
+
+#. module: l10n_mx_account_tree
+#: code:addons/l10n_mx_account_tree/model/metodos.py:257
+#, python-format
+msgid " To "
+msgstr " Hasta "
+
+#. module: l10n_mx_account_tree
+#: code:addons/l10n_mx_account_tree/model/metodos.py:231
+#, python-format
+msgid " To: "
+msgstr " Hasta: "
+
+#. module: l10n_mx_account_tree
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_chart_argil
+msgid "(If you do not select Fiscal year it will take all open fiscal years)"
+msgstr "(Si no selecciona un Año Fiscal tomará todos los Años Fiscales existentes)"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model,name:l10n_mx_account_tree.model_account_account
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: l10n_mx_account_tree
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_analytic_chart_argil
+msgid "Account Analytic Charts"
+msgstr "Arbol de Cuentas Analíticas"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model,name:l10n_mx_account_tree.model_account_analytic_chart_argil
+msgid "Account Chart Of Analytics Argil"
+msgstr "Arbol de Cuentas Analíticas Ext"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model,name:l10n_mx_account_tree.model_account_account_type
+msgid "Account Type"
+msgstr "Tipo de Cuenta"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model,name:l10n_mx_account_tree.model_account_chart_argil
+msgid "Account chart special"
+msgstr "Catálogo Contable (Esp)"
+
+#. module: l10n_mx_account_tree
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_chart_argil
+msgid "Account charts"
+msgstr "Catálogo Contable"
+
+#. module: l10n_mx_account_tree
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_tree_argil
+msgid "Accumulated Balance"
+msgstr "Saldo acumulado"
+
+#. module: l10n_mx_account_tree
+#: selection:account.chart_argil,target_move:0
+msgid "All Entries"
+msgstr "Todas las Partidas"
+
+#. module: l10n_mx_account_tree
+#: selection:account.chart_argil,target_move:0
+msgid "All Posted Entries"
+msgstr "Todas las Partidas Asentadas"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model,name:l10n_mx_account_tree.model_account_analytic_account
+msgid "Analytic Account"
+msgstr "Cuenta analítica"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_balance
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_account_argil_balance
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_argil_balance_all
+msgid "Balance All"
+msgstr "Saldo Final Acumulado"
+
+#. module: l10n_mx_account_tree
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_analytic_chart_argil
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_chart_argil
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_account_tree
+#: model:ir.actions.act_window,name:l10n_mx_account_tree.action_account_chart_argil
+#: model:ir.actions.act_window,name:l10n_mx_account_tree.action_account_tree_argil
+#: model:ir.ui.menu,name:l10n_mx_account_tree.menu_action_account_tree2_argil
+#: model:ir.ui.menu,name:l10n_mx_account_tree.menu_mx_reports2
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_tree_argil
+msgid "Chart of Accounts"
+msgstr "Plan de Cuentas Ext."
+
+#. module: l10n_mx_account_tree
+#: model:ir.actions.act_window,name:l10n_mx_account_tree.action_analytic_tree_argil
+msgid "Chart of Analytic Accounts"
+msgstr "Plan de Cuentas Analíticas Ext."
+
+#. module: l10n_mx_account_tree
+#: model:ir.actions.act_window,name:l10n_mx_account_tree.action_analytic_chart_argil
+#: model:ir.ui.menu,name:l10n_mx_account_tree.menu_action_analytic_tree2_argil
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_analytic_tree_argil
+msgid "Chart of Analytics"
+msgstr "Cuentas Analíticas"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_child_id
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_account_child_id
+msgid "Child Accounts"
+msgstr "Cuentas hijas"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_child_parent_ids
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_account_child_parent_ids
+msgid "Children"
+msgstr "Hijos"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_child_consol_ids
+msgid "Consolidated Children"
+msgstr "Hijos Consolidados"
+
+#. module: l10n_mx_account_tree
+#: model:account.account.type,name:l10n_mx_account_tree.data_account_type_consolidation
+msgid "Consolidation"
+msgstr "Consolidación"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_chart_argil_create_uid
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_chart_argil_create_date
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil_create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_credit
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_account_argil_credit
+msgid "Credit"
+msgstr "Haber"
+
+#. module: l10n_mx_account_tree
+#: selection:account.account,sign:0
+msgid "Creditable"
+msgstr "Acreedora"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_debit
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_account_argil_debit
+msgid "Debit"
+msgstr "Debe"
+
+#. module: l10n_mx_account_tree
+#: selection:account.account,sign:0
+msgid "Debitable"
+msgstr "Deudora"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_partner_breakdown
+msgid "Desglosar Empresas en Balanza"
+msgstr "Desglosar Empresas en Balanza"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,help:l10n_mx_account_tree.field_account_account_sign
+msgid "Determines sign to use in reports"
+msgstr "Signo a usar en reportes."
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_chart_argil_display_name
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil_display_name
+msgid "Display Name"
+msgstr "Nombre desplegado"
+
+#. module: l10n_mx_account_tree
+#: code:addons/l10n_mx_account_tree/model/account.py:127
+#, python-format
+msgid "Error ! You cannot create recursive accounts."
+msgstr "Error ! No puede crear cuentas recursivas"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_chart_argil_date_from
+msgid "From"
+msgstr "De"
+
+#. module: l10n_mx_account_tree
+#: code:addons/l10n_mx_account_tree/model/metodos.py:257
+#, python-format
+msgid "From: "
+msgstr "Hasta: "
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_chart_argil_id
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil_id
+msgid "ID"
+msgstr "ID"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_argil_initial_balance
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_tree_argil
+msgid "Initial Balance"
+msgstr "Saldo Inicial"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model,name:l10n_mx_account_tree.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_chart_argil___last_update
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil___last_update
+msgid "Last Modified on"
+msgstr "Ultima modificacion realizada"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_chart_argil_write_uid
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil_write_uid
+msgid "Last Updated by"
+msgstr "Ultima actualizacion por"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_chart_argil_write_date
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil_write_date
+msgid "Last Updated on"
+msgstr "Ultima actualización realizada"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_level
+msgid "Level"
+msgstr "Nivel"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_sign
+msgid "MX Report Sign"
+msgstr "Signo para Reportes MX"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil_target_move
+msgid "Movimientos a incluir"
+msgstr "Movimientos a incluir"
+
+#. module: l10n_mx_account_tree
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_analytic_chart_argil
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_chart_argil
+msgid "Open Charts"
+msgstr "Abrir Plan"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_account_parent_id
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_account_parent_id
+msgid "Parent"
+msgstr "Padre"
+
+#. module: l10n_mx_account_tree
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_tree_argil
+msgid "Period Balance"
+msgstr "Saldo del Periodo"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil_fiscalyear_id
+msgid "Periodo Anual"
+msgstr "Periodo Anual"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil_period_to
+msgid "Periodo Final"
+msgstr "Periodo Final"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_chart_argil_period_from
+msgid "Periodo Inicial"
+msgstr "Periodo Inicial"
+
+#. module: l10n_mx_account_tree
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_chart_argil
+msgid "Periods"
+msgstr "Periodos"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,help:l10n_mx_account_tree.field_account_account_partner_breakdown
+msgid "Si activa esta casilla se desglosará en la Balanza de Comprobación las empresas que conforman los cargos / abonos y saldos de esta cuenta"
+msgstr "Si activa esta casilla se desglosará en la Balanza de Comprobación las empresas que conforman los cargos / abonos y saldos de esta cuenta"
+
+#. module: l10n_mx_account_tree
+#: model:ir.model.fields,field_description:l10n_mx_account_tree.field_account_analytic_chart_argil_date_to
+msgid "To"
+msgstr "A"
+
+#. module: l10n_mx_account_tree
+#: model:account.account.type,name:l10n_mx_account_tree.data_account_type_view
+msgid "View"
+msgstr "Vista"
+
+#. module: l10n_mx_account_tree
+#: code:addons/l10n_mx_account_tree/model/metodos.py:100
+#, python-format
+msgid "You have not supplied enough arguments to compute the initial balance, please select a period and a journal in the context."
+msgstr "No ha proporcionado suficientes argumentos para calcular el Saldo Inicial, por favor seleccione un Periodo y un Diario para el contexto."
+
+#. module: l10n_mx_account_tree
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_analytic_chart_argil
+#: model:ir.ui.view,arch_db:l10n_mx_account_tree.view_account_chart_argil
+msgid "or"
+msgstr "ó"

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+
+	<!-- Parameter:  1 =  -->
+	<record model="ir.config_parameter" id="tax_amount_according_to_currency_exchange_on_payment_date">
+      <field name="key">tax_amount_according_to_currency_exchange_on_payment_date</field> 
+      <field name="value">2
+        1 = Usar monto de Impuesto de acuerdo al Tipo de Cambio de la Fecha del pago,
+          en caso de alguna diferencia se agregará la partida para la Utilidad/Pérdida
+          Cambiaria.
+        2 = Usar monto de Impuesto de acuerdo al registro de la Factura</field>
+    </record>
+
+    </data>
+    <data>
+        <record id="view_tax_form_cash_basis_inherit_argil" model="ir.ui.view">
+            <field name="name">tax.form.cash.basis.inherit</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='advanced_booleans']" position="inside">
+                    <field name="use_tax_cash_basis" attrs="{'invisible':[('amount_type','=', 'group')]}"/>
+                    <field name="tax_cash_basis_account" attrs="{'invisible': [('use_tax_cash_basis', '=', False)], 'required': [('use_tax_cash_basis', '=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+        
+        
+        
+    </data>
+</odoo>

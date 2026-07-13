@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="tis_hr_biometric_attendance.action_biometric_attnd_log_view" model="ir.actions.act_window">
+            <field name="view_mode">tree,calendar,form</field>
+        </record>
+        <record id="attendance_log_view_calendar_custom_sanmex" model="ir.ui.view">
+            <field name="name">attendance.log.view.calendar.custom.sanmex</field>
+            <field name="model">attendance.log</field>
+            <field name="arch" type="xml">
+                <calendar string="Asistencias Log" date_start="punching_time" color="status" quick_add="false">
+                    <field name="employee_id" filters="1"/>
+                    <field name="status" filters="1" widget="badge" decoration-success="status == '1'" decoration-info="status == '0'"/>
+                    <field name="device" filters="1"/>
+                </calendar>
+            </field>
+        </record>
+</odoo>

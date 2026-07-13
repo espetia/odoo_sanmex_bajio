@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="historial_actua_catalogo" model="ir.ui.view">
+            <field name="name">actua.historial.tree</field>
+            <field name="model">actua.historial</field>            
+            <field name="arch" type="xml">
+                 <tree string="Historial de Actualizaciones de Cátalogos SAT" create="0" delete="0">
+                    <field name="Version_ws" />
+                    <field name="Version_sat" />
+                    <field name="Actualizacion" />
+                    <field name="Creacion" />
+                    <field name="FechaLiberacion" />
+                    <field name="Notas"/>
+                    <field name="modelo_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="historial_actua_catalogo" model="ir.ui.view">
+            <field name="name">actua.historial.form</field>
+            <field name="model">actua.historial</field>
+            <field name="arch" type="xml">
+                 <form string="Historial de Actualizaciones de Cátalogos SAT" create="0" delete="0">
+                    <field name="Version_ws" />
+                    <field name="Version_sat" />
+                    <field name="Actualizacion" />
+                    <field name="Creacion" />
+                    <field name="FechaLiberacion" />
+                    <field name="Notas"/>
+                    <field name="modelo_id"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="historial_actua_catalogo_search" model="ir.ui.view">
+            <field name="name">actua.historial.serch</field>
+            <field name="model">actua.historial</field>
+            <field name="arch" type="xml">
+                <search string="Busqueda Actualizaciones SAT">
+                     <field name="modelo_id" filter_domain="['|', ('modelo_id','ilike',self),('Version_sat','ilike',self)]" string="Actualizaciones ..."/>
+                    <field name="modelo_id" />
+                    <field name="Version_sat" />
+                    <field name="Actualizacion" />                    
+                </search>
+            </field>
+        </record>
+
+    <record id="action_historial_actualizaciones" model="ir.actions.act_window">
+            <field name="name">Historial de Actualizaciones a Cátalogos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">actua.historial</field>
+            <!--<field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+            <!--<field name="view_id" ref="modelo_id"/>-->
+        </record>
+
+<menuitem action="action_historial_actualizaciones" name="Historial de Actualizaciones a Cátalogos"
+                  id="action_hist_actualiza_catalogo" sequence="9"
+                  parent="base.menu_administration"/>
+    
+<record id="registro_actua_catalogo" model="ir.ui.view">
+            <field name="name">actua.registro.tree</field>
+            <field name="model">actua.registro</field>
+            <field name="arch" type="xml">
+                 <tree string="Registro de Actualizaciones de Cátalogos SAT" edit="0" create="0" delete="0">
+                    <field name="name" />                    
+                    <field name="actualizacion" />
+                    <field name="creacion" />                    
+                    <field name="modelo_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="resgitro_actua_catalogo" model="ir.ui.view">
+            <field name="name">actua.registro.form</field>
+            <field name="model">actua.registro</field>
+            <field name="arch" type="xml">
+      <form string="Registro de Actualizaciones de Cátalogos SAT" edit="0" create="0" delete="0">
+                   <group>
+                    <field name="name" />                    
+                    <field name="actualizacion"/>
+                    <field name="creacion"/>                
+                    <field name="modelo_id"/>
+                </group>
+                </form>
+            </field>
+        </record>
+        
+        
+
+    <record id="action_registro_actualizaciones" model="ir.actions.act_window">
+            <field name="name">Registro de Actualizaciones a Cátalogos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">actua.registro</field>
+            <!--<field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+            <!--<field name="view_id" ref="modelo_id"/>-->
+        </record>
+
+<menuitem action="action_registro_actualizaciones" name="Registro de Actualizaciones a Cátalogos"
+                  id="action_registro_actualiza_catalogo" sequence="9"
+                  parent="base.menu_administration"/>    
+
+</odoo>

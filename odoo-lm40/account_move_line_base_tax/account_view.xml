@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+
+
+        <record id="moveline_currency_fit" model="ir.ui.view">
+            <field name="name">moveline.currency.fit</field>
+            <field name="model">account.move</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+               
+                
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='credit']" position="after">
+                    <!--<field name="not_move_diot"/>-->
+                    <field name="tax_id_secondary" />
+                    <field name="amount_base"/>                    
+                </xpath>
+                <notebook position="before">
+                    <field name="item_concept" placeholder="Concepto para la póliza..." nolabel="1" attrs="{'invisible': [('move_type', 'not in', ('entry'))]}"/>
+                </notebook>
+            </field>
+        </record>
+
+    <record id="view_move_line_form_inherit_amount" model="ir.ui.view">
+        <field name="name">account.move.line.form.inherit.amount</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_form"/>
+        <field name="arch" type="xml">
+            <field name="tax_ids" position="after">
+                <separator string="Taxes Effective Payment" colspan="2"/>
+                    <field name="amount_base"/>
+                    <field name="tax_id_secondary"/>
+                   <!-- <field name="not_move_diot"/>-->
+                
+            </field>
+            <field name="account_id" position="replace">
+                <field name="account_id" 
+                       domain="[('company_id', '=', company_id),('internal_type','not in', ('deprecated', 'view','consolidation'))]"  />
+                      
+            </field>
+        </field>
+    </record>
+    
+    <record id="view_move_line_tree_inherit_amount" model="ir.ui.view">
+        <field name="name">account.move.line.tree.inherit.amount</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr='//tree/field[@name="credit"]' position="after">
+                <field name="not_move_diot"/>
+                <field name="tax_id_secondary"/>
+                <field name="amount_base"/>                
+            </xpath>
+            <field name="account_id" position="replace"> 
+                <field name="account_id" 
+                       domain="[('company_id', '=', company_id),('internal_type','not in', ('deprecated', 'view','consolidation'))]"  />                       
+            </field>            
+        </field>
+    </record>
+
+    
+</odoo>

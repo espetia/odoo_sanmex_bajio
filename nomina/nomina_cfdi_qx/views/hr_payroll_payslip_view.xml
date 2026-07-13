@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="hr_payslip_run_form_nomina_cfdi_inherit_nomina_cfdi" model="ir.ui.view">
+        <field name="name">hr.payslip.run.form.nomina.cfdi.inherit.nomina.cfdi</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="nomina_cfdi_ee.hr_payslip_run_form_nomina_cfdi"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='timbrar_nomina']" position="after">
+                <button string="Confirmar Todas" name="confirmar_todas" type="object" class="oe_highlight" states="draft"/>
+                <button string="Reversar Todas" name="reversar_todas" type="object" class="oe_highlight" states="done"/>
+            </xpath>            
+
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_tree_inherit_nomina_cfdi" model="ir.ui.view">
+        <field name="name">view.hr.payslip.tree.inherit.nomina.cfdi</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='number']" position="after">
+                <field name="no_empleado" string="No. Empleado"/>
+            </xpath>
+        </field>
+    </record>
+
+       <record id="view_nomina_custom_qx" model="ir.ui.view">
+            <field name="name">account.nomina.form.nomina_qx_custom</field>
+            <field name="model">hr.payslip</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="nomina_cfdi_ee.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                
+              
+                    <field name="uuid_relacionado" position="after">
+                    <separator string="Información de Timbrado" colspan="2" readonly="1"/>                    
+                    <field name="selo_digital_cdfi"/>
+                    <field name="numero_cetificado"/>
+                     <field name="cadena_origenal"/>
+                     <field name="selo_sat"/>
+                      <field name="qrcode_image" string="Código Bidimencional" widget="image" options="{&quot;size&quot;: [90, 90]}"/>
+
+                </field>
+            </field>
+        </record> 
+</odoo>

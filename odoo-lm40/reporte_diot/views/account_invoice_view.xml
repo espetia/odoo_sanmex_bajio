@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<odoo>
+      
+          
+
+              <record id="diot__report_list" model="ir.ui.view">
+                   <field name="name">diot.reporte.tree</field>
+                   <field name="model">account.invoice.diot</field>
+                   <field name="arch" type="xml">
+                        <tree string="Registro Pre-DIOT" create="0" delete="0">
+                                     <field name="num_pre_diot"/>
+                                     <field name="name" />
+                                     <field name="num_pago"/>
+                                     <field name="declaracion_id"/>
+                                     <field name="proveedor"/>
+                                     <field name="rfc_prove"/>                        
+                                     <field name="account_tax"/>
+                                     <field name="monto_factura"/>
+                                     <field name="total_iva"/>
+                                     <field name="factor"/>
+                                     <field name="categoria_impuesto"/>
+                                     <field name="tasa_pagada"/>                  
+                                     <field name="monto_base" />
+                                     <field name="monto_impuesto" />
+                                     <field name="fecha_pago"/>                                   
+                                     <field name="periodo_reportado"/>                            
+                                     <field name="user_id"/>
+                                     <field name="currency_id" invisible="1"/>
+                                     <field name="state"/>
+                       </tree>
+                   </field>
+               </record>
+
+               <record id="diot_report_form" model="ir.ui.view">
+                   <field name="name">diot.reporte.form</field>
+                   <field name="model">account.invoice.diot</field>
+                   <field name="arch" type="xml">
+                       <form string="Registro Pre-DIOT" create="0" delete="0">
+                           <sheet>
+                                <group>
+                                  <field name="num_pre_diot"/>
+                                   <field name="name" />
+                                   <field name="num_pago"/>
+                                   <field name="declaracion_id"/>
+                                   <field name="proveedor"/>
+                                   <field name="rfc_prove"/>
+                                   <field name="account_id"/>
+                                   <field name="account_tax"/>
+                                   <field name="fecha_pago"/>
+                                   <field name="monto_factura"/>
+                                   <field name="total_iva"/>
+                                   <field name="factor"/>
+                                   <field name="monto_base" />
+                                   <field name="categoria_impuesto"/>
+                                   <field name="tasa_pagada"/>
+                                   <field name="monto_impuesto" />
+                                   <field name="periodo_reportado"/>                              
+                                   <field name="user_id"/>
+                                   <field name="currency_id" invisible="1"/>
+                                   <field name="state" invisible="1"/>
+                                </group>
+                                <notebook>
+                            <page string="Relación de Pagos a cuentas contables">
+                                <field name="account_lines_ids">
+                                    <tree>
+                                        <field name="product_id"/>
+                                        <field name="account_id"/>
+                                        <field name="amount_line"/>                                                                          
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                           </sheet>                    
+                       </form>
+                   </field>
+               </record>
+
+
+               
+
+           <record id="action_pre-diot" model="ir.actions.act_window">
+                   <field name="name">Pre-DIOT</field>
+                   <field name="type">ir.actions.act_window</field>
+                   <field name="res_model">account.invoice.diot</field>
+                   <!--<field name="view_type">form</field>-->
+                   <field name="view_mode">tree,form</field>
+                   <field name="view_id" ref="diot__report_list"/>
+               </record>
+
+
+       <menuitem id="menu_registro_diot" name="DIOT" parent="account.menu_finance" sequence="2"/>
+
+       <menuitem action="action_pre-diot"
+                         id="action_pre-diot_menu" sequence="0"
+                         parent="menu_registro_diot" />
+</odoo>

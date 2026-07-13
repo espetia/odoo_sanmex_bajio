@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>   
+	<act_window name="Comparar CFDI con facturas de proveedor"         
+            res_model="wizard.compara.compras"  
+            binding_model="registro.descargas"        
+            view_mode="form"
+            target="new"  
+
+            id="action_comparar_facturas_masivo"/>
+
+	
+	<record model='ir.ui.view' id='view_compara_compras'>
+		<field name='name'>Comparar CFDI con Facturas de proveedor</field>
+		<field name='model'>wizard.compara.compras</field>
+		<field name='arch' type='xml'>
+			<form name='Comparar CFDI con facturas de proveedor'>
+				<footer>
+					<button name='buscar_factura_multiple' type='object' string='Comparar' class='oe_highlight'/> 
+					<button special="cancel" string="Cancelar"/> 
+				</footer>
+			</form>
+		</field>
+	</record>
+
+
+	<record id="action_comparar_facturas" model='ir.actions.act_window'>
+		<field name='name'>Comparar CFDI con Facturas de proveedor</field>		
+		<field name='res_model'>wizard.compara.compras</field>		
+		<field name='view_mode'>form</field>
+		<field name='target'>new</field>
+ 	</record>
+
+
+</odoo>

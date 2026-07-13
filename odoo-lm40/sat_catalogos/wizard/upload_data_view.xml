@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>    
+        
+        <record id="overall_config_wizard_sat_models_cfdi_form" model="ir.ui.view">
+            <field name="name">overall.config.wizard.sat.models.cfdi</field>
+            <field name="model">overall.config.wizard.sat.models.cfdi</field>
+            <field name="arch" type="xml">
+                <form string="Asistente Carga de Catálogos CFDI 4.0" version="7.0">
+                    <field name="load_data" invisible="1"/>
+                    <notebook attrs="{'invisible':[('load_data','=',True)]}">
+                        <page string="Catálogos del SAT 3.3">
+                            Estos catálogos son publicados oficialmente por el SAT, y proveen datos requeridos para la generación de Documentos CFDI Versión 4.0 y Contabilidad Electrónica.
+                            <br/>
+                            <br/>
+                            <strong>Selecciona los catálogos a Implementar:</strong>
+                            <br />
+                           <group string="Catalogos CFDI" col="3"> 
+                           <group>
+                               
+                               <field name="sat_cfdi"/>
+                               <field name="sat_colonia"/>                               
+                               <field name="sat_codigo_postal"/>                               
+                               <field name="sat_localidad"/>
+                               <field name="sat_estados"/>                               
+                               <field name="sat_paises"/>
+                               <field name="sat_municipio"/>
+                               <field name="sat_aduana"/>
+                            </group>
+                            <group> 
+                                                         
+                               <field name="sat_producto"/>                  
+                               <field name="sat_udm"/>
+                                <field name="sat_uso_cfdi"/>                            
+                               <field name="sat_metodo_pago"/>
+                               <field name="sat_formas_pago"/>
+                               <field name="sat_tipos_relacion"/>                              
+                               <field name ="sat_tasaocuota"/>
+                               <field name="sat_tipofactor"/>
+                              <field name="sat_impuestos"/>
+                                                           
+                            </group>
+                            <group>
+                              <field name="sat_regimen_fiscal"/>                               
+                              <field name="sat_moneda"/>
+                               <field name="sat_tipo_comprobante"/>                              
+                               <field name="sat_pedimento"/>
+                               <field name ="sat_clavepedemiento"/>
+                               <field name="sat_tipooperacion"/>
+                               <field name="sat_patentes_aduanales"/>
+                               <field name="sat_traslado"/>
+                               <field name="sat_arancel"/>                           
+                            </group>
+                              <group string="Catálogos Contabilidad Electrónica">
+                          
+                            <field name="sat_ce"/>
+                            <field name="sat_codigo_agrupador"/>
+                            <field name="tipo_poliza"/>
+                            <field name="sat_bancos"/>
+                            <field name="sat_metodopago"/>
+                          </group>
+                           <group string="Catálogo Pac's">                          
+                            <field name="pacs"/>                            
+                          </group>
+                        </group>
+                        <div aling="center">
+                          <button type="object" name="carga_catalogos" string="Carga de Catalogos"
+                           class="oe_highlight"/>
+                          <button type="object" name="actualiza_catalogos" string="Actualizar Catálogos(s)" class="oe_highlight"/>
+                        </div>
+
+                        <br/>
+                        <br/>                        
+                       
+                         </page>
+                          <page string="Catálogos CFDI 4.0" >
+                               <group col="3">
+                                 
+                                 <group> 
+                                
+                               <field name="sat_meses"/>
+                               <field name="sat_periodicidad"/>                               
+                               <field name="sat_objetoimp"/>                               
+                               <field name="sat_exportacion"/>
+                           </group>
+                       </group>
+                   </page>
+                         </notebook>  
+
+                           
+                             
+                        
+                   
+                      
+                </form>
+            </field>
+        </record>
+        
+        <record id="overall_config_wizard_sat_models_cfdi_action" model="ir.actions.act_window">
+            <field name="name">Asistente Carga Catálogos</field>
+            <field name="res_model">overall.config.wizard.sat.models.cfdi</field>
+            <field name="view_mode">form</field>
+            
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem id="overall_config_wizard_sat_models_cfdi_menu" name="Asistente Carga Datos" parent="catalogos_sat_menu" action="overall_config_wizard_sat_models_cfdi_action"  sequence="99"/>
+
+    
+</odoo>

@@ -1,0 +1,90 @@
+<odoo>
+<data>
+    
+        <record id="wiz_view_nomina_cancel" model="ir.ui.view">
+            <field name="name">account.nomina.cancel_wizard</field>
+            <field name="model">nomina.cancel_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Cancelar Nomina?">
+                    <group col="4" colspan="4">
+                        <field name="date" default_focus="1"/>
+                        <field name="journal_id" />
+                    </group>
+                    <p class="oe_grey">
+                        Si la nómina tiene una póliza contable entonces se creará 
+                        una póliza de Cancelación, conciliando las partidas 
+                        correspondientes para "matar" el saldo.
+                    </p>
+                    <footer>
+                        <button string="Crear Póliza" name="action_payslip_cancel_wizard" type="object" default_focus="1" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_nomina_cancel_wizard" model="ir.actions.act_window">
+          <field name="name">Cancelar Nómina</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">nomina.cancel_wizard</field>         
+          <field name="view_mode">form</field>
+          <field name="target">new</field>
+        </record>
+    
+    
+        <record id="view_nomina_cancel" model="ir.ui.view">
+            <field name="name">account.nomina.form.nomina_cancel</field>
+            <field name="model">hr.payslip</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_payslip_cancel']" position="replace">
+                    <button name="%(action_nomina_cancel_wizard)d" type='action'
+                            states="draft,done" string="Cancelar nómina"/>
+                </xpath>
+              
+                    <field name="paid" position="after">
+                    
+                    <field name="cancel_move_id" attrs="{'invisible':[('cancel_move_id','=',False)]}" />
+                </field>
+            </field>
+        </record>
+        
+       <record id="view_nomina_cancel_custom" model="ir.ui.view">
+            <field name="name">account.nomina.form.nomina_cancel_custom</field>
+            <field name="model">hr.payslip</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="nomina_cfdi_ee.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                
+              <xpath expr="//button[@name='action_cfdi_cancel']" position="replace">
+                    <button name="action_cfdi_cancel" type="object" string="ENVIAR SOLICITUD DE CANCELACIÓN" attrs="{'invisible':['|',('nomina_cfdi','=',False), ('estado_factura','=','factura_cancelada')]}" class="oe_highlight" groups="base.group_user" confirm="¿Esta seguro que quiere cancelar la factura?"/>
+                </xpath>
+                    <field name="uuid_relacionado" position="after">
+                    <separator string="Información de Cancelación" colspan="2" readonly="1"/>
+                    <field name="cancelaciones_id" />
+                    <field name="uuid_sustituye" attrs="{'invisible':[('cancelaciones_id','!=', 1)]}"/>
+                    <field name="cancel_solicitud"/>
+                     <field name="status_cancel"/>
+                </field>
+            </field>
+        </record> 
+    <record id="view_nomina_cancel_custom_tree" model="ir.ui.view">
+            <field name="name">account.nomina.tree.nomina_cancel_custom</field>
+            <field name="model">hr.payslip</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_tree"/>
+            <field name="arch" type="xml">
+                
+              
+                    <field name="state" position="after">
+                    
+                    
+                     <field name="status_cancel" string="Estatus SAT"/>
+                </field>
+            </field>
+        </record> 
+
+    
+</data>
+</odoo>

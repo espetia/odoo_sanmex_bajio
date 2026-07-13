@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+ <record model="ir.ui.view" id="sale_view_cirugia">
+      <field name="name">sale_view_cirugia</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sat_catalogos.sale_view_order_new_pay_method_id"/>
+      <field name="arch" type="xml">
+        
+        <field name="uso_cfdi_id" position="after">
+                    <field name="carta_porte" />
+                    
+                </field>
+    		
+      </field>
+    </record>
+
+ </odoo>

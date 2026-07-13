@@ -1,0 +1,147 @@
+<odoo>
+  <data>
+
+    <template id="panel_stock_sanmex" name="base.logistics.sanmex.panel_stock_sanmex">
+      <div class="o_logistics_dashboard container">
+        <div class="row" style="margin: 10px;">
+          <div class="col-sm-4">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <td class="o_text">
+                    <i class="fa fa-truck fa-lg"></i>
+                    <div>Operaciones</div>
+                  </td>
+                  <td class="o_main o_dashboard_action" title="Obra">
+                    <a href="#" class="href"><t t-esc="values['total_confirm']"/> <br/> Confirmado</a>
+                    
+                  </td>
+                  <td class="o_main o_dashboard_action" title="Obra">
+                    <a href="#" class="href"><t t-esc="values['total_in_progress']"/> <br/> Próxima entrega</a>
+                  </td>
+                  <td class="o_main o_dashboard_action" title="Obra">
+                    <a href="#" class="href"><t t-esc="values['total_delivery']"/> <br/> <div class="text-smx-label">Rentados</div></a>
+                  </td>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+          <div class="col-sm-3">
+            <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <td class="o_text">
+                      <div>Ordenes por</div>
+                    </td>
+                    <td class="o_main" title="Obra">
+                      <a href="#" class="href"><t t-esc="values['sanitary_qty_dis']"/> <br/> Planificar</a>
+                      
+                    </td>
+                  </tr>
+                </thead>
+            </table>
+          </div>
+          <div class="col-sm-5">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <td class="o_text">
+                      <div>Inventario de baños hoy</div>
+                    </td>
+                    <td class="o_main o_dashboard_action" title="Disponibles">
+                      <a href="#" class="href"><t t-esc="values['sanitary_qty_dis']"/> <br/> Disponibles</a>
+                      
+                    </td>
+                    <td class="o_main o_dashboard_action" title="En limpieza">
+                      <a href="#" class="href"><t t-esc="values['sanitary_qty_clean']"/> <br/> En limpieza</a>
+                    </td>
+                    <td class="o_main o_dashboard_action" title="Mantenimiento">
+                      <a href="#" class="href"><t t-esc="values['sanitary_qty_mantt']"/> <br/> <div class="text-smx-label">Mantenimiento</div></a>
+                    </td>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+          
+          
+        </div>
+      </div>
+         
+    </template>
+
+    <template id="panel_lot_sanmex" name="base.logistics.sanmex.panel_lot_sanmex">
+      <div class="o_logistics_dashboard container">
+        <div class="row" style="margin: 10px;">
+            
+          <div class="col-sm-4">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <td class="o_text">
+                      <div>Baños obra</div>
+                    </td>
+                    <td class="o_main o_dashboard_action" title="Obra">
+                      <a href="#" class="href"><t t-esc="values['sanitary_qty_stock']"/> <br/> Solicitado</a>
+                    </td>
+                    <td class="o_main o_dashboard_action" title="Obra">
+                      <a href="#" class="href"><t t-esc="values['sanitary_qty_dis']"/> <br/> Disponibles</a>
+                      
+                    </td>
+                    <td class="o_main o_dashboard_action" title="Obra">
+                      <a href="#" class="href"><t t-esc="values['sanitary_qty_clean']"/> <br/> Requerido</a>
+                    </td>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+          <div class="col-sm-4">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <td class="o_text">
+                    <div>Baños Evento </div>
+                  </td>
+                  <td class="o_main o_dashboard_action" title="Obra">
+                    <a href="#" class="href"><t t-esc="values['sanitary_qty_stock']"/> <br/> Solicitado</a>
+                  </td>
+                  <td class="o_main o_dashboard_action" title="Obra">
+                    <a href="#" class="href"><t t-esc="values['sanitary_qty_dis']"/> <br/> Disponibles</a>
+                    
+                  </td>
+                  <td class="o_main o_dashboard_action" title="Obra">
+                    <a href="#" class="href"><t t-esc="values['sanitary_qty_clean']"/> <br/> Requerido</a>
+                  </td>
+                </tr>
+              </thead>
+            </table>
+        </div>
+          <div class="col-sm-4">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <td class="o_text">
+                    <i class="fa fa-truck fa-lg"></i>
+                    <div>Operaciones</div>
+                  </td>
+                  <td class="o_main o_dashboard_action" title="Obra">
+                    <a href="#" class="href"><t t-esc="values['total_confirm']"/> <br/> Confirmado</a>
+                    
+                  </td>
+                  <td class="o_main o_dashboard_action" title="Obra">
+                    <a href="#" class="href"><t t-esc="values['total_in_progress']"/> <br/> Próxima Entrega</a>
+                  </td>
+                  <td class="o_main o_dashboard_action" title="Obra">
+                    <a href="#" class="href"><t t-esc="values['total_delivery']"/> <br/> <div class="text-smx-label">Rentados</div></a>
+                  </td>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+         
+    </template>
+
+  </data>
+</odoo>

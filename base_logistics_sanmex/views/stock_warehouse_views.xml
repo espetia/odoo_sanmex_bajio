@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- View stock.warehouse form -->
+    <record id="view_stock_warehouse_form_base_logistics_sanmex" model="ir.ui.view">
+        <field name="name">view.stock.warehouse.form.base.logistics.sanmex</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='technical_info']" position="after">
+                <page name="config_sanmex" string="Configuración Sanmex">
+                    <group>
+                        <field name="product_sanitary" />
+                        <field name="user_id" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

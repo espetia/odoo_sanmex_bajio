@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<odoo>
+                   
+                
+        
+        <record id="pagos_cfdi_invoice_form" model="ir.ui.view">
+            <field name="name">pagos.invoice.form</field>
+            <field name="model">account.payment.register</field>
+            <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+            <field name="arch" type="xml">
+                <field name="group_payment" position="after">
+                    <field name="user_id" invisible="1" />
+                    <field name="use_for_cfdi" invisible="1" />
+                    <field name="currency_rate"/>
+                    <field name="timbrar" attrs="{'invisible': [('use_for_cfdi','=', False)]}"/>
+                    <field name="payment_datetime_reception" attrs="{'required' : [('timbrar','=', True)],'invisible': [('timbrar','=', False)]}"/>
+                    <field name="num_operacion" attrs="{'invisible': [('timbrar','=', False)]}"/>
+                    <field name="pay_method_id" attrs="{'required' : [('timbrar','=', True)],'invisible': [('timbrar','=', False)]}"/>                    
+                </field>
+                <xpath expr="//form/group" position="inside">
+                <field name="payments_invoice_ids">
+                    <tree editable="bottom" create="0">
+                        <field name="invoice_id"/>
+                        <field name="invoice_currency_id"/>
+                        <field name="total_factura"/>
+                        <field name="saldo_pagar"/>
+                        <field name="monto_pago"/>
+                        <field name="monto_pago_currency" optional="hide"/>
+                    </tree>
+                </field>
+            </xpath>
+            </field>
+        </record>
+        
+              
+        
+        <record id="view_account_payment_form_cfdi_pagos_cancel" model="ir.ui.view">
+            <field name="name">account_payment_form_view_extend</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <button name="action_cancel" position="replace">
+                    
+                    <button name="cancel" string="Cancelar1" type="object" 
+                            attrs="{'invisible': ['|',('state','=',('draft','cancelled')),('payment_type','=','inbound')]}" 
+                            groups="account.group_account_manager" />
+                   <button name="timbre_pago" string="Timbrar pago" type="object"
+                    attrs="{'invisible': ['|',('state', 'in', ('cancelled','draft')),('payment_type','!=','inbound')]}"/>
+                    
+                    <button name="cancel_pago" string="Solicitud de cancelación" type="object" 
+                        attrs="{'invisible': ['|',('state', 'not in', ('cancelled','posted')),('payment_type','!=','inbound')]}"/>
+                    
+                   <button name="cancel" string="Cancelar" type="object" 
+                            attrs="{'invisible': ['|',('state','=','cancelled'),('payment_type','!=','inbound')]}" 
+                            groups="account.group_account_manager"
+                            confirm="Si este registro está relacionado a un CFDI entonces al cancelar este registro se cancelará el CFDI, está seguro que desea Cancelar este registro?"/>
+
+                    
+                </button>
+
+                
+
+                <field name="ref" position="after">
+                    <field name="total_invoice" invisible="1"/>
+                    <field name="factor_global" invisible="1"/>
+                    <field name="timbrar" attrs="{'invisible': ['|',('use_for_cfdi','=', False),('payment_type','!=','inbound')]}"/>
+                    <field name="payment_datetime_reception" attrs="{'required' : [('timbrar','=', True)],'invisible': [('timbrar','=', False)]}"/>
+                    <field name="num_operacion" attrs="{'required' : [('timbrar','=', True)],'invisible': [('timbrar','=', False)]}"/>
+                    <field name="pay_method_id" attrs="{'required' : [('timbrar','=', True)],'invisible': [('timbrar','=', False)]}"/>
+                </field>
+                <xpath expr="//group[4]" position="after">
+                    <notebook colspan="4">
+                        <page string="Facturas relacionadas" attrs="{'invisible': [('payment_type','!=','inbound')]}">
+                            <field name="payment_invoice_line_ids" colspan="4" nolabel="1" >
+                                <tree>
+                                    <field name="invoice_id" />                                 
+                                    <field name="invoice_folio" />
+                                    <field name="invoice_uuid" />
+                                    <field name="invoice_currency_id" />
+                                    <field name="invoice_currency_rate" />
+                                    <field name="parcialidad" />
+                                    <field name="saldo_anterior" />
+                                    <field name="monto_pago" />              
+                                    <field name="monto_pago_fac" invisible="1"/>
+                                    <field name="factor_fact" invisible="1"/>
+                                    <field name="saldo_final" />
+                                </tree>
+                            </field>
+                        </page>                        
+                        <page string="CFDI Info" attrs="{'invisible': [('payment_type','!=','inbound')]}">
+                            <field name="use_for_cfdi" invisible="1"/>
+                            <group colspan="4" col="4">
+                                
+                            </group>
+                            <group colspan="4" col="2">
+                                <separator string="Informacion de Timbrado" colspan="2"/>
+                                <field name="pac_timbre" />
+                                <!--<field name="ticomprobante" readonly="1"/>-->
+                                <field name="UUID"/>                            
+                                <field name="fecha_timbrado"/>
+                                <field name="cfdi_sello"/>
+                                <field name="cfdi_no_certificado"/>                            
+                                <field name="cfdi_cadena_original"/>                  
+                                <field name="cfdi_cbb" widget="image" options='{"size": [90, 90]}'/>                           
+                                <separator string="Estado Timbrado" colspan="2" />
+                                <field name="cfdi_fecha_cancelacion"/>
+                                <field name="cancel_solicitud"/>
+                                <field name="status_cfdi"/>                        
+                                
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>        
+        
+       
+        
+        
+        <!--<report 
+            id="l10n_mx_einvoice_payment_report"
+            string="CFDI Recepción Pagos"
+            model="account.payment"
+            report_type="qweb-pdf"
+            file="pagos.report_account_payment" 
+            name="pagos.report_account_payment" 
+        />  -->
+    
+</odoo>
