@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_create_po_wizard_form" model="ir.ui.view">
+        <field name="name">create.po.wizard.form</field>
+        <field name="model">create.po.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create Purchase Document">
+                <group>
+                    <field name="action_type" widget="radio"/>
+                    
+                    <field name="partner_id" attrs="{'invisible': [('action_type', '!=', 'create_po')], 'required': [('action_type', '=', 'create_po')]}"/>
+                    
+                    <field name="type_id" attrs="{'invisible': [('action_type', '!=', 'create_pr')], 'required': [('action_type', '=', 'create_pr')]}"/>
+                    <field name="vendor_ids" widget="many2many_tags" attrs="{'invisible': [('action_type', '!=', 'create_pr')], 'required': [('action_type', '=', 'create_pr')]}"/>
+                    
+                    <field name="requisition_id" invisible="1"/>
+                </group>
+                <notebook>
+                    <page string="Lines to Order">
+                        <field name="line_ids" domain="[('requisition_id', '=', requisition_id), ('product_id', '!=', False), ('po_line_id', '=', False)]">
+                            <tree create="0">
+                                <field name="product_id"/>
+                                <field name="name"/>
+                                <field name="product_qty"/>
+                                <field name="product_uom_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <footer>
+                    <button string="Create" type="object" name="action_create_po" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_create_po_wizard" model="ir.actions.act_window">
+        <field name="name">Create Purchase Document</field>
+        <field name="res_model">create.po.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
