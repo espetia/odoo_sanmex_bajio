@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Tree View for Purchase Order Lines -->
+        <record id="view_purchase_order_line_tree_san_mex" model="ir.ui.view">
+            <field name="name">purchase.order.line.tree.san.mex</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Order Lines">
+                    <field name="order_reference"/>
+                    <field name="product_id"/>
+                    <field name="name" string="Description"/>
+                    <field name="date_order" optional="show"/>
+                    <field name="payment_date" optional="show"/>
+                    <field name="payment_type" optional="show"/>
+                    <field name="internal_note" optional="show"/>
+                    <field name="state"/>
+                    <field name="project_id"/>
+                    <field name="price_unit" widget="monetary"/>
+                    <field name="product_qty"/>
+                    <field name="price_total" widget="monetary" sum="Total"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View for Purchase Order Lines -->
+        <record id="view_purchase_order_line_search_san_mex" model="ir.ui.view">
+            <field name="name">purchase.order.line.search.san.mex</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <search string="Purchase Order Line Search">
+                    <field name="product_id"/>
+                    <field name="order_reference" string="Purchase Order"/>
+                    <field name="partner_id"/>
+                    <separator/>
+                    <filter name="state_draft" string="Quotation Request" domain="[('state', '=', 'draft')]"/>
+                    <filter name="state_sent" string="Quotation Send" domain="[('state', '=', 'sent')]"/>
+                    <filter name="state_to_approve" string="To Approve" domain="[('state', '=', 'to approve')]"/>
+                    <filter name="state_purchase" string="Purchase Order" domain="[('state', '=', 'purchase')]"/>
+                    <filter name="state_done" string="Locked" domain="[('state', '=', 'done')]"/>
+                    <filter name="state_cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                    <filter name="ignore_exceptional_purchase" string="Ignore Exceptional Purchase"
+                            domain="[('exceptional_purchase_order', '=', False)]"/>
+                    <filter name="payment_date" string="Payment Date" date="payment_date"/>
+                    <separator/>
+                    <filter name="payment_type_1" string="Efectivo" domain="[('payment_type', '=', '1')]"/>
+                    <filter name="payment_type_2" string="Credito Proveedor" domain="[('payment_type', '=', '2')]"/>
+                    <filter name="payment_type_3" string="American Express" domain="[('payment_type', '=', '3')]"/>
+                    <filter name="payment_type_4" string="Pago Inmediato" domain="[('payment_type', '=', '4')]"/>
+                    <filter name="payment_type_5" string="Gastos fijos" domain="[('payment_type', '=', '5')]"/>
+                    <filter name="payment_type_6" string="Gastos Dirección" domain="[('payment_type', '=', '6')]"/>
+                    <filter name="payment_type_7" string="Compras amex domiciliados"
+                            domain="[('payment_type', '=', '7')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_order" string="Purchase Order"
+                                context="{'group_by': 'order_reference'}"/>
+                        <filter name="group_by_product" string="Product" context="{'group_by': 'product_id'}"/>
+                        <filter name="group_by_partner" string="Provider" context="{'group_by': 'partner_id'}"/>
+                        <filter name="group_by_date_order" string="Order Date (Month)"
+                                context="{'group_by': 'date_order:month'}"/>
+                        <filter name="group_by_payment_date" string="Payment Date (Month)"
+                                context="{'group_by': 'payment_date:month'}"/>
+                        <filter name="group_by_fortnight_pay" string="Fortnight Pay"
+                                context="{'group_by': 'fortnight_pay'}"/>
+                        <filter name="group_by_journal_id" string="Journal" context="{'group_by': 'journal_id'}"/>
+                        <filter name="group_by_project_id" string="Analytic Account"
+                                context="{'group_by': 'project_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Window Action -->
+        <record id="action_purchase_order_line_report_san_mex" model="ir.actions.act_window">
+            <field name="name">Provider Group</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="view_purchase_order_line_search_san_mex"/>
+            <field name="view_id" ref="view_purchase_order_line_tree_san_mex"/>
+            <field name="context">{'group_by': ['payment_date:month', 'fortnight_pay', 'journal_id', 'partner_id',
+                'order_reference']}
+            </field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_purchase_order_line_report_san_mex"
+                  name="Provider Group"
+                  parent="purchase.purchase_report_main"
+                  action="action_purchase_order_line_report_san_mex"
+                  sequence="10"/>
+
+    </data>
+</odoo>

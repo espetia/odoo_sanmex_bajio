@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista Tree -->
+        <record id="view_purchase_payable_report_tree" model="ir.ui.view">
+            <field name="name">purchase.payable.report.tree</field>
+            <field name="model">purchase.payable.report</field>
+            <field name="arch" type="xml">
+                <tree string="Proveedores por pagar" create="0" edit="0" delete="0" default_order="payment_date desc">
+                    <field name="trade_name"/>
+                    <field name="order_id" widget="many2one"/>
+                    <field name="product_id"/>
+                    <field name="name"/>
+                    <field name="date_order"/>
+                    <field name="payment_date"/>
+                    <field name="payment_type"/>
+                    <field name="internal_note"/>
+                    <field name="vehicle_id"/>
+                    <field name="state"/>
+                    <field name="project_id"/>
+                    <field name="price_unit" widget="monetary"/>
+                    <field name="product_qty"/>
+                    <field name="iva_amount" widget="monetary"/>
+                    <field name="price_total" widget="monetary"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista de Búsqueda con agrupaciones -->
+        <record id="view_purchase_payable_report_search" model="ir.ui.view">
+            <field name="name">purchase.payable.report.search</field>
+            <field name="model">purchase.payable.report</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Proveedores por pagar">
+                    <!-- Campos de búsqueda para filtrar por mes/año específico y por quincena -->
+                    <!-- Permite seleccionar rangos de fechas (por ejemplo, todo diciembre 2025) sobre payment_date -->
+                    <field name="payment_date"/>
+                    <!-- Permite filtrar por la quincena exacta, ej.: Q1, Q2 -->
+                    <field name="fortnight_pay"/>
+                    <!-- Permite filtrar por mes y año exactos sin usar rango de fechas -->
+                    <field name="payment_month"/>
+                    <field name="payment_year"/>
+                    <!-- Filtros rápidos de quincena -->
+                    <filter name="fortnight_q1" string="Q1" domain="[('fortnight_pay','=','Q1')]"/>
+                    <filter name="fortnight_q2" string="Q2" domain="[('fortnight_pay','=','Q2')]"/>
+                    <!-- Filtro de fecha para que aparezca en el menú "Filtros" con selector de rango -->
+                    <filter name="filter_payment_date" string="Fecha de pago" date="payment_date"/>
+                    <!-- Filtros por Mes del Año y Quincena -->
+                    <group expand="0" string="Agrupar por">
+                        <filter name="group_month" string="Mes" context="{'group_by': 'payment_date:month'}"/>
+                        <filter name="group_fortnight" string="Quincena de pago" context="{'group_by': 'fortnight_pay'}"/>
+                        <filter name="group_journal" string="Diario de pagos" context="{'group_by': 'journal_id'}"/>
+                        <filter name="group_partner" string="Proveedor" context="{'group_by': 'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Acción -->
+        <record id="action_purchase_payable_report" model="ir.actions.act_window">
+            <field name="name">Proveedores por pagar</field>
+            <field name="res_model">purchase.payable.report</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_purchase_payable_report_tree"/>
+            <field name="search_view_id" ref="view_purchase_payable_report_search"/>
+            <field name="context">{"group_by": ["payment_date:month", "fortnight_pay", "journal_id", "partner_id"]}</field>
+        </record>
+
+        <!-- Menú -->
+        <menuitem id="menu_purchase_payable_report"
+                  name="Proveedores por pagar"
+                  parent="purchase.purchase_report_main"
+                  action="action_purchase_payable_report"
+                  sequence="20"/>
+    </data>
+</odoo>

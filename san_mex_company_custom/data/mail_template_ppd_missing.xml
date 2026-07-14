@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="email_template_ppd_missing_reminder" model="mail.template">
+            <field name="name">Purchase Order: PPD Missing Reminder</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="subject">Recordatorio: Órdenes de Compra sin PPD</field>
+            <field name="email_to">{{ object.email_formatted }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="background-color: #F3F4F6; padding: 40px; font-family: Arial, sans-serif; text-align: center;">
+                    <div style="max-width: 600px; margin: 0 auto; background-color: #FFFFFF; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: left;">
+                        <h2 style="color: #333333; font-size: 20px; margin-top: 0; display: flex; align-items: center;">
+                            <span style="color: #E53935; font-size: 24px; margin-right: 8px;">🔴</span> ¡Órdenes de Compra con PPD Faltante!
+                        </h2>
+                        <p style="color: #555555; font-size: 15px; line-height: 1.5; margin-top: 15px;">
+                            Hola <strong><t t-out="object.name or ''"/></strong>,<br/><br/>
+                            Le informamos que actualmente hay <strong><t t-out="len(ctx.get('missing_ppd_orders_info', []))"/></strong> órdenes de compra que requieren método de pago PPD y tienen un saldo pendiente por cubrir.
+                        </p>
+                        
+                        <div style="background-color: #F9FAFB; padding: 15px; border-radius: 6px; margin: 20px 0; border: 1px solid #E5E7EB;">
+                            <ul style="margin: 0; padding-left: 20px; color: #444444; font-size: 14px;">
+                                <t t-foreach="ctx.get('missing_ppd_orders_info')" t-as="info">
+                                    <li style="margin-bottom: 5px;">
+                                        <strong><t t-out="info['order'].name"/></strong> - Saldo a cubrir: <t t-out="info['balance_to_cover']"/> <t t-out="info['order'].currency_id.name"/>
+                                    </li>
+                                </t>
+                            </ul>
+                        </div>
+
+                        <div style="margin: 30px 0;">
+                            <a href="/web#action=purchase.purchase_rfq&amp;model=purchase.order&amp;view_type=list"
+                                style="background-color: #6366F1; color: #FFFFFF; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 15px; display: inline-block;">
+                                Ver Órdenes
+                            </a>
+                        </div>
+                        
+                        <p style="color: #777777; font-size: 13px; margin-bottom: 0; border-top: 1px solid #E5E7EB; padding-top: 15px;">
+                            Saludos,<br/>
+                            <strong><t t-out="object.company_id.name or ''"/></strong>
+                        </p>
+                    </div>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

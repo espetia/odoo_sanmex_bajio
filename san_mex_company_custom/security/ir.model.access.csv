@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_payable_report_manager,purchase.payable.report manager,model_purchase_payable_report,purchase.group_purchase_manager,1,0,0,0
+access_customer_status_log,customer.status.log,model_customer_status_log,account.group_account_invoice,1,1,1,1
+access_purchase_payment_documentation_line,purchase.payment.documentation.line,model_purchase_payment_documentation_line,purchase.group_purchase_user,1,1,1,1

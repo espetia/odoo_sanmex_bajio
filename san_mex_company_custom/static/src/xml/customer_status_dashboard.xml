@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="san_mex_company_custom.CustomerStatusDashboard">
+        <div class="o_customer_status_dashboard d-flex justify-content-around p-3 bg-view border-bottom">
+            <div class="o_stat_box p-3 text-center border rounded flex-fill mx-2 bg-primary text-white" style="cursor: pointer;" data-type="new_month">
+                <div class="o_stat_value h3 font-weight-bold"><t t-esc="stats.new_month"/></div>
+                <div class="o_stat_text">New Customers (This Month)</div>
+            </div>
+            <div class="o_stat_box p-3 text-center border rounded flex-fill mx-2 bg-success text-white" style="cursor: pointer;" data-type="recovered_month">
+                <div class="o_stat_value h3 font-weight-bold"><t t-esc="stats.recovered_month"/></div>
+                <div class="o_stat_text">Recovered Customers (This Month)</div>
+            </div>
+            <div class="o_stat_box p-3 text-center border rounded flex-fill mx-2 bg-info text-white" style="cursor: pointer;" data-type="new_total">
+                <div class="o_stat_value h3 font-weight-bold"><t t-esc="stats.new_total"/></div>
+                <div class="o_stat_text">Total New Customers</div>
+            </div>
+            <div class="o_stat_box p-3 text-center border rounded flex-fill mx-2 bg-warning text-white" style="cursor: pointer;" data-type="recovered_total">
+                <div class="o_stat_value h3 font-weight-bold"><t t-esc="stats.recovered_total"/></div>
+                <div class="o_stat_text">Total Recovered Customers</div>
+            </div>
+        </div>
+    </t>
+</templates>

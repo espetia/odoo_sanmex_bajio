@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_customer_status_log_search" model="ir.ui.view">
+        <field name="name">customer.status.log.search</field>
+        <field name="model">customer.status.log</field>
+        <field name="arch" type="xml">
+            <search string="Search Customer Status Log">
+                <field name="partner_id"/>
+                <field name="invoice_id"/>
+                <filter string="New Customers" name="new" domain="[('status_type', '=', 'new')]"/>
+                <filter string="Recovered Customers" name="recovered" domain="[('status_type', '=', 'recovered')]"/>
+                <separator/>
+                <filter string="Date" name="date_detected_filter" date="date_detected"/>
+                <filter string="This Month" name="this_month"
+                        domain="[('date_detected', '&gt;=', (context_today()).strftime('%Y-%m-01')), ('date_detected', '&lt;', (context_today() + relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
+                <filter string="Last Month" name="last_month"
+                        domain="[('date_detected', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%Y-%m-01')), ('date_detected', '&lt;', context_today().strftime('%Y-%m-01'))]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Customer" name="group_by_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Status" name="group_by_status" context="{'group_by': 'status_type'}"/>
+                    <filter string="Month" name="group_by_date" context="{'group_by': 'date_detected:month'}"/>
+                </group>
+                <searchpanel>
+                    <field name="status_type" icon="fa-filter" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_customer_status_log" model="ir.actions.act_window">
+        <field name="name">Customer Status Reports</field>
+        <field name="res_model">customer.status.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_customer_status_log_search"/>
+        <field name="context">{'search_default_group_by_date': 1, 'search_default_group_by_status': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No customer status logs found.
+            </p>
+            <p>
+                The system will automatically log new and recovered customers.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_customer_status_log_tree" model="ir.ui.view">
+        <field name="name">customer.status.log.tree</field>
+        <field name="model">customer.status.log</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Status Log" create="0" edit="0" sample="1" js_class="customer_status_dashboard">
+                <header>
+                    <button name="%(action_customer_status_log)d" type="action" string="Refresh" class="btn-primary"/>
+                </header>
+                <field name="date_detected"/>
+                <field name="partner_id"/>
+                <field name="status_type" decoration-info="status_type == 'new'" decoration-success="status_type == 'recovered'" widget="badge"/>
+                <field name="invoice_id"/>
+                <field name="analytic_account_names" string="Cuentas Analíticas"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_customer_status_log_form" model="ir.ui.view">
+        <field name="name">customer.status.log.form</field>
+        <field name="model">customer.status.log</field>
+        <field name="arch" type="xml">
+            <form string="Customer Status Log" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="status_type" widget="badge"
+                               decoration-info="status_type == 'new'"
+                               decoration-success="status_type == 'recovered'"/>
+                        <field name="date_detected"/>
+                        <field name="invoice_id"/>
+                        <field name="analytic_account_names" string="Cuentas Analíticas"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="menu_customer_status_log"
+              name="Customer Status Reports"
+              parent="account.menu_finance_reports"
+              action="action_customer_status_log"
+              sequence="110"/>
+
+    <record id="ir_cron_customer_status_check" model="ir.cron">
+        <field name="name">Customer Status: Daily Check</field>
+        <field name="model_id" ref="model_customer_status_log"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_customer_status()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

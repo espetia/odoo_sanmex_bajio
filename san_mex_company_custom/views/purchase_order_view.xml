@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="after">
+                    <field name="is_amount_exceeded" invisible="1"/>
+                    <field name="is_ppd_missing" invisible="1"/>
+                    <div class="alert alert-danger mb-0" role="alert" attrs="{'invisible': [('is_amount_exceeded', '=', False)]}" style="margin-bottom:0;">
+                        <strong>Warning!</strong> The total payment documentation amount exceeds the purchase order total.
+                    </div>
+                    <div class="alert alert-danger mb-0" role="alert" attrs="{'invisible': [('is_ppd_missing', '=', False)]}" style="margin-bottom:0;">
+                        <strong>Warning!</strong> The purchase order requires a PPD payment method but none was provided in the payment documentation.
+                    </div>
+                </xpath>
+                <field name="picking_type_id" position="after">
+                     <field name="payment_date"/>
+                    <field name="exceptional_purchase_order"/>
+                    <field name="internal_note"/>
+                </field>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Payment Documentation">
+                        <field name="payment_documentation_line_ids">
+                            <tree editable="bottom">
+                                <field name="invoice_number"/>
+                                <field name="payment_method"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="amount" widget="monetary"/>
+                                <field name="invoice_pdf" filename="invoice_pdf_name" widget="binary"/>
+                                <field name="invoice_pdf_name" invisible="1"/>
+                                <button name="action_view_pdf" type="object" icon="fa-eye" title="View PDF" attrs="{'invisible': [('invoice_pdf', '=', False)]}"/>
+                                <field name="invoice_xml" filename="invoice_xml_name" widget="binary"/>
+                                <field name="invoice_xml_name" invisible="1"/>
+                                <field name="comment"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

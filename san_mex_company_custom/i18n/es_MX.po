@@ -1,0 +1,807 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* san_mex_company_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0-20240924\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-27 19:59+0000\n"
+"PO-Revision-Date: 2026-05-27 19:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: san_mex_company_custom
+#: model:mail.template,body_html:san_mex_company_custom.email_template_ppd_missing_reminder
+msgid ""
+"<div style=\"background-color: #F3F4F6; padding: 40px; font-family: Arial, sans-serif; text-align: center;\">\n"
+"                    <div style=\"max-width: 600px; margin: 0 auto; background-color: #FFFFFF; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: left;\">\n"
+"                        <h2 style=\"color: #333333; font-size: 20px; margin-top: 0; display: flex; align-items: center;\">\n"
+"                            <span style=\"color: #E53935; font-size: 24px; margin-right: 8px;\">🔴</span> ¡Órdenes de Compra con PPD Faltante!\n"
+"                        </h2>\n"
+"                        <p style=\"color: #555555; font-size: 15px; line-height: 1.5; margin-top: 15px;\">\n"
+"                            Hola <strong><t t-out=\"object.name or ''\"/></strong>,<br/><br/>\n"
+"                            Le informamos que actualmente hay <strong><t t-out=\"len(ctx.get('missing_ppd_orders_info', []))\"/></strong> órdenes de compra que requieren método de pago PPD y tienen un saldo pendiente por cubrir.\n"
+"                        </p>\n"
+"                        \n"
+"                        <div style=\"background-color: #F9FAFB; padding: 15px; border-radius: 6px; margin: 20px 0; border: 1px solid #E5E7EB;\">\n"
+"                            <ul style=\"margin: 0; padding-left: 20px; color: #444444; font-size: 14px;\">\n"
+"                                <t t-foreach=\"ctx.get('missing_ppd_orders_info')\" t-as=\"info\">\n"
+"                                    <li style=\"margin-bottom: 5px;\">\n"
+"                                        <strong><t t-out=\"info['order'].name\"/></strong> - Saldo a cubrir: <t t-out=\"info['balance_to_cover']\"/> <t t-out=\"info['order'].currency_id.name\"/>\n"
+"                                    </li>\n"
+"                                </t>\n"
+"                            </ul>\n"
+"                        </div>\n"
+"\n"
+"                        <div style=\"margin: 30px 0;\">\n"
+"                            <a href=\"/web#action=purchase.purchase_rfq&amp;model=purchase.order&amp;view_type=list\" style=\"background-color: #6366F1; color: #FFFFFF; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 15px; display: inline-block;\">\n"
+"                                Ver Órdenes\n"
+"                            </a>\n"
+"                        </div>\n"
+"                        \n"
+"                        <p style=\"color: #777777; font-size: 13px; margin-bottom: 0; border-top: 1px solid #E5E7EB; padding-top: 15px;\">\n"
+"                            Saludos,<br/>\n"
+"                            <strong><t t-out=\"object.company_id.name or ''\"/></strong>\n"
+"                        </p>\n"
+"                    </div>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"<div style=\"background-color: #F3F4F6; padding: 40px; font-family: Arial, sans-serif; text-align: center;\">\n"
+"                    <div style=\"max-width: 600px; margin: 0 auto; background-color: #FFFFFF; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: left;\">\n"
+"                        <h2 style=\"color: #333333; font-size: 20px; margin-top: 0; display: flex; align-items: center;\">\n"
+"                            <span style=\"color: #E53935; font-size: 24px; margin-right: 8px;\">🔴</span> ¡Órdenes de Compra con PPD Faltante!\n"
+"                        </h2>\n"
+"                        <p style=\"color: #555555; font-size: 15px; line-height: 1.5; margin-top: 15px;\">\n"
+"                            Hola <strong><t t-out=\"object.name or ''\"/></strong>,<br/><br/>\n"
+"                            Le informamos que actualmente hay <strong><t t-out=\"len(ctx.get('missing_ppd_orders_info', []))\"/></strong> órdenes de compra que requieren método de pago PPD y tienen un saldo pendiente por cubrir.\n"
+"                        </p>\n"
+"                        \n"
+"                        <div style=\"background-color: #F9FAFB; padding: 15px; border-radius: 6px; margin: 20px 0; border: 1px solid #E5E7EB;\">\n"
+"                            <ul style=\"margin: 0; padding-left: 20px; color: #444444; font-size: 14px;\">\n"
+"                                <t t-foreach=\"ctx.get('missing_ppd_orders_info')\" t-as=\"info\">\n"
+"                                    <li style=\"margin-bottom: 5px;\">\n"
+"                                        <strong><t t-out=\"info['order'].name\"/></strong> - Saldo a cubrir: <t t-out=\"info['balance_to_cover']\"/> <t t-out=\"info['order'].currency_id.name\"/>\n"
+"                                    </li>\n"
+"                                </t>\n"
+"                            </ul>\n"
+"                        </div>\n"
+"\n"
+"                        <div style=\"margin: 30px 0;\">\n"
+"                            <a href=\"/web#action=purchase.purchase_rfq&amp;model=purchase.order&amp;view_type=list\" style=\"background-color: #6366F1; color: #FFFFFF; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 15px; display: inline-block;\">\n"
+"                                Ver Órdenes\n"
+"                            </a>\n"
+"                        </div>\n"
+"                        \n"
+"                        <p style=\"color: #777777; font-size: 13px; margin-bottom: 0; border-top: 1px solid #E5E7EB; padding-top: 15px;\">\n"
+"                            Saludos,<br/>\n"
+"                            <strong><t t-out=\"object.company_id.name or ''\"/></strong>\n"
+"                        </p>\n"
+"                    </div>\n"
+"                </div>\n"
+"            "
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.purchase_order_form_inherit
+msgid ""
+"<strong>Warning!</strong> The purchase order requires a PPD payment method "
+"but none was provided in the payment documentation."
+msgstr ""
+"<strong>¡Advertencia!</strong> La orden de compra requiere un método de pago PPD "
+"pero no se proporcionó ninguno en la documentación de pago."
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.purchase_order_form_inherit
+msgid ""
+"<strong>Warning!</strong> The total payment documentation amount exceeds the"
+" purchase order total."
+msgstr ""
+"<strong>¡Advertencia!</strong> El monto total de la documentación de pago excede el"
+" total de la orden de compra."
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_payable_report_search
+msgid "Agrupar por"
+msgstr "Agrupar por"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "American Express"
+msgstr "American Express"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__amount
+msgid "Amount"
+msgstr "Importe"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_account_move_debtors_tree
+msgid "Amount Due"
+msgstr "Importe adeudado"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order_line__project_id
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Analytic Account"
+msgstr "Cuenta Analítica"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__payment_year
+msgid "Año de Pago"
+msgstr "Año de Pago"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_payable_report_search
+msgid "Buscar Proveedores por pagar"
+msgstr "Buscar Proveedores por pagar"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__product_qty
+msgid "Cantidad"
+msgstr "Cantidad"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,help:san_mex_company_custom.field_purchase_order_line__project_id
+msgid "Centro de costos asociado a esta compra."
+msgstr "Centro de costos asociado a esta compra."
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__comment
+msgid "Comment"
+msgstr "Comentario"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__company_id
+msgid "Compañía"
+msgstr "Compañía"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Compras amex domiciliados"
+msgstr "Compras amex domiciliados"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log__create_uid
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log__create_date
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Credito Proveedor"
+msgstr "Crédito Proveedor"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__project_id
+msgid "Cuenta Analítica"
+msgstr "Cuenta Analítica"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log__partner_id
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_search
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: san_mex_company_custom
+#: model:ir.model,name:san_mex_company_custom.model_customer_status_log
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_tree
+msgid "Customer Status Log"
+msgstr "Registro de Estado de Cliente"
+
+#. module: san_mex_company_custom
+#: model:ir.actions.act_window,name:san_mex_company_custom.action_customer_status_log
+#: model:ir.ui.menu,name:san_mex_company_custom.menu_customer_status_log
+msgid "Customer Status Reports"
+msgstr "Clientes Recuperados/Nuevos"
+
+#. module: san_mex_company_custom
+#: model:ir.actions.server,name:san_mex_company_custom.ir_cron_customer_status_check_ir_actions_server
+#: model:ir.cron,cron_name:san_mex_company_custom.ir_cron_customer_status_check
+#: model:ir.cron,name:san_mex_company_custom.ir_cron_customer_status_check
+msgid "Customer Status: Daily Check"
+msgstr "Estado del Cliente: Verificación Diaria"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_search
+msgid "Date"
+msgstr "Fecha"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log__date_detected
+msgid "Date Detected"
+msgstr "Fecha Detectada"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,help:san_mex_company_custom.field_purchase_order_line__date_order
+msgid ""
+"Depicts the date within which the Quotation should be confirmed and "
+"converted into a purchase order."
+msgstr ""
+"Representa la fecha en la que la solicitud de cotización debe validarse y "
+"convertirse en una orden de compra."
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__name
+msgid "Descripción"
+msgstr "Descripción"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_tree_san_mex
+msgid "Description"
+msgstr "Descripción"
+
+#. module: san_mex_company_custom
+#: model:ir.actions.act_window,name:san_mex_company_custom.action_account_move_debtors
+#: model:ir.ui.menu,name:san_mex_company_custom.menu_account_move_debtors
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_account_move_debtors_tree
+msgid "Deudores"
+msgstr "Deudores"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__journal_id
+msgid "Diario"
+msgstr "Diario"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__journal_name
+msgid "Diario de Pagos"
+msgstr "Diario de Pagos"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_payable_report_search
+msgid "Diario de pagos"
+msgstr "Diario de pagos"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log__display_name
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__display_name
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Efectivo"
+msgstr "Efectivo"
+
+#. module: san_mex_company_custom
+#: code:addons/san_mex_company_custom/models/sale_order.py:0
+#, python-format
+msgid ""
+"El cliente seleccionado es un deudor con facturas vencidas por más de 2 "
+"meses."
+msgstr ""
+"El cliente seleccionado es un deudor con facturas vencidas por más de 2 "
+"meses."
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__state
+msgid "Estado"
+msgstr "Estado"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order_line__exceptional_purchase_order
+msgid "Exceptional Purchase"
+msgstr "Compra Excepcional "
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order__exceptional_purchase_order
+msgid "Exceptional Purchase Order"
+msgstr "Orden de Compra Excepcional"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__date_order
+msgid "Fecha de Orden"
+msgstr "Fecha de Orden"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__payment_date
+msgid "Fecha de Pago"
+msgstr "Fecha de Pago"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_payable_report_search
+msgid "Fecha de pago"
+msgstr "Fecha de pago"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order_line__fortnight_pay
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Fortnight Pay"
+msgstr "Quincena"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Gastos Dirección"
+msgstr "Gastos Dirección"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Gastos fijos"
+msgstr "Gastos fijos"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_search
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log__id
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__id
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Ignore Exceptional Purchase"
+msgstr "Ignorar Compra Excepcional"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__iva_amount
+msgid "Impuestos"
+msgstr "Impuestos"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order__internal_note
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order_line__internal_note
+msgid "Internal Note"
+msgstr "Nota Interna"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__invoice_number
+msgid "Invoice Number"
+msgstr "Número de factura"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__invoice_pdf
+msgid "Invoice PDF"
+msgstr "PDF de factura"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__invoice_xml
+msgid "Invoice XML"
+msgstr "XML de factura"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order__is_amount_exceeded
+msgid "Is Amount Exceeded"
+msgstr "Monto excedido"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order__is_ppd_missing
+msgid "Is PPD Missing"
+msgstr "Falta PPD"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order_line__journal_id
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Journal"
+msgstr "Diario"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log____last_update
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report____last_update
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_search
+msgid "Last Month"
+msgstr "Mes pasado"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log__write_uid
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log__write_date
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Locked"
+msgstr "Bloqueado"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_payable_report_search
+msgid "Mes"
+msgstr "Mes"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__payment_month
+msgid "Mes de Pago"
+msgstr "Mes de Pago"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__currency_id
+msgid "Moneda"
+msgstr "Moneda"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_search
+msgid "Month"
+msgstr "Mes"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields.selection,name:san_mex_company_custom.selection__customer_status_log__status_type__new
+msgid "New Customer"
+msgstr "Nuevo Cliente"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_search
+msgid "New Customers"
+msgstr "Nuevos Clientes"
+
+#. module: san_mex_company_custom
+#. openerp-web
+#: code:addons/san_mex_company_custom/static/src/xml/customer_status_dashboard.xml:0
+#, python-format
+msgid "New Customers (This Month)"
+msgstr "Nuevos Clientes (Este Mes)"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.actions.act_window,help:san_mex_company_custom.action_customer_status_log
+msgid "No customer status logs found."
+msgstr "No se encontraron registros de estado de cliente."
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__trade_name
+msgid "Nombre Comercial"
+msgstr "Nombre Comercial"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__internal_note
+msgid "Nota Interna"
+msgstr "Nota Interna"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__order_id
+msgid "Orden de Compra"
+msgstr "Orden de Compra"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order_line__date_order
+msgid "Order Date"
+msgstr "Fecha de la orden"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Order Date (Month)"
+msgstr "Fecha de la orden"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order_line__order_reference
+msgid "Order Reference"
+msgstr "Referencia"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__invoice_pdf_name
+msgid "PDF File Name"
+msgstr "Nombre de archivo PDF"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields.selection,name:san_mex_company_custom.selection__purchase_payment_documentation_line__payment_method__ppd
+msgid "PPD"
+msgstr "PPD"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields.selection,name:san_mex_company_custom.selection__purchase_payment_documentation_line__payment_method__pue
+msgid "PUE"
+msgstr "PUE"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Pago Inmediato"
+msgstr "Pago Inmediato"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order__payment_date
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order_line__payment_date
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Payment Date"
+msgstr "Fecha de Pago"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Payment Date (Month)"
+msgstr "Fecha de Pago (Mes)"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.purchase_order_form_inherit
+msgid "Payment Documentation"
+msgstr "Documentación de pago"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order__payment_documentation_line_ids
+msgid "Payment Documentation Lines"
+msgstr "Líneas de documentación de pago"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__payment_method
+msgid "Payment Method"
+msgstr "Método de Pago"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order_line__payment_type
+msgid "Payment Type"
+msgstr "Tipo de Pago"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__price_unit
+msgid "Precio Unitario"
+msgstr "Precio Unitario"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Product"
+msgstr "Producto"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__product_id
+msgid "Producto"
+msgstr "Producto"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__partner_id
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__partner_name
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_payable_report_search
+msgid "Proveedor"
+msgstr "Proveedor"
+
+#. module: san_mex_company_custom
+#: model:ir.actions.act_window,name:san_mex_company_custom.action_purchase_payable_report
+#: model:ir.ui.menu,name:san_mex_company_custom.menu_purchase_payable_report
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_payable_report_tree
+msgid "Proveedores por pagar"
+msgstr "Proveedores por pagar"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_order_line__partner_id
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Provider"
+msgstr "Proveedor"
+
+#. module: san_mex_company_custom
+#: model:ir.actions.act_window,name:san_mex_company_custom.action_purchase_order_line_report_san_mex
+#: model:ir.ui.menu,name:san_mex_company_custom.menu_purchase_order_line_report_san_mex
+msgid "Provider Group"
+msgstr "Proveedores"
+
+#. module: san_mex_company_custom
+#: model:ir.model,name:san_mex_company_custom.model_purchase_order
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__order_id
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Purchase Order"
+msgstr "Orden de compra"
+
+#. module: san_mex_company_custom
+#: model:ir.model,name:san_mex_company_custom.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Línea de orden de compra"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Purchase Order Line Search"
+msgstr "Lina de orden de compra busqueda"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_tree_san_mex
+msgid "Purchase Order Lines"
+msgstr "Linas de orden de compra"
+
+#. module: san_mex_company_custom
+#: model:mail.template,name:san_mex_company_custom.email_template_ppd_missing_reminder
+msgid "Purchase Order: PPD Missing Reminder"
+msgstr "Orden de Compra: Recordatorio de falta PPD"
+
+#. module: san_mex_company_custom
+#: model:ir.actions.server,name:san_mex_company_custom.ir_cron_ppd_missing_reminder_ir_actions_server
+#: model:ir.cron,cron_name:san_mex_company_custom.ir_cron_ppd_missing_reminder
+#: model:ir.cron,name:san_mex_company_custom.ir_cron_ppd_missing_reminder
+msgid "Purchase Order: Send PPD Missing Reminder"
+msgstr "Orden de Compra: Enviar recordatorio de falta PPD"
+
+#. module: san_mex_company_custom
+#: model:ir.model,name:san_mex_company_custom.model_purchase_payment_documentation_line
+msgid "Purchase Payment Documentation Line"
+msgstr "Línea de documentación de pago de compra"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_payable_report_search
+msgid "Q1"
+msgstr "Q1"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_payable_report_search
+msgid "Q2"
+msgstr "Q2"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__fortnight_pay
+msgid "Quincena de Pago"
+msgstr "Quincena de Pago"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_payable_report_search
+msgid "Quincena de pago"
+msgstr "Quincena de pago"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Quotation Request"
+msgstr "Solicitud de cotización"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "Quotation Send"
+msgstr "Cotización enviada"
+
+#. module: san_mex_company_custom
+#: model:mail.template,subject:san_mex_company_custom.email_template_ppd_missing_reminder
+msgid "Recordatorio: Órdenes de Compra sin PPD"
+msgstr "Recordatorio: Órdenes de Compra sin PPD"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields.selection,name:san_mex_company_custom.selection__customer_status_log__status_type__recovered
+msgid "Recovered Customer"
+msgstr "Cliente Recuperado"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_search
+msgid "Recovered Customers"
+msgstr "Clientes Recuperados"
+
+#. module: san_mex_company_custom
+#. openerp-web
+#: code:addons/san_mex_company_custom/static/src/xml/customer_status_dashboard.xml:0
+#, python-format
+msgid "Recovered Customers (This Month)"
+msgstr "Clientes Recuperados (Este Mes)"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_tree
+msgid "Refresh"
+msgstr "Refrescar"
+
+#. module: san_mex_company_custom
+#: model:ir.model,name:san_mex_company_custom.model_account_payment_register
+msgid "Register Payment"
+msgstr "Registrar pago"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields.selection,name:san_mex_company_custom.selection__purchase_payment_documentation_line__payment_method__regular_pay
+msgid "Regular Pay"
+msgstr "Complemento de Pago"
+
+#. module: san_mex_company_custom
+#: model:ir.model,name:san_mex_company_custom.model_purchase_payable_report
+msgid "Reporte de compras por pagar"
+msgstr "Reporte de compras por pagar"
+
+#. module: san_mex_company_custom
+#: model:ir.model,name:san_mex_company_custom.model_sale_order
+msgid "Sales Order"
+msgstr "Orden de venta"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_search
+msgid "Search Customer Status Log"
+msgstr "Buscar Registro de Estado de Cliente"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_search
+msgid "Status"
+msgstr "Estado"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log__status_type
+msgid "Status Type"
+msgstr "Tipo de Estado"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,help:san_mex_company_custom.field_customer_status_log__invoice_id
+msgid "The invoice that triggered this status change."
+msgstr "La factura que disparó este cambio de estado."
+
+#. module: san_mex_company_custom
+#: model_terms:ir.actions.act_window,help:san_mex_company_custom.action_customer_status_log
+msgid "The system will automatically log new and recovered customers."
+msgstr ""
+"El sistema registrará automáticamente a los clientes nuevos y recuperados."
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_customer_status_log_search
+msgid "This Month"
+msgstr "Este Mes"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__payment_type
+msgid "Tipo de Pago"
+msgstr "Tipo de Pago"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_search_san_mex
+msgid "To Approve"
+msgstr "Para aprobar"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__price_total
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_account_move_debtors_tree
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.view_purchase_order_line_tree_san_mex
+msgid "Total"
+msgstr "Total"
+
+#. module: san_mex_company_custom
+#. openerp-web
+#: code:addons/san_mex_company_custom/static/src/xml/customer_status_dashboard.xml:0
+#, python-format
+msgid "Total New Customers"
+msgstr "Total Clientes Nuevos"
+
+#. module: san_mex_company_custom
+#. openerp-web
+#: code:addons/san_mex_company_custom/static/src/xml/customer_status_dashboard.xml:0
+#, python-format
+msgid "Total Recovered Customers"
+msgstr "Total Clientes Recuperados"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_customer_status_log__invoice_id
+msgid "Trigger Invoice"
+msgstr "Factura Disparadora"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payable_report__vehicle_id
+msgid "Vehículo"
+msgstr "Vehículo"
+
+#. module: san_mex_company_custom
+#: model_terms:ir.ui.view,arch_db:san_mex_company_custom.purchase_order_form_inherit
+msgid "View PDF"
+msgstr "Ver PDF"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,field_description:san_mex_company_custom.field_purchase_payment_documentation_line__invoice_xml_name
+msgid "XML File Name"
+msgstr "Nombre de archivo XML"
+
+#. module: san_mex_company_custom
+#: model:ir.model.fields,help:san_mex_company_custom.field_purchase_order_line__partner_id
+msgid "You can find a vendor by its Name, TIN, Email or Internal Reference."
+msgstr ""
+"Puede encontrar un proveedor por su nombre, NIF, correo electrónico o "
+"referencia interna."
+
+#. module: san_mex_company_custom
+#: code:addons/san_mex_company_custom/models/sale_order.py:0
+#, python-format
+msgid "¡Atención!"
+msgstr "¡Atención!"

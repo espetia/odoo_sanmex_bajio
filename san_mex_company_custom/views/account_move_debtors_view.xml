@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action to view debtors: Invoices that are not_paid and older than 2 months -->
+    <record id="action_account_move_debtors" model="ir.actions.act_window">
+        <field name="name">Deudores</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[
+            ('move_type', '=', 'out_invoice'),
+            ('state', '=', 'posted'),
+            ('payment_state', '=', 'not_paid'), 
+            ('invoice_date_due', '&lt;=', (context_today() - relativedelta(months=2)).strftime('%Y-%m-%d'))
+        ]</field>
+        <!-- Group by partner_id as requested -->
+        <field name="context">{'group_by': 'partner_id'}</field>
+    </record>
+
+    <!-- Tree view customization for Debtors grouped by partner_id -->
+    <record id="view_account_move_debtors_tree" model="ir.ui.view">
+        <field name="name">account.move.debtors.tree</field>
+        <field name="model">account.move</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <tree string="Deudores" create="false" sample="1">
+                <field name="partner_id" readonly="1" />
+                <field name="name" readonly="1"/>
+                <field name="invoice_date" readonly="1"/>
+                <field name="invoice_date_due" readonly="1"/>
+                <field name="amount_total_signed" readonly="1" string="Total"/>
+                <field name="amount_residual_signed" readonly="1" string="Amount Due"/>
+                <field name="payment_state" readonly="1" widget="badge" decoration-danger="payment_state == 'not_paid'"/>
+                <field name="state" invisible="1"/>
+                <field name="move_type" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Map the action to the specific tree view -->
+    <record id="action_account_move_debtors_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_account_move_debtors_tree"/>
+        <field name="act_window_id" ref="action_account_move_debtors"/>
+    </record>
+
+    <!-- Menu Item for Sales Team: Deudores -->
+    <!-- Inherits from sale.menu_sale_invoicing and restricts to group_sale_salesman_all_leads -->
+    <menuitem id="menu_account_move_debtors"
+              name="Deudores"
+              parent="sale.menu_sale_invoicing"
+              action="action_account_move_debtors"
+              groups="sales_team.group_sale_salesman_all_leads"
+              sequence="50"/>
+</odoo>
