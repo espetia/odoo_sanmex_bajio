@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_purchase_smx" model="report.paperformat">
+      <field name="name">Purchase SMX</field>
+      <field name="default" eval="False"/>
+      <field name="format">A4</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">7</field>
+      <field name="margin_bottom">20</field>
+      <field name="margin_left">7</field>
+      <field name="margin_right">7</field>
+      <field name="header_spacing">0</field>
+      <field name="dpi">90</field>
+    </record>
+
+    <record id="report_purchase_smx_quotation_action" model="ir.actions.report">
+      <field name="name">Orden de Compra Sanmex</field>
+      <field name="model">purchase.order</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">purchase_report_sanmex.report_purchase_smx</field>
+      <field name="report_file">purchase_report_sanmex.report_purchase_smx</field>
+      <field name="print_report_name">'Orden de compra SMX- %s' % (object.name)</field>
+      <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+      <field name="binding_type">report</field>
+      <field name="paperformat_id" ref="purchase_report_sanmex.paperformat_purchase_smx"/>
+    </record>
+
+    <template id="report_purchase_smx">
+      <t t-call="web.html_container">
+          <t t-foreach="docs" t-as="o">
+              <t t-call="purchase_report_sanmex.report_purchase_smx_doc" t-lang="o.partner_id.lang"/>
+          </t>
+      </t>
+    </template>
+
+    <template id="external_layout_purchase_sanmex">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <t t-if="not company">
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-out="0"/>
+        </div>
+
+        <div class="footer text-xs" style="width: 100%; font-family: 'Lato', Helvetica, Arial, sans-serif;">
+            <hr style="border: 0; border-top: 1px solid #d1d5db; margin: 0 auto 8px auto;"/>
+            <table style="width: 100%; border-collapse: collapse; text-align: center; color: #272356;">
+                <tr>
+                    <td width="33%"><i class="fa fa-phone" style="margin-right: 5px;"/> 984 176 0833</td>
+                    <td width="33%"><i class="fa fa-envelope" style="margin-right: 5px;"/> recepción1qroo@sanmex.com.mx</td>
+                    <td width="33%"><span t-if="company.website"><i class="fa fa-globe" style="margin-right: 5px;"/> <span t-field="company.website"/></span></td>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <template id="report_purchase_smx_doc">
+        <t t-call="purchase_report_sanmex.external_layout_purchase_sanmex">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+
+            <div class="page" style="font-size: 12px; line-height: 1.35; font-family: 'Lato', Helvetica, Arial, sans-serif; color: #54595F;">
+                <style>
+                    .text-blue { color: #272356; }
+                    .text-red { color: #FF1616; }
+                    .font-bold { font-weight: 700; }
+                    .uppercase { text-transform: uppercase; }
+                    .text-xs { font-size: 11px; }
+                    .text-right { text-align: right; }
+                    .mb-1 { margin-bottom: 4px; }
+                    .mb-2 { margin-bottom: 8px; }
+                    .mb-3 { margin-bottom: 12px; }
+                    .mb-4 { margin-bottom: 16px; }
+                    .section-title { border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; margin-bottom: 8px; }
+
+                    .box-main { border: 1px solid #272356; padding: 10px 12px; border-radius: 8px; vertical-align: top; }
+                    .box-soft { border: 1px solid #d1d5db; padding: 10px 12px; border-radius: 8px; background-color: #f9fafb; vertical-align: top; }
+
+                    .po-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+                    .po-table th { background-color: #272356; color: #ffffff; padding: 7px; font-weight: 700; font-size: 11px; }
+                    .po-table td { padding: 7px; border-bottom: 1px solid #e5e7eb; vertical-align: top; font-size: 11px; }
+                    .po-table tr.row-light td { background-color: #f9fafb; }
+                    .po-table tr.o_line_section td { background-color: #e5e7eb; font-weight: 700; color: #272356; }
+                    .po-table tr.o_line_note td { font-style: italic; color: #54595F; }
+
+                    .status-box { border: 1px solid #d1d5db; border-radius: 6px; background-color: #f9fafb; padding: 8px 10px; }
+                    .notes-box { border: 1px solid #d1d5db; border-radius: 6px; background-color: #f9fafb; padding: 8px 10px; white-space: pre-line; }
+
+                    .approval-table { width: 100%; border-collapse: collapse; }
+                    .approval-table th { text-align: left; background-color: #272356; color: #fff; padding: 7px; font-size: 11px; }
+                    .approval-table td { padding: 7px; border-bottom: 1px solid #e5e7eb; font-size: 11px; }
+
+                    .doc-header-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+                    .doc-header-table td { vertical-align: top; }
+                </style>
+
+                <table class="doc-header-table">
+                    <tr>
+                        <td width="55%">
+                            <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 78px;" alt="Logo"/>
+                            <div class="text-xs">
+                                <p class="font-bold text-blue" style="font-size: 16px; margin-bottom: 2px;"><span t-field="o.company_id.name"/></p>
+                                <p style="margin-bottom: 0px; line-height: 1.2;"><span t-field="o.company_id.street"/> <span t-if="o.company_id.street2" t-field="o.company_id.street2"/></p>
+                                <p style="margin-bottom: 0px; line-height: 1.2;"><span t-field="o.company_id.city"/>, <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.name"/>. <span t-if="o.company_id.country_id" t-field="o.company_id.country_id.name"/>, C.P. <span t-field="o.company_id.zip"/></p>
+                                <p style="margin-bottom: 0px; line-height: 1.2;">
+                                    <strong>RFC:</strong> <span t-field="o.company_id.vat"/>
+                                    <t t-if="o.company_id.regimen_fiscal_id"> | <strong>Régimen Fiscal:</strong> <span t-field="o.company_id.regimen_fiscal_id.code"/></t>
+                                </p>
+                            </div>
+                        </td>
+                        <td width="45%" class="text-right">
+                            <h2 class="font-bold text-blue uppercase" style="font-size: 26px; line-height: 1; margin-bottom: 8px;">Orden de Compra</h2>
+                            <p class="font-bold text-red" style="font-size: 18px; margin-bottom: 10px;"><span t-field="o.name"/></p>
+                            <table style="width: 100%;" class="text-xs">
+                                <tr>
+                                    <td align="right">
+                                        <table style="background-color: #f9fafb; border: 1px solid #d1d5db; border-radius: 6px; border-collapse: separate; text-align: left;">
+                                            <tr>
+                                                <td style="padding: 10px 12px;">
+                                                    <table style="border-collapse: collapse;">
+                                                        <tr t-if="o.date_order">
+                                                            <td class="font-bold text-blue" style="padding-right: 12px; padding-bottom: 2px;">Fecha orden:</td>
+                                                            <td style="padding-bottom: 2px;"><span t-field="o.date_order"/></td>
+                                                        </tr>
+                                                        <tr t-if="o.date_approve">
+                                                            <td class="font-bold text-blue" style="padding-right: 12px; padding-bottom: 2px;">Fecha aprobación:</td>
+                                                            <td style="padding-bottom: 2px;"><span t-field="o.date_approve"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="font-bold text-blue" style="padding-right: 12px; padding-bottom: 2px;">Estado:</td>
+                                                            <td style="padding-bottom: 2px;"><span t-field="o.state"/></td>
+                                                        </tr>
+                                                        <tr t-if="o.partner_ref">
+                                                            <td class="font-bold text-blue" style="padding-right: 12px;">Ref. compra:</td>
+                                                            <td><span t-field="o.partner_ref"/></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 12px;">
+                    <tr>
+                        <td width="59%" class="box-main">
+                            <h3 class="section-title font-bold text-blue uppercase text-xs">Proveedor</h3>
+
+                            <p class="font-bold text-blue mb-1" style="font-size: 14px;">
+                                <span t-if="o.trade_name" t-field="o.trade_name"/>
+                                <span t-else="" t-field="o.partner_id.name"/>
+                            </p>
+
+                            <div class="text-xs" t-field="o.partner_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                            <p class="text-xs mb-1" t-if="o.partner_id.vat">
+                                <strong><t t-esc="o.company_id.account_fiscal_country_id.vat_label or 'Tax ID'"/>:</strong> <span t-field="o.partner_id.vat"/>
+                            </p>
+                        </td>
+                        <td width="2%" style="border: none; background: transparent;"></td>
+                        <td width="39%" class="box-soft">
+                            <h3 class="section-title font-bold text-blue uppercase text-xs">Datos Complementarios</h3>
+                            <p class="mb-1 text-xs" t-if="o.fortnight_pay"><strong>Quincena de pago:</strong> <span t-field="o.fortnight_pay"/></p>
+                            <p class="mb-1 text-xs" t-if="o.journal_id"><strong>Diario de pago:</strong> <span t-field="o.journal_id"/></p>
+                            <p class="mb-1 text-xs" t-if="o.payment_type"><strong>Forma de pago:</strong> <span t-field="o.payment_type"/></p>
+                            <p class="mb-1 text-xs">
+                                <strong>Dirección de entrega:</strong>
+                                <t t-if="o.dest_address_id">
+                                    <span t-field="o.dest_address_id.name"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-if="o.picking_type_id and o.picking_type_id.warehouse_id" t-field="o.picking_type_id.warehouse_id.name"/>
+                                </t>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="po-table">
+                    <thead>
+                        <tr class="uppercase">
+                            <th name="th_product">Producto</th>
+                            <th name="th_description">Descripción</th>
+                            <th name="th_vehicle">Vehículo</th>
+                            <th name="th_taxes">Impuestos</th>
+                            <th name="th_quantity" class="text-right">Cantidad</th>
+                            <th name="th_price_unit" class="text-right">Precio</th>
+                            <th name="th_amount" class="text-right">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="current_subtotal" t-value="0"/>
+                        <t t-foreach="o.order_line" t-as="line">
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+
+                            <tr t-att-class="'o_line_section' if line.display_type == 'line_section' else 'o_line_note' if line.display_type == 'line_note' else 'row-light' if line_index % 2 == 1 else ''">
+                                <t t-if="not line.display_type">
+                                    <td><span t-field="line.product_id.name"/></td>
+                                    <td><span t-field="line.name"/></td>
+                                    <td><span t-field="line.vehicle_id.name"/></td>
+                                    <td><span t-esc="', '.join(map(lambda x: x.name, line.taxes_id))"/></td>
+                                    <td class="text-right">
+                                        <span t-field="line.product_qty"/>
+                                        <span t-field="line.product_uom.name" groups="uom.group_uom"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td colspan="99"><span t-field="line.name"/></td>
+                                    <t t-set="current_section" t-value="line"/>
+                                    <t t-set="current_subtotal" t-value="0"/>
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99"><span t-field="line.name"/></td>
+                                </t>
+                            </tr>
+
+                            <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                                <tr>
+                                    <td colspan="99" class="text-right" style="background-color: #f9fafb;">
+                                        <strong class="text-blue">Subtotal de sección:</strong>
+                                        <span t-esc="current_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+
+                <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 10px;">
+                    <tr>
+                        <td width="62%" style="padding-right: 8px; vertical-align: top;">
+                            <div class="box-soft">
+                                <h3 class="section-title font-bold text-blue uppercase text-xs">Detalle de aprobación</h3>
+                                <table class="approval-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Personal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.approval_info_line" t-as="appro_line">
+                                            <tr>
+                                                <td><span t-field="appro_line.approved_by.name"/></td>
+                                            </tr>
+                                        </t>
+                                        <tr t-if="not o.approval_info_line">
+                                            <td>-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+
+                        <td width="38%" style="vertical-align: top;">
+                            <div class="box-soft mb-2">
+                                <h3 class="section-title font-bold text-blue uppercase text-xs">Totales</h3>
+                                <table class="table table-sm" style="margin-bottom: 0;">
+                                    <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)"/>
+                                    <t t-call="account.document_tax_totals"/>
+                                </table>
+                            </div>
+
+                            <div class="status-box text-xs">
+                                <strong class="text-blue">Estado de presupuesto:</strong>
+                                <span t-if="o.in_budget">Dentro del presupuesto</span>
+                                <span t-else="">Excede el presupuesto planeado</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div t-if="o.notes" class="notes-box text-xs mb-2">
+                    <h3 class="section-title font-bold text-blue uppercase text-xs">Observaciones</h3>
+                    <span t-field="o.notes"/>
+                </div>
+
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+</odoo>
