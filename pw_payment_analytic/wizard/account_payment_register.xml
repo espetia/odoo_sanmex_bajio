@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_payment_register_form_inherit_pw_analytic" model="ir.ui.view">
+        <field name="name">account.payment.register.form.inherit.pw.analytic</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='communication']" position="after">
+                <field name="analytic_account_id" groups="pw_payment_analytic.pw_group_analytic_account"/>
+                <field name="analytic_tag_ids" widget="many2many_tags" groups="pw_payment_analytic.pw_group_analytic_tags"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

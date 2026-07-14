@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pw_group_analytic_account" model="res.groups">
+        <field name="name">Analytic Account on Payment</field>
+    </record>
+    <record id="pw_group_analytic_tags" model="res.groups">
+        <field name="name">Analytic Tags on Payment</field>
+    </record>
+</odoo>
